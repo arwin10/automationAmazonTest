@@ -1,0 +1,140 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import com.jawwy.util.Log;
+
+public class RMS_HomePage {
+	
+	private static WebElement element = null;
+	private static Select select = null;
+	
+	public static WebElement txtbox_SearchBy(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='simInfoForm:searchInput']"));
+
+		if(element!=null)
+		{   
+			Log.info("SearchBy Textbox is displayed.");
+			System.out.println("SearchBy textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("SearchBy Textbox is not displayed.");
+			System.out.println("SearchBy textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+    
+	public static Select select_SearchBy(WebDriver driver){
+
+		select = new Select(driver.findElement(By.xpath("//select[@id='simInfoForm:searchParameterInput']")));
+
+		if(select!=null)
+		{   
+			Log.info("SearchBy select is displayed.");
+			System.out.println("SearchBy select is displayed.");
+
+		}
+		else
+		{
+			Log.warn("SearchBy select is not displayed.");
+			System.out.println("SearchBy select is not displayed.");
+
+		}
+
+		return select;
+
+	}
+	
+	public static WebElement button_Search(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='simInfoForm:searchBtn']"));
+
+		if(element!=null)
+		{   
+			Log.info("SearchBy Button is displayed.");
+			System.out.println("SearchBy Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("SearchBy Button is not displayed.");
+			System.out.println("SearchBy Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_SearchConfirm(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='simInfoForm:lengthyProcessConfirmBtn']"));
+
+		if(element!=null)
+		{   
+			Log.info("SearchBy Confirm Button is displayed.");
+			System.out.println("SearchBy Confirm Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("SearchBy Confirm Button is not displayed.");
+			System.out.println("SearchBy Confirm Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_SearchIcon(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//img[@title='View']"));
+
+		if(element!=null)
+		{   
+			Log.info("Search Icon Button is displayed.");
+			System.out.println("Search Icon Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search Icon Button is not displayed.");
+			System.out.println("Search Icon Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement panel_InformationDetails(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//img[@title='View']"));
+
+		if(element!=null)
+		{   
+			Log.info("Information details Panel is displayed.");
+			System.out.println("Information details Panel is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Information details Panel is not displayed.");
+			System.out.println("Information details Panel is not displayed.");
+
+		}
+
+		return element;
+
+	}
+}

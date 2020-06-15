@@ -1,0 +1,34 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class ADM_Portal_HomePage {
+	
+	private static WebElement element = null;
+
+	public static WebElement txtbx_UserName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='username']"));
+
+		if(element!=null)
+		{   
+			Log.info("Username Textbox is displayed.");
+			System.out.println("Username textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Username Textbox is not displayed.");
+			System.out.println("Username textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+
+}

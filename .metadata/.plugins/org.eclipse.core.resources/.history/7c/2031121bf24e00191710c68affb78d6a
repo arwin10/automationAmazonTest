@@ -1,0 +1,543 @@
+package com.jawwy.modules;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import com.jawwy.pageobject.RMS_HomePage;
+import com.jawwy.pageobject.RMS_LoginPage;
+import com.jawwy.pageobject.ViaArabia_HomePage;
+import com.jawwy.util.CommonUtilities;
+import com.jawwy.util.DataBaseUtilities;
+import com.jawwy.util.ExcelUtilities;
+import com.jawwy.util.Log;
+
+public class Jawwy_RMS {
+
+	private WebDriver driver;
+	private CommonUtilities utilities;
+	private DataBaseUtilities dbutilities;
+	private WebDriverWait wait;
+	private String sTestCaseName;
+	private int iTestCaseRow;
+	ArrayList moduleRecord=null;
+
+
+	@BeforeTest
+	@Parameters("browsername")
+	public void setUp(String browsername) throws Exception{
+
+		//Log4j configuration settings
+		DOMConfigurator.configure("log4j.xml");
+		Log.info("Log4j initiated");
+
+		System.out.println("Executing in browser: "+browsername);
+
+		if(browsername.equalsIgnoreCase("Firefox"))
+		{   
+			System.setProperty("webdriver.gecko.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\geckodriver.exe");
+			System.setProperty("webdriver.firefox.bin", "C:\\FirefoxPortable45ESR\\FirefoxPortable.exe");
+			driver= new FirefoxDriver();
+		}		
+
+		if(browsername.equalsIgnoreCase("Chrome"))	
+		{
+			System.setProperty("webdriver.chrome.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\chromedriver.exe");
+			driver = new ChromeDriver();
+		}
+
+		if(browsername.equalsIgnoreCase("IE"))	
+		{
+			System.setProperty("webdriver.ie.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\IEDriverServer.exe");
+			driver = new InternetExplorerDriver();
+		}
+
+
+
+		Log.info("New driver instantiated");
+
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+		Log.info("Window maximized and Implicit wait applied on the driver for 10 seconds");
+
+
+		wait = new WebDriverWait(driver,60);
+		Log.info("WebDriver wait initialized");
+
+		utilities = new CommonUtilities();
+		//dbutilities= new DataBaseUtilities();
+
+		//Getting Testdata from the excel file
+		moduleRecord=ExcelUtilities.excelSetDBRecord("Jawwy_RMS");
+		//dbutilities.DatabaseConnection();
+
+
+	}
+
+
+	@AfterTest
+	public void tearDown() throws Exception{
+
+		driver.quit();
+	}
+
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_RMS_Login(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appRMS_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+			
+			utilities.explicitilyWaitFor("//span[text()='Home']", wait);
+
+			if(driver.findElements(By.xpath("//span[text()='Home']")).size()>0)
+			{
+
+				Log.info("RMS HomePage is opened.");
+				System.out.println("RMS HomePage is opened.");
+			}
+
+			else
+			{
+				Log.warn("RMS HomePage is not opened");
+				System.out.println("RMS HomePage is not opened");
+				Assert.assertTrue(false);
+
+			} 
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+    
+	@Test
+	@Parameters("testcasename")
+	public void verify_RMS_Login_InvalidCreds(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appRMS_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+			
+			utilities.explicitilyWaitFor("//span[@id='textExMsgLogin' and contains(text(),'Invalid username or password. Please try again.')]", wait);
+
+			if(driver.findElements(By.xpath("//span[@id='textExMsgLogin' and contains(text(),'Invalid username or password. Please try again.')]")).size()>0)
+			{
+
+				Log.info("RMS HomePage is not opened.");
+				System.out.println("RMS HomePage is not opened.");
+			}
+
+			else
+			{
+				Log.warn("RMS HomePage is opened");
+				System.out.println("RMS HomePage is opened");
+				Assert.assertTrue(false);
+
+			} 
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_RMS_Login_InvalidUsername(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appRMS_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+			
+			utilities.explicitilyWaitFor("//span[@id='textExMsgLogin' and contains(text(),'Invalid username or password. Please try again.')]", wait);
+
+			if(driver.findElements(By.xpath("//span[@id='textExMsgLogin' and contains(text(),'Invalid username or password. Please try again.')]")).size()>0)
+			{
+
+				Log.info("RMS HomePage is not opened.");
+				System.out.println("RMS HomePage is not opened.");
+			}
+
+			else
+			{
+				Log.warn("RMS HomePage is opened");
+				System.out.println("RMS HomePage is opened");
+				Assert.assertTrue(false);
+
+			} 
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_RMS_Login_InvalidPassword(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appRMS_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+			
+			utilities.explicitilyWaitFor("//span[@id='textExMsgLogin' and contains(text(),'Invalid username or password. Please try again.')]", wait);
+
+			if(driver.findElements(By.xpath("//span[@id='textExMsgLogin' and contains(text(),'Invalid username or password. Please try again.')]")).size()>0)
+			{
+
+				Log.info("RMS HomePage is not opened.");
+				System.out.println("RMS HomePage is not opened.");
+			}
+
+			else
+			{
+				Log.warn("RMS HomePage is opened");
+				System.out.println("RMS HomePage is opened");
+				Assert.assertTrue(false);
+
+			} 
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+   
+	@Test
+	@Parameters("testcasename")
+	public void verify_RMS_Login_EmptyCreds(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appRMS_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+			
+			utilities.explicitilyWaitFor("//span[@id='j_passwordMsg:j_password']/span", wait);
+			
+			if(RMS_LoginPage.error_EmptyUsername(driver).isDisplayed())
+			{
+				Log.info("Username empty error is present.");
+				System.out.println("Username empty error is present.");
+			}
+			else
+			{
+				Log.warn("Username empty error is not present.");
+				System.out.println("Username empty error is not present.");
+				Assert.assertTrue(false);
+			}
+			if(RMS_LoginPage.error_EmptyPassword(driver).isDisplayed())
+			{
+				Log.info("Password empty error is present.");
+				System.out.println("Password empty error is present.");
+			}
+			else
+			{
+				Log.warn("Password empty error is not present.");
+				System.out.println("Password empty error is not present.");
+				Assert.assertTrue(false);
+			}
+			if(driver.findElements(By.xpath("//span[@id='j_passwordMsg:j_password']/span")).size()>0)
+			{
+
+				Log.info("RMS HomePage is not opened.");
+				System.out.println("RMS HomePage is not opened.");
+			}
+
+			else
+			{
+				Log.warn("RMS HomePage is opened");
+				System.out.println("RMS HomePage is opened");
+				Assert.assertTrue(false);
+
+			} 
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_RMS_Login_EmptyUsername(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appRMS_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+			
+			utilities.explicitilyWaitFor("//span[@id='j_usernameMsg:j_username']/span", wait);
+			
+			if(RMS_LoginPage.error_EmptyUsername(driver).isDisplayed())
+			{
+				Log.info("Username empty error is present.");
+				System.out.println("Username empty error is present.");
+			}
+			else
+			{
+				Log.warn("Username empty error is not present.");
+				System.out.println("Username empty error is not present.");
+				Assert.assertTrue(false);
+			}
+			
+			if(driver.findElements(By.xpath("//span[@id='j_usernameMsg:j_username']/span")).size()>0)
+			{
+
+				Log.info("RMS HomePage is not opened.");
+				System.out.println("RMS HomePage is not opened.");
+			}
+
+			else
+			{
+				Log.warn("RMS HomePage is opened");
+				System.out.println("RMS HomePage is opened");
+				Assert.assertTrue(false);
+
+			} 
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_RMS_Login_EmptyPassword(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appRMS_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+			
+			utilities.explicitilyWaitFor("//span[@id='j_passwordMsg:j_password']/span", wait);
+			
+			if(RMS_LoginPage.error_EmptyPassword(driver).isDisplayed())
+			{
+				Log.info("Password empty error is present.");
+				System.out.println("Password empty error is present.");
+				
+			}
+			else
+			{
+				Log.warn("Password empty error is not present.");
+				System.out.println("Password empty error is not present.");
+				Assert.assertTrue(false);
+			}
+			if(driver.findElements(By.xpath("//span[@id='j_passwordMsg:j_password']/span")).size()>0)
+			{
+
+				Log.info("RMS HomePage is not opened.");
+				System.out.println("RMS HomePage is not opened.");
+			}
+
+			else
+			{
+				Log.warn("RMS HomePage is opened");
+				System.out.println("RMS HomePage is opened");
+				Assert.assertTrue(false);
+
+			} 
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+	
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_RMS_SearchSIM_ICCID(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appRMS_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+			
+			utilities.explicitilyWaitFor("//span[text()='Home']", wait);
+
+			if(driver.findElements(By.xpath("//span[text()='Home']")).size()>0)
+			{
+
+				Log.info("RMS HomePage is opened.");
+				System.out.println("RMS HomePage is opened.");
+				
+				driver.get(testdata.get("SIM_Management_URL").toString());
+				
+				utilities.explicitilyWaitFor("//div[@class='rf-cp-lbl-exp' and contains(text(),'Advanced search (Click to open or close advanced search)')]", wait);
+				
+				if(RMS_HomePage.txtbox_SearchBy(driver).isDisplayed())
+				{
+					Log.info("SIM & MSISDN Info Page is opened.");
+					System.out.println("SIM & MSISDN Info Page is opened.");
+					RMS_HomePage.select_SearchBy(driver).selectByValue(testdata.get("SearchBySelect").toString());
+					RMS_HomePage.txtbox_SearchBy(driver).sendKeys(testdata.get("SearchByValue").toString());
+					RMS_HomePage.button_Search(driver).click();
+					Thread.sleep(2000);
+					RMS_HomePage.button_SearchConfirm(driver).click();
+					
+				}
+				else
+				{
+					Log.warn("SIM & MSISDN Info Page is not opened");
+					System.out.println("SIM & MSISDN Info Page is not opened");
+				}
+				
+			}
+
+			else
+			{
+				Log.warn("RMS HomePage is not opened");
+				System.out.println("RMS HomePage is not opened");
+				Assert.assertTrue(false);
+
+			} 
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+}

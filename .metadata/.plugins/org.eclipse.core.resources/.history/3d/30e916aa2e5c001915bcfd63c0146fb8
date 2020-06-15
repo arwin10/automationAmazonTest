@@ -1,0 +1,1109 @@
+package com.jawwy.modules;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import com.jawwy.pageobject.CRM_HomePage;
+import com.jawwy.pageobject.ViaArabia_HomePage;
+import com.jawwy.util.CommonUtilities;
+import com.jawwy.util.DataBaseUtilities;
+import com.jawwy.util.ExcelUtilities;
+import com.jawwy.util.Log;
+
+public class Jawwy_SugarCRM {
+	
+	private WebDriver driver;
+	private CommonUtilities utilities;
+	private DataBaseUtilities dbutilities;
+	private WebDriverWait wait;
+	private String sTestCaseName;
+	private int iTestCaseRow;
+	ArrayList moduleRecord=null;
+
+
+	@BeforeTest
+	@Parameters("browsername")
+	public void setUp(String browsername) throws Exception{
+
+		//Log4j configuration settings
+		DOMConfigurator.configure("log4j.xml");
+		Log.info("Log4j initiated");
+
+		System.out.println("Executing in browser: "+browsername);
+
+		if(browsername.equalsIgnoreCase("Firefox"))
+		{   
+			System.setProperty("webdriver.gecko.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\geckodriver.exe");
+			System.setProperty("webdriver.firefox.bin", "C:\\FirefoxPortable45ESR\\FirefoxPortable.exe");
+			driver= new FirefoxDriver();
+		}		
+
+		if(browsername.equalsIgnoreCase("Chrome"))	
+		{
+			System.setProperty("webdriver.chrome.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\chromedriver.exe");
+			driver = new ChromeDriver();
+		}
+
+		if(browsername.equalsIgnoreCase("IE"))	
+		{
+			System.setProperty("webdriver.ie.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\IEDriverServer.exe");
+			driver = new InternetExplorerDriver();
+		}
+
+
+
+		Log.info("New driver instantiated");
+
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+		Log.info("Window maximized and Implicit wait applied on the driver for 10 seconds");
+
+
+		wait = new WebDriverWait(driver,120);
+		Log.info("WebDriver wait initialized");
+
+		utilities = new CommonUtilities();
+		//dbutilities= new DataBaseUtilities();
+
+		//Getting Testdata from the excel file
+		moduleRecord=ExcelUtilities.excelSetDBRecord("Jawwy_SugarCRM");
+		//dbutilities.DatabaseConnection();
+
+
+	}
+
+
+	@AfterTest
+	public void tearDown() throws Exception{
+
+		driver.quit();
+	}
+
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SugarCRMLogin(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appCRM_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//input[@class='search-query']")).size()>0)
+			{
+
+				Log.info("CRM HomePage is opened.");
+				System.out.println("CRM HomePage is opened.");
+                
+				
+
+			}
+
+			else
+			{
+					System.out.println("CRM HomePage is not opened.");
+					Log.warn("CRM HomePage is not opened.");
+					Assert.assertTrue(false);
+
+			} 
+
+
+				
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+    
+	@Test
+	@Parameters("testcasename")
+	public void verify_SugarCRMOrderIdSearch(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appCRM_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//input[@class='search-query']")).size()>0)
+			{
+
+				Log.info("CRM HomePage is opened.");
+				System.out.println("CRM HomePage is opened.");
+                
+				CRM_HomePage.txtbx_SearchQuery(driver).sendKeys(testdata.get("OrderID").toString()+"\n");
+				Thread.sleep(2000);
+				
+				String orderId= CRM_HomePage.link_SearchResult_OrderId(driver).getText();
+				
+				if(orderId.equals(testdata.get("OrderID").toString()))
+				{
+					Log.info("Order Id="+orderId+" is found.");
+					System.out.println("Order Id="+orderId+" is found.");
+					CRM_HomePage.link_SearchResult_OrderId(driver).click();
+					Thread.sleep(4000);
+					utilities.explicitilyWaitFor("//div[@id='tabContent']", wait);
+					if(CRM_HomePage.div_loading(driver).isDisplayed())
+					{
+			          Thread.sleep(5000);
+				    }
+					if(CRM_HomePage.div_ResultDetails(driver).isDisplayed())
+					{
+						Log.info("Order details found.");
+						System.out.println("Order details found.-->");
+						System.out.println(CRM_HomePage.div_ResultDetails(driver).getText());
+					}
+					else
+					{
+						Log.info("Order details not found.");
+						System.out.println("Order details not found.");
+						Assert.assertTrue(false);
+					}
+				}
+				else
+				{
+					Log.warn("Order Id="+orderId+" is not found.");
+					System.out.println("Order Id="+orderId+" is not found.");
+					Assert.assertTrue(false);
+				}
+
+			}
+
+			else
+			{
+					System.out.println("CRM HomePage is not opened.");
+					Log.warn("CRM HomePage is not opened.");
+					Assert.assertTrue(false);
+
+			} 
+
+
+				
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+    
+	@Test
+	@Parameters("testcasename")
+	public void verify_SugarCRM_MSISDNSearch(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appCRM_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//input[@class='search-query']")).size()>0)
+			{
+
+				Log.info("CRM HomePage is opened.");
+				System.out.println("CRM HomePage is opened.");
+			
+				CRM_HomePage.txtbx_SearchQuery(driver).click();
+				Thread.sleep(2000);
+				CRM_HomePage.button_Search_dropdown(driver).click();
+				Thread.sleep(2000);
+				CRM_HomePage.button_Search_dropdownTelcoOrderOption(driver).click();
+				
+				CRM_HomePage.txtbx_SearchQuery(driver).sendKeys(testdata.get("MSISDN").toString()+"\n");
+				Thread.sleep(2000);
+				
+				String MSISDN= CRM_HomePage.link_SearchResult_MSISDN(driver).getText();
+				String orderId= CRM_HomePage.link_SearchResult_OrderId(driver).getText();
+				if(MSISDN.equals(testdata.get("MSISDN").toString()))
+				{
+					Log.info("Order Id="+orderId+" is found.");
+					System.out.println("Order Id="+orderId+" is found.");
+					CRM_HomePage.link_SearchResult_OrderId(driver).click();
+					Thread.sleep(4000);
+					utilities.explicitilyWaitFor("//div[@id='tabContent']", wait);
+					if(CRM_HomePage.div_loading(driver).isDisplayed())
+					{
+			          Thread.sleep(5000);
+				    }
+					if(CRM_HomePage.div_ResultDetails(driver).isDisplayed())
+					{
+						Log.info("Order details found.");
+						System.out.println("Order details found.-->");
+						System.out.println(CRM_HomePage.div_ResultDetails(driver).getText());
+					}
+					else
+					{
+						Log.info("Order details not found.");
+						System.out.println("Order details not found.");
+						Assert.assertTrue(false);
+					}
+				}
+				else
+				{
+					Log.warn("Order Id="+orderId+" is not found.");
+					System.out.println("Order Id="+orderId+" is not found.");
+					Assert.assertTrue(false);
+				}
+
+			}
+
+			else
+			{
+					System.out.println("CRM HomePage is not opened.");
+					Log.warn("CRM HomePage is not opened.");
+					Assert.assertTrue(false);
+
+			} 
+
+
+				
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+  
+	@Test
+	@Parameters("testcasename")
+	public void verify_SugarCRM_ViewContacts(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appCRM_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//input[@class='search-query']")).size()>0)
+			{
+
+				Log.info("CRM HomePage is opened.");
+				System.out.println("CRM HomePage is opened.");
+			   
+				CRM_HomePage.link_ContactsTab(driver).click();
+				utilities.explicitilyWaitFor("//td[@data-type='fullname']", wait);
+				
+				if(CRM_HomePage.header_ContactsTab(driver).isDisplayed())
+				{
+					Log.info("CRM Contact page is opened.");
+					System.out.println("CRM Contact page is opened.");
+					List<WebElement> contactlist = driver.findElements(By.xpath("//td[@data-type='fullname']"));
+ 					if(contactlist.size()>0)
+					{
+						Log.info("CRM Contact List is displayed.");
+						System.out.println("CRM Contact List is displayed.");
+						for(WebElement contact:contactlist)
+						{
+							System.out.println(contact.getText());
+						}
+					}
+					else
+					{
+						Log.warn("CRM Contact List is not displayed.");
+						System.out.println("CRM Contact List is not displayed.");
+						Assert.assertTrue(false);
+					}
+				}
+				else
+				{
+					Log.warn("CRM Contact page is not opened.");
+					System.out.println("CRM Contact page is not opened.");
+					Assert.assertTrue(false);
+				}
+				
+
+			}
+
+			else
+			{
+					System.out.println("CRM HomePage is not opened.");
+					Log.warn("CRM HomePage is not opened.");
+					Assert.assertTrue(false);
+
+			} 
+
+
+				
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+    
+	@Test
+	@Parameters("testcasename")
+	public void verify_SugarCRM_SearchEditContacts(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appCRM_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//input[@class='search-query']")).size()>0)
+			{
+
+				Log.info("CRM HomePage is opened.");
+				System.out.println("CRM HomePage is opened.");
+			   
+				CRM_HomePage.link_ContactsTab(driver).click();
+				utilities.explicitilyWaitFor("//td[@data-type='fullname']", wait);
+				
+				if(CRM_HomePage.header_ContactsTab(driver).isDisplayed())
+				{
+					Log.info("CRM Contact page is opened.");
+					System.out.println("CRM Contact page is opened.");
+					
+					CRM_HomePage.txtBox_ContactSearch(driver).sendKeys(testdata.get("ContactName").toString());
+					Thread.sleep(2000);
+					List<WebElement> contactlist = driver.findElements(By.xpath("//td[@data-type='fullname']"));
+ 					if(contactlist.size()>0)
+					{
+						Log.info("CRM Contact List is displayed.");
+						System.out.println("CRM Contact List is displayed.");
+						String contactname=null;
+						for(WebElement contact:contactlist)
+						{   
+							contactname = contact.getText();
+							if(contactname.equals(testdata.get("ContactName").toString()))
+							{
+							  System.out.println("Contact Name found:"+contactname);
+							  contact.click();
+						      utilities.explicitilyWaitFor("//span[@data-fieldname='account_name']/span/a", wait);	
+						      if(CRM_HomePage.data_contactName(driver).getText().contains(contactname))
+						      {
+						  		Log.info("CRM Contact View  page is displayed.");
+								System.out.println("CRM Contact View page is displayed.");
+								CRM_HomePage.button_Edit(driver).click();
+								Thread.sleep(2000);
+								
+								if(CRM_HomePage.div_ContactName(driver).isDisplayed())
+								{
+									if(!CRM_HomePage.div_ContactName(driver).getTagName().equals("input"))
+									{
+										Log.warn("Contact name is not editable.");
+										System.out.println("Contact name is not editable.");
+									}
+									else
+									{
+										Log.info("Contact name is editable.");
+										System.out.println("Contact name is editable..");
+									}
+								}
+								
+								if(CRM_HomePage.div_DOB(driver).isDisplayed())
+								{
+									if(!CRM_HomePage.div_DOB(driver).getTagName().equals("input"))
+									{
+										Log.warn("DOB is not editable.");
+										System.out.println("DOB is not editable.");
+									}
+									else
+									{
+										Log.info("DOB is editable.");
+										System.out.println("DOB is editable..");
+									}
+								}
+								
+								if(CRM_HomePage.div_ContactType(driver).isDisplayed())
+								{
+									if(!CRM_HomePage.div_ContactType(driver).getTagName().equals("input"))
+									{
+										Log.warn("Contact Type is not editable.");
+										System.out.println("Contact Type is not editable.");
+									}
+									else
+									{
+										Log.info("Contact Type is editable.");
+										System.out.println("Contact Type is editable..");
+									}
+								}
+								
+								CRM_HomePage.drpdwn_Gender(driver).click();
+								Thread.sleep(2000);
+								CRM_HomePage.drpdwn_GenderOption(driver).click();
+								
+								CRM_HomePage.drpdwn_langpref(driver).click();
+								Thread.sleep(2000);
+								CRM_HomePage.drpdwn_langPrefOption(driver).click();
+								
+								CRM_HomePage.drpdwn_PrefContact(driver).click();
+								Thread.sleep(2000);
+								CRM_HomePage.drpdwn_PrefContactOption(driver).click();
+								
+								CRM_HomePage.button_Save(driver).click();
+								Thread.sleep(2000);
+								
+								CRM_HomePage.checkbox_ChangesUser(driver).click();
+								CRM_HomePage.checkbox_ChangesUser(driver).click();
+								Thread.sleep(2000);
+								CRM_HomePage.button_Select(driver).click();
+								Thread.sleep(2000);
+//								utilities.explicitilyWaitFor("//div[@id='alerts' and contains(text(),'Saved')]", wait);
+//								if(utilities.isElementPresent(driver, "//div[@id='alerts' and contains(text(),'Saved')]"))
+//								{
+//									Log.info("Contacts details saved successfully.");
+//									System.out.println("Contacts details saved successfully.");
+//									Assert.assertTrue(false);
+//								}
+//								else
+//								{
+//									Log.warn("Contacts details didn't saved successfully.");
+//									System.out.println("Contacts details didn't saved successfully.");
+//									Assert.assertTrue(false);
+//								}
+								while(CRM_HomePage.div_loading(driver).isDisplayed())
+								{
+									System.out.println("Saving data..Please Wait..");
+									Thread.sleep(4000);
+								}
+						      }
+						      else
+						      {
+						  		Log.warn("CRM Contact View page is not displayed.");
+								System.out.println("CRM Contact View page is not displayed.");
+								Assert.assertTrue(false);
+						      }
+						    }
+						}
+					}
+					else
+					{
+						Log.warn("CRM Contact List is not displayed.");
+						System.out.println("CRM Contact List is not displayed.");
+						Assert.assertTrue(false);
+					}
+				}
+				else
+				{
+					Log.warn("CRM Contact page is not opened.");
+					System.out.println("CRM Contact page is not opened.");
+					Assert.assertTrue(false);
+				}
+				
+
+			}
+
+			else
+			{
+					System.out.println("CRM HomePage is not opened.");
+					Log.warn("CRM HomePage is not opened.");
+					Assert.assertTrue(false);
+
+			} 
+
+
+				
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SugarCRM_TelcoEstoreOrdersContacts(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appCRM_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//input[@class='search-query']")).size()>0)
+			{
+
+				Log.info("CRM HomePage is opened.");
+				System.out.println("CRM HomePage is opened.");
+			   
+				CRM_HomePage.link_ContactsTab(driver).click();
+				utilities.explicitilyWaitFor("//td[@data-type='fullname']", wait);
+				
+				if(CRM_HomePage.header_ContactsTab(driver).isDisplayed())
+				{
+					Log.info("CRM Contact page is opened.");
+					System.out.println("CRM Contact page is opened.");
+					
+					CRM_HomePage.txtBox_ContactSearch(driver).sendKeys(testdata.get("ContactName").toString());
+					Thread.sleep(4000);
+					List<WebElement> contactlist = driver.findElements(By.xpath("//td[@data-type='fullname']"));
+ 					if(contactlist.size()>0)
+					{
+						Log.info("CRM Contact List is displayed.");
+						System.out.println("CRM Contact List is displayed.");
+						String contactname=null;
+						for(WebElement contact:contactlist)
+						{   
+							contactname = contact.getText();
+							if(contactname.equals(testdata.get("ContactName").toString()))
+							{
+							  System.out.println("Contact Name found:"+contactname);
+							  contact.click();
+						      utilities.explicitilyWaitFor("//span[@data-fieldname='account_name']/span/a", wait);	
+						      if(CRM_HomePage.data_contactName(driver).getText().contains(contactname))
+						      {
+						  		Log.info("CRM Contact View  page is displayed.");
+								System.out.println("CRM Contact View page is displayed.");
+								utilities.scrollIntoView(driver,"//h4[@class='pull-left' and text()='Telco Orders']");
+								if(CRM_HomePage.header_TelcoOrders(driver).isDisplayed())
+								{   
+									CRM_HomePage.header_TelcoOrders(driver).click();
+									utilities.explicitilyWaitFor("//tr[contains(@name,'Telco_Order')]/td[2]/span/div/a", wait);	
+									List<WebElement> telco_ordersid = driver.findElements(By.xpath("//tr[contains(@name,'Telco_Order')]/td[2]/span/div/a"));
+									System.out.println("Telco Orders count="+telco_ordersid.size());
+									List<WebElement> telco_ordersstatus = driver.findElements(By.xpath("//tr[contains(@name,'Telco_Order')]/td[3]/span/div"));
+									List<WebElement> telco_ordersMSISDN = driver.findElements(By.xpath("//tr[contains(@name,'Telco_Order')]/td[4]/span/div/a"));
+									System.out.println("Telco Orders--->");
+									System.out.println("Orders\t\t" + "OrderStatus\t\t" + "MSISDN");
+		                            
+									for(WebElement order:telco_ordersid)
+									{
+										System.out.println(order.getText());
+									}
+									
+									for(WebElement status:telco_ordersstatus)
+									{
+										System.out.println("\t\t"+status.getText());
+									}
+									
+									for(WebElement msisdn:telco_ordersMSISDN)
+									{
+										System.out.println("\t\t\t\t\t"+msisdn.getText());
+									}
+									
+ 								}
+								else
+								{
+									Log.warn("Telco Orders is not displayed.");
+									System.out.println("Telco Orders is not displayed.");
+								}
+								
+								
+								if(CRM_HomePage.header_EstoreOrders(driver).isDisplayed())
+								{   
+									CRM_HomePage.header_EstoreOrders(driver).click();
+									utilities.explicitilyWaitFor("//tr[contains(@name,'eStoreOrder')]/td[2]/span/div/a", wait);	
+									List<WebElement> estore_ordersid = driver.findElements(By.xpath("//tr[contains(@name,'eStoreOrder')]/td[2]/span/div/a"));
+									System.out.println("Estore Orders count="+estore_ordersid.size());
+									List<WebElement> estore_ordersstatus = driver.findElements(By.xpath("//tr[contains(@name,'eStoreOrder')]/td[4]/span"));
+									List<WebElement> estore_ordersdate = driver.findElements(By.xpath("//tr[contains(@name,'eStoreOrder')]/td[3]/span"));
+									System.out.println("Estore Orders--->");
+									System.out.println("Orders\t\t" + "OrderStatus\t\t" + "Date Creation");
+		                            
+									for(WebElement order:estore_ordersid)
+									{
+										System.out.println(order.getText());
+									}
+									
+									for(WebElement status:estore_ordersstatus)
+									{
+										System.out.println("\t\t"+status.getText());
+									}
+									
+									for(WebElement date:estore_ordersdate)
+									{
+										System.out.println("\t\t\t\t\t"+date.getText());
+									}
+									
+ 								}
+								else
+								{
+									Log.warn("Estore Orders is not displayed.");
+									System.out.println("Estore Orders is not displayed.");
+								}
+								
+								
+								
+								 
+						      }
+						      else
+						      {
+						  		Log.warn("CRM Contact View page is not displayed.");
+								System.out.println("CRM Contact View page is not displayed.");
+								Assert.assertTrue(false);
+						      }
+						    }
+						}
+					}
+					else
+					{
+						Log.warn("CRM Contact List is not displayed.");
+						System.out.println("CRM Contact List is not displayed.");
+						Assert.assertTrue(false);
+					}
+				}
+				else
+				{
+					Log.warn("CRM Contact page is not opened.");
+					System.out.println("CRM Contact page is not opened.");
+					Assert.assertTrue(false);
+				}
+				
+
+			}
+
+			else
+			{
+					System.out.println("CRM HomePage is not opened.");
+					Log.warn("CRM HomePage is not opened.");
+					Assert.assertTrue(false);
+
+			} 
+
+
+				
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+    
+	@Test
+	@Parameters("testcasename")
+	public void verify_SugarCRM_AddressContractsDocsContacts(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appCRM_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//input[@class='search-query']")).size()>0)
+			{
+
+				Log.info("CRM HomePage is opened.");
+				System.out.println("CRM HomePage is opened.");
+			   
+				CRM_HomePage.link_ContactsTab(driver).click();
+				utilities.explicitilyWaitFor("//td[@data-type='fullname']", wait);
+				
+				if(CRM_HomePage.header_ContactsTab(driver).isDisplayed())
+				{
+					Log.info("CRM Contact page is opened.");
+					System.out.println("CRM Contact page is opened.");
+					
+					CRM_HomePage.txtBox_ContactSearch(driver).sendKeys(testdata.get("ContactName").toString());
+					Thread.sleep(4000);
+					List<WebElement> contactlist = driver.findElements(By.xpath("//td[@data-type='fullname']"));
+ 					if(contactlist.size()>0)
+					{
+						Log.info("CRM Contact List is displayed.");
+						System.out.println("CRM Contact List is displayed.");
+						String contactname=null;
+						for(WebElement contact:contactlist)
+						{   
+							contactname = contact.getText();
+							if(contactname.equals(testdata.get("ContactName").toString()))
+							{
+							  System.out.println("Contact Name found:"+contactname);
+							  contact.click();
+						      utilities.explicitilyWaitFor("//span[@data-fieldname='account_name']/span/a", wait);	
+						      if(CRM_HomePage.data_contactName(driver).getText().contains(contactname))
+						      {
+						  		Log.info("CRM Contact View  page is displayed.");
+								System.out.println("CRM Contact View page is displayed.");
+								utilities.scrollIntoView(driver,"//h4[@class='pull-left' and text()='Addresses']");
+								if(CRM_HomePage.header_Address(driver).isDisplayed())
+								{   
+									CRM_HomePage.header_Address(driver).click();
+									utilities.explicitilyWaitFor("//tr[contains(@name,'adr_Address')]/td[2]/span/div/a", wait);	
+									List<WebElement> add_name = driver.findElements(By.xpath("//tr[contains(@name,'adr_Address')]/td[2]/span/div/a"));
+									System.out.println("Adress count="+add_name.size());
+									List<WebElement> add_city = driver.findElements(By.xpath("//tr[contains(@name,'adr_Address')]/td[3]/span"));
+									List<WebElement> add_street = driver.findElements(By.xpath("//tr[contains(@name,'adr_Address')]/td[4]/span"));
+									List<WebElement> add_area = driver.findElements(By.xpath("//tr[contains(@name,'adr_Address')]/td[5]/span"));
+									List<WebElement> add_country = driver.findElements(By.xpath("//tr[contains(@name,'adr_Address')]/td[7]/span"));
+									System.out.println("Addresses for Standard delivery--->");
+									System.out.println("Name\t\t" + "City\t\t" + "Street\t\t"+ "Area\t\t"+"\t\tCountry");
+		                            
+									for(WebElement name:add_name)
+									{
+										System.out.println(name.getText());
+									}
+									
+									for(WebElement city:add_city)
+									{
+										System.out.println("\t\t"+city.getText());
+									}
+									
+									for(WebElement street:add_street)
+									{
+										System.out.println("\t\t\t\t\t"+street.getText());
+									}
+									
+									for(WebElement area:add_area)
+									{
+										System.out.println("\t\t\t\t\t\t\t"+area.getText());
+									}
+									for(WebElement country:add_country)
+									{
+										System.out.println("\t\t\t\t\t\t\t\t\t"+country.getText());
+									}
+ 								}
+								else
+								{
+									Log.warn("Addresses is not displayed.");
+									System.out.println("Addresses is not displayed.");
+								}
+								
+								utilities.scrollIntoView(driver,"//h4[@class='pull-left' and text()='Documents']");
+								if(CRM_HomePage.header_Documents(driver).isDisplayed())
+								{   
+									CRM_HomePage.header_Documents(driver).click();
+									utilities.explicitilyWaitFor("//tr[contains(@name,'Documents')]/td[2]/span/div/a", wait);	
+									List<WebElement> doc_name = driver.findElements(By.xpath("//tr[contains(@name,'Documents')]/td[2]/span/div/a"));
+									System.out.println("Doc name count="+doc_name.size());
+									List<WebElement> doc_link = driver.findElements(By.xpath("//tr[contains(@name,'Documents')]/td[3]/span/a"));
+									List<WebElement> doc_source = driver.findElements(By.xpath("//tr[contains(@name,'Documents')]/td[5]/span"));
+									List<WebElement> doc_pubdate = driver.findElements(By.xpath("//tr[contains(@name,'Documents')]/td[7]/span"));
+									System.out.println("Contract Documents--->");
+									System.out.println("Doc Name\t\t" + "Doc Link\t\t\t\t" + "Doc Source\t\t\t"+"Doc Publish Date");
+		                            
+									for(WebElement name:doc_name)
+									{
+										System.out.println(name.getText());
+									}
+									
+									for(WebElement link:doc_link)
+									{
+										System.out.println("\t\t"+link.getText());
+										
+									}
+									
+									for(WebElement source:doc_source)
+									{
+										System.out.println("\t\t\t\t\t\t\t\t\t"+source.getText());
+									}
+									
+									for(WebElement pubdate:doc_pubdate)
+									{
+										System.out.println("\t\t\t\t\t\t\t\t\t\t\t"+pubdate.getText());
+									}
+									
+									utilities.scrollIntoView(driver, "//tr[contains(@name,'Documents')][1]/td[3]/span/a");
+									if(doc_link.get(1).isDisplayed())
+									{
+										doc_link.get(1).click();
+										Log.info("Contract Document is downloading.");
+										System.out.println("Contract Document is downloading.");
+									}
+									else
+									{
+										Log.warn("Contract Document is not downloading.");
+										System.out.println("Contract Document is not downloading.");
+									}
+									
+ 								}
+								else
+								{
+									Log.warn("Documents is not displayed.");
+									System.out.println("Documents is not displayed.");
+								}
+								
+								
+								
+								 
+						      }
+						      else
+						      {
+						  		Log.warn("CRM Contact View page is not displayed.");
+								System.out.println("CRM Contact View page is not displayed.");
+								Assert.assertTrue(false);
+						      }
+						    }
+						}
+					}
+					else
+					{
+						Log.warn("CRM Contact List is not displayed.");
+						System.out.println("CRM Contact List is not displayed.");
+						Assert.assertTrue(false);
+					}
+				}
+				else
+				{
+					Log.warn("CRM Contact page is not opened.");
+					System.out.println("CRM Contact page is not opened.");
+					Assert.assertTrue(false);
+				}
+				
+
+			}
+
+			else
+			{
+					System.out.println("CRM HomePage is not opened.");
+					Log.warn("CRM HomePage is not opened.");
+					Assert.assertTrue(false);
+
+			} 
+
+
+				
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SugarCRM_RefferalContacts(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appCRM_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//input[@class='search-query']")).size()>0)
+			{
+
+				Log.info("CRM HomePage is opened.");
+				System.out.println("CRM HomePage is opened.");
+			   
+				CRM_HomePage.link_ContactsTab(driver).click();
+				utilities.explicitilyWaitFor("//td[@data-type='fullname']", wait);
+				
+				if(CRM_HomePage.header_ContactsTab(driver).isDisplayed())
+				{
+					Log.info("CRM Contact page is opened.");
+					System.out.println("CRM Contact page is opened.");
+					
+					CRM_HomePage.txtBox_ContactSearch(driver).sendKeys(testdata.get("ContactName").toString());
+					Thread.sleep(4000);
+					List<WebElement> contactlist = driver.findElements(By.xpath("//td[@data-type='fullname']"));
+ 					if(contactlist.size()>0)
+					{
+						Log.info("CRM Contact List is displayed.");
+						System.out.println("CRM Contact List is displayed.");
+						String contactname=null;
+						for(WebElement contact:contactlist)
+						{   
+							contactname = contact.getText();
+							if(contactname.equals(testdata.get("ContactName").toString()))
+							{
+							  System.out.println("Contact Name found:"+contactname);
+							  contact.click();
+						      utilities.explicitilyWaitFor("//span[@data-fieldname='account_name']/span/a", wait);	
+						      if(CRM_HomePage.data_contactName(driver).getText().contains(contactname))
+						      {
+						  		Log.info("CRM Contact View  page is displayed.");
+								System.out.println("CRM Contact View page is displayed.");
+								utilities.scrollIntoView(driver,"//h4[@class='pull-left' and text()='Refferals']");
+								if(CRM_HomePage.header_Refferals(driver).isDisplayed())
+								{   
+									CRM_HomePage.header_Refferals(driver).click();
+									utilities.explicitilyWaitFor("//tr[contains(@name,'Contacts_')]/td[2]/span/div/a", wait);	
+									List<WebElement> refferal_name = driver.findElements(By.xpath("//tr[contains(@name,'Contacts_')]/td[2]/span/div/a"));
+									System.out.println("Refferals count="+refferal_name.size());
+									List<WebElement> refferal_accname = driver.findElements(By.xpath("//tr[contains(@name,'Contacts_')]/td[3]/span/div/a"));
+									List<WebElement> refferal_email = driver.findElements(By.xpath("//tr[contains(@name,'Contacts_')]/td[4]/span/div/a"));
+									List<WebElement> refferal_phone = driver.findElements(By.xpath("//tr[contains(@name,'Contacts_')]/td[5]/span/div"));
+									System.out.println("Refferal Contacts--->");
+									System.out.println("Refferal Name\t\t" + "Account Name\t\t" + "Email");
+		                            
+									for(WebElement name:refferal_name)
+									{
+										System.out.println(name.getText());
+									}
+									
+									for(WebElement accname:refferal_accname)
+									{
+										System.out.println("\t\t"+accname.getText());
+									}
+									
+									for(WebElement email:refferal_email)
+									{
+										System.out.println("\t\t\t\t\t"+email.getText());
+									}
+									for(WebElement phone:refferal_phone)
+									{
+										System.out.println("\t\t\t\t\t"+phone.getText());
+									}
+									
+ 								}
+								else
+								{
+									Log.warn("Telco Orders is not displayed.");
+									System.out.println("Telco Orders is not displayed.");
+								}
+															 
+						      }
+						      else
+						      {
+						  		Log.warn("CRM Contact View page is not displayed.");
+								System.out.println("CRM Contact View page is not displayed.");
+								Assert.assertTrue(false);
+						      }
+						    }
+						}
+					}
+					else
+					{
+						Log.warn("CRM Contact List is not displayed.");
+						System.out.println("CRM Contact List is not displayed.");
+						Assert.assertTrue(false);
+					}
+				}
+				else
+				{
+					Log.warn("CRM Contact page is not opened.");
+					System.out.println("CRM Contact page is not opened.");
+					Assert.assertTrue(false);
+				}
+				
+
+			}
+
+			else
+			{
+					System.out.println("CRM HomePage is not opened.");
+					Log.warn("CRM HomePage is not opened.");
+					Assert.assertTrue(false);
+
+			} 
+
+
+				
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+} 

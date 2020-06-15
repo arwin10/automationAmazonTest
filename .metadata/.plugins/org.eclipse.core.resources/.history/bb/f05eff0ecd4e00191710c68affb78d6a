@@ -1,0 +1,34 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class RMS_LoginPage {
+	
+	private static WebElement element = null;
+
+	public static WebElement link_SapphireTab(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//a[text()='Sapphire']"));
+
+		if(element!=null)
+		{   
+			Log.info("Sapphire Link is present.");
+			System.out.println("Sapphire Link is present.");
+
+		}
+		else
+		{
+			Log.warn("Sapphire Link is not present.");
+			System.out.println("Sapphire Link is not present.");
+
+		}
+
+		return element;
+
+	}
+
+}

@@ -1,0 +1,438 @@
+package com.jawwy.modules;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import com.jawwy.pageobject.ViaArabia_HomePage;
+import com.jawwy.util.CommonUtilities;
+import com.jawwy.util.DataBaseUtilities;
+import com.jawwy.util.ExcelUtilities;
+import com.jawwy.util.Log;
+
+public class Jawwy_ODC {
+	
+	private WebDriver driver;
+	private CommonUtilities utilities;
+	private DataBaseUtilities dbutilities;
+	private WebDriverWait wait;
+	private String sTestCaseName;
+	private int iTestCaseRow;
+	ArrayList moduleRecord=null;
+	ResultSet tableRecord = null;
+   
+
+	@BeforeTest
+	@Parameters("browsername")
+	public void setUp(String browsername) throws Exception{
+
+		//Log4j configuration settings
+		DOMConfigurator.configure("log4j.xml");
+		Log.info("Log4j initiated");
+
+		System.out.println("Executing in browser: "+browsername);
+		
+		/*** Disabled for Database test cases***/
+		
+//		if(browsername.equalsIgnoreCase("Firefox"))
+//		{   
+//			System.setProperty("webdriver.gecko.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\geckodriver.exe");
+//			System.setProperty("webdriver.firefox.bin", "C:\\FirefoxPortable45ESR\\FirefoxPortable.exe");
+//			driver= new FirefoxDriver();
+//		}		
+//
+//		if(browsername.equalsIgnoreCase("Chrome"))	
+//		{
+//			System.setProperty("webdriver.chrome.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\chromedriver.exe");
+//			driver = new ChromeDriver();
+//		}
+//
+//		if(browsername.equalsIgnoreCase("IE"))	
+//		{
+//			System.setProperty("webdriver.ie.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\IEDriverServer.exe");
+//			driver = new InternetExplorerDriver();
+//		}
+
+
+
+//		Log.info("New driver instantiated");
+//
+//		driver.manage().deleteAllCookies();
+//		driver.manage().window().maximize();
+//		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+//		Log.info("Window maximized and Implicit wait applied on the driver for 10 seconds");
+//
+//
+//		wait = new WebDriverWait(driver,60);
+//		Log.info("WebDriver wait initialized");
+
+		utilities = new CommonUtilities();
+		dbutilities= new DataBaseUtilities();
+
+		//Getting Testdata from the excel file
+		moduleRecord=ExcelUtilities.excelSetDBRecord("Jawwy_ODC");
+		dbutilities.DatabaseConnection();
+
+
+	}
+
+
+	@AfterTest
+	public void tearDown() throws Exception{
+
+		//driver.quit();  /*** Disabled for Database test cases***/
+		dbutilities.databaseDisconnect();
+	}
+	
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_Notification_TemplateID(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+			
+			String notificationID = testdata.get("Notification_ID").toString();
+			System.out.println("\nVerifying Template ID: "+notificationID+" ["+testdata.get("Notification_Type").toString()+"]\n\n");
+            String query = "select * from ESB_T_CLOB_1_LOG where interface_id='INT_153' and req_res_time like '%"+testdata.get("Order_Date").toString()+"%' and request_message like '%<ETID>"+notificationID+"</ETID>%'  and request_message like '%"+testdata.get("Order_ID").toString()+"%' order by req_res_time DESC";
+			String result = null;
+			int success=0;
+			System.out.println("Executing Query: "+query+"\n\n");
+			
+            tableRecord=dbutilities.executeQuery(query);
+            
+            //System.out.println("Records count="+ tableRecord.getRow());
+           
+              
+              while(tableRecord.next())
+               {   
+            	result = tableRecord.getString("REQUEST_MESSAGE");
+            	System.out.println("Result[REQUEST_MESSAGE]="+ result);
+            	if(result.contains(testdata.get("Order_ID").toString()) && result.contains("SMS_"+notificationID) && result.contains("EML_"+notificationID))
+            	{
+            		Log.info("Template ID:"+notificationID+" notification is triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is triggered for the order.");
+            		success=1;
+            	}
+            	else
+            	{
+            		Log.warn("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		Assert.assertTrue(false);
+            	}
+              }
+              
+              if(success==0)
+              {
+            	  Log.warn("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  System.out.println("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  Assert.assertTrue(false);
+              }
+          
+           
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+    
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_Notification_TemplateID34(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+			
+			String notificationID = testdata.get("Notification_ID").toString();
+			System.out.println("\nVerifying Template ID: "+notificationID+" ["+testdata.get("Notification_Type").toString()+"]\n\n");
+            String query = "select * from ESB_T_CLOB_1_LOG where interface_id='INT_153' and SERVICE_NAME='SMS/EMAIL' and req_res_time like '%"+testdata.get("Order_Date").toString()+"%' and request_message like '%<ETID>"+notificationID+"</ETID>%'  and request_message like '%<TA>"+testdata.get("Email_ID").toString()+"</TA>%' order by req_res_time DESC";
+			String result = null;
+			int success=0;
+			System.out.println("Executing Query: "+query+"\n\n");
+			
+            tableRecord=dbutilities.executeQuery(query);
+            
+            //System.out.println("Records count="+ tableRecord.getRow());
+           
+              
+              while(tableRecord.next())
+               {   
+            	result = tableRecord.getString("REQUEST_MESSAGE");
+            	System.out.println("Result[REQUEST_MESSAGE]="+ result);
+            	if(result.contains("EML_"+notificationID))
+            	{
+            		Log.info("Template ID:"+notificationID+" notification is triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is triggered for the order.");
+            		success=1;
+            	}
+            	else
+            	{
+            		Log.warn("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		Assert.assertTrue(false);
+            	}
+              }
+              
+              if(success==0)
+              {
+            	  Log.warn("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  System.out.println("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  Assert.assertTrue(false);
+              }
+          
+           
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+    
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_Notification_TemplateID37(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+			
+			String notificationID = testdata.get("Notification_ID").toString();
+			System.out.println("\nVerifying Template ID: "+notificationID+" ["+testdata.get("Notification_Type").toString()+"]\n\n");
+            String query = "select * from ESB_T_CLOB_1_LOG where interface_id='INT_153' and SERVICE_NAME='SMS/EMAIL' and req_res_time like '%"+testdata.get("Order_Date").toString()+"%' and request_message like '%<ETID>"+notificationID+"</ETID>%'  and request_message like '%<TA>"+testdata.get("Email_ID").toString()+"</TA>%' order by req_res_time DESC";
+			String result = null;
+			int success=0;
+			System.out.println("Executing Query: "+query+"\n\n");
+			
+            tableRecord=dbutilities.executeQuery(query);
+            
+            //System.out.println("Records count="+ tableRecord.getRow());
+           
+              
+              while(tableRecord.next())
+               {   
+            	result = tableRecord.getString("REQUEST_MESSAGE");
+            	System.out.println("Result[REQUEST_MESSAGE]="+ result);
+            	if(result.contains("SMS_"+notificationID) && result.contains("EML_"+notificationID))
+            	{
+            		Log.info("Template ID:"+notificationID+" notification is triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is triggered for the order.");
+            		success=1;
+            	}
+            	else
+            	{
+            		Log.warn("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		Assert.assertTrue(false);
+            	}
+              }
+              
+              if(success==0)
+              {
+            	  Log.warn("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  System.out.println("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  Assert.assertTrue(false);
+              }
+          
+           
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_Notification_TemplateID38(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+			
+			String notificationID = testdata.get("Notification_ID").toString();
+			System.out.println("\nVerifying Template ID: "+notificationID+" ["+testdata.get("Notification_Type").toString()+"]\n\n");
+            String query = "select * from ESB_T_CLOB_1_LOG where interface_id='INT_153' and SERVICE_NAME='SMS/EMAIL' and req_res_time like '%"+testdata.get("Order_Date").toString()+"%' and request_message like '%<ETID>"+notificationID+"</ETID>%'  and request_message like '%<TA>"+testdata.get("Email_ID").toString()+"</TA>%' order by req_res_time DESC";
+			String result = null;
+			int success=0;
+			System.out.println("Executing Query: "+query+"\n\n");
+			
+            tableRecord=dbutilities.executeQuery(query);
+            
+            //System.out.println("Records count="+ tableRecord.getRow());
+           
+              
+              while(tableRecord.next())
+               {   
+            	result = tableRecord.getString("REQUEST_MESSAGE");
+            	System.out.println("Result[REQUEST_MESSAGE]="+ result);
+            	if(result.contains("SMS_"+notificationID) && result.contains("EML_"+notificationID))
+            	{
+            		Log.info("Template ID:"+notificationID+" notification is triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is triggered for the order.");
+            		success=1;
+            	}
+            	else
+            	{
+            		Log.warn("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		Assert.assertTrue(false);
+            	}
+              }
+              
+              if(success==0)
+              {
+            	  Log.warn("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  System.out.println("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  Assert.assertTrue(false);
+              }
+          
+           
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_Notification_TemplateID39(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+			
+			String notificationID = testdata.get("Notification_ID").toString();
+			System.out.println("\nVerifying Template ID: "+notificationID+" ["+testdata.get("Notification_Type").toString()+"]\n\n");
+            String query = "select * from ESB_T_CLOB_1_LOG where interface_id='INT_153' and SERVICE_NAME='SMS/EMAIL' and req_res_time like '%"+testdata.get("Order_Date").toString()+"%' and request_message like '%<ETID>"+notificationID+"</ETID>%'  and request_message like '%<TA>"+testdata.get("Email_ID").toString()+"</TA>%' order by req_res_time DESC";
+			String result = null;
+			int success=0;
+			System.out.println("Executing Query: "+query+"\n\n");
+			
+            tableRecord=dbutilities.executeQuery(query);
+            
+            //System.out.println("Records count="+ tableRecord.getRow());
+           
+              
+              while(tableRecord.next())
+               {   
+            	result = tableRecord.getString("REQUEST_MESSAGE");
+            	System.out.println("Result[REQUEST_MESSAGE]="+ result);
+            	if(result.contains("SMS_"+notificationID) && result.contains("EML_"+notificationID))
+            	{
+            		Log.info("Template ID:"+notificationID+" notification is triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is triggered for the order.");
+            		success=1;
+            	}
+            	else
+            	{
+            		Log.warn("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		System.out.println("Template ID:"+notificationID+" notification is not triggered for the order.");
+            		Assert.assertTrue(false);
+            	}
+              }
+              
+              if(success==0)
+              {
+            	  Log.warn("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  System.out.println("Template ID:"+notificationID+" notifications is not present in DB.");
+          		  Assert.assertTrue(false);
+              }
+          
+           
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+}

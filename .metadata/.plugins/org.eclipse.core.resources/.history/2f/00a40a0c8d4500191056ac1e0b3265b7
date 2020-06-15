@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Jawwy Test Suite">
+ 
+
+<test name="verify_ViaArabiaOrderSearch">
+<parameter name="testcasename" value="verify_ViaArabiaOrderSearch"></parameter>
+<parameter name="browsername" value="IE"></parameter>
+<classes>
+<class name="com.jawwy.modules.Jawwy_Admin">
+<methods>
+<include name="verify_ViaArabiaOrderSearch"></include>
+</methods>
+</class>
+</classes>
+</test>
+ 
+</suite>

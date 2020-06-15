@@ -1,0 +1,35 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class ViaArabia_HomePage {
+  
+	private static WebElement element = null;
+
+	public static WebElement link_SapphireTab(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//a[text()='Sapphire']"));
+
+		if(element!=null)
+		{   
+			Log.info("Sapphire Link is displayed.");
+			System.out.println("Sapphire Link is displayed");
+
+		}
+		else
+		{
+			Log.info("Sapphire Link is not displayed.");
+			System.out.println("Sapphire Link is not displayed");
+
+		}
+
+		return element;
+
+	}
+	
+	
+}

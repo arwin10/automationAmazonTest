@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Jawwy Test Suite]">
+  <parameter name="testcasename" value="verify_ADMAPPAgentPOSOrder_ICCIDScan"/>
+  <parameter name="browsername" value="Android_Cloud"/>
+  <test name="verify_ADMAPPAgentPOSOrder_ICCIDScan(failed)" preserve-order="true">
+    <parameter name="testcasename" value="verify_ADMAPPAgentPOSOrder_ICCIDScan"/>
+    <parameter name="browsername" value="Android_Cloud"/>
+    <classes>
+      <class name="com.jawwy.modules.Jawwy_ADM_App">
+        <methods>
+          <include name="verify_ADMAPPAgentPOSOrder_ICCIDScan"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- com.jawwy.modules.Jawwy_ADM_App -->
+    </classes>
+  </test> <!-- verify_ADMAPPAgentPOSOrder_ICCIDScan(failed) -->
+</suite> <!-- Failed suite [Jawwy Test Suite] -->

@@ -1,0 +1,106 @@
+package com.jawwy.util;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import com.jawwy.pageobject.ViaArabia_Login_Page;
+
+
+
+
+
+public class CommonUtilities {
+	
+	
+	  public boolean isFileDownloaded(String downloadPath, String fileName) {
+		  File dir = new File(downloadPath);
+		  File[] dirContents = dir.listFiles();
+
+		  for (int i = 0; i < dirContents.length; i++) {
+		      if (dirContents[i].getName().contains(fileName)) {
+		          // File has been found, it can now be deleted:
+		          dirContents[i].delete();
+		          return true;
+		      }
+		          }
+		      return false;
+		  }
+    
+	
+	public void explicitilyWaitFor(String xpath,WebDriverWait wait) throws Exception{
+		
+		wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+		
+	}
+	
+	public void scrollIntoView(WebDriver driver,String path) throws Exception
+	{
+	 WebElement element=driver.findElement(By.xpath(path));
+	 JavascriptExecutor je = (JavascriptExecutor) driver;
+	 je.executeScript("arguments[0].scrollIntoView(true);",element);
+	 //je.executeScript("window.scrollBy(0,-120)", "");
+	}
+	
+	public void scrollDown(WebDriver driver, String path)
+	{
+		JavascriptExecutor je = (JavascriptExecutor) driver;
+		je.executeScript("window.scrollBy(0,-120)","");
+	}
+	
+	public boolean isElementPresent(WebDriver driver, String xpath) 
+	{
+		if(driver.findElements(By.xpath(xpath)).size()>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+			
+	}
+	
+	public void app_Login(WebDriver driver,WebDriverWait wait,String appURL,String username,String password) throws Exception
+	{
+		
+		
+		System.out.println("Launching Via Arabia Login URL-");
+		
+		driver.navigate().to(appURL);
+		
+		explicitilyWaitFor("//button[@type='submit']", wait);
+		
+		driver.findElement(By.id("login-username")).sendKeys(username);
+		Thread.sleep(4000);
+		
+		driver.findElement(By.id("login-password")).sendKeys(password);
+		Thread.sleep(4000);
+		
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		//driver.findElement(By.xpath("//button[@type='submit']")).click();
+		Thread.sleep(4000);
+		
+		System.out.println("Launching Via Arabia Homepage URL-");
+		
+		
+		
+		//assertTrue(driver.getTitle().equals(Constant.Page_Title),"HomePage title didn't matched");
+		
+		assertEquals(Constant.Page_Title,driver.getTitle());
+		
+		System.out.println("Logged into Application...");
+		
+	}
+
+}

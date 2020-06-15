@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+  <parameter name="testcasename" value="param-val-not-found"/>
+  <parameter name="browsername" value="param-val-not-found"/>
+  <test thread-count="5" name="Default test(failed)">
+    <classes>
+      <class name="com.jawwy.modules.Jawwy_SugarCRM">
+        <methods>
+          <include name="verify_SugarCRM_TelcoEstoreOrdersContacts"/>
+          <include name="verify_SugarCRMOrderIdSearch"/>
+          <include name="verify_SugarCRM_EstoreOrdersStatusContacts"/>
+          <include name="verify_SugarCRM_CaseCreation_ContactPage"/>
+          <include name="verify_SugarCRM_AddressContractsDocsContacts"/>
+          <include name="tearDown"/>
+          <include name="verify_SugarCRM_BarMSISDN"/>
+          <include name="verify_SugarCRM_MSISDNSearch"/>
+          <include name="verify_SugarCRM_CaseCreation_CasePage"/>
+          <include name="verify_SugarCRM_CaseCreation_AssignCase"/>
+          <include name="verify_SugarCRM_RefferalContacts"/>
+          <include name="verify_SugarCRM_UnBarSubList"/>
+          <include name="verify_SugarCRMLogin"/>
+          <include name="verify_SugarCRM_BarSubList"/>
+          <include name="verify_SugarCRM_SearchEditContacts"/>
+          <include name="verify_SugarCRM_ViewContacts"/>
+          <include name="verify_SugarCRM_Search_CustTypeContacts"/>
+          <include name="verify_SugarCRM_SearchCaseFilter"/>
+          <include name="verify_SugarCRM_CaseCreationError_CasePage"/>
+          <include name="verify_SugarCRM_UnBarMSISDN"/>
+          <include name="verify_SugarCRM_Search_EditCase_Error"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- com.jawwy.modules.Jawwy_SugarCRM -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

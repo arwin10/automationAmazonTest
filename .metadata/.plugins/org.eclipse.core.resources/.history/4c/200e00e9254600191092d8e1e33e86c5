@@ -1,0 +1,141 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class ViaArabia_HomePage {
+  
+	private static WebElement element = null;
+
+	public static WebElement link_SapphireTab(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//a[text()='Sapphire']"));
+
+		if(element!=null)
+		{   
+			Log.info("Sapphire Link is present.");
+			System.out.println("Sapphire Link is present.");
+
+		}
+		else
+		{
+			Log.info("Sapphire Link is not present.");
+			System.out.println("Sapphire Link is not present.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement header_Test(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//h4[text()='Test']"));
+
+		if(element!=null)
+		{   
+			Log.info("Test header is present.");
+			System.out.println("Test header is present.");
+
+		}
+		else
+		{
+			Log.info("Test header is not present.");
+			System.out.println("Test header is not present.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement link_CheckOrderStatus(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//a[text()='Check Order Status' and @href='sphvieworderstatus.asp']"));
+
+		if(element!=null)
+		{   
+			Log.info("Check Order Status Link is present.");
+			System.out.println("Check Order Status Link is present.");
+
+		}
+		else
+		{
+			Log.info("Check Order Status Link is not present.");
+			System.out.println("Check Order Status Link is not present.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement Label_OrderId(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//td[text()='Order Id']"));
+
+		if(element!=null)
+		{   
+			Log.info("Order Id Label is displayed.");
+			System.out.println("Order Id Label is displayed.");
+
+		}
+		else
+		{
+			Log.info("Order Id Label is not displayed.");
+			System.out.println("Order Id Label  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement TextBox_OrderId(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='OrderId']"));
+
+		if(element!=null)
+		{   
+			Log.info("Order Id textbox is present.");
+			System.out.println("Order Id textbox is present.");
+
+		}
+		else
+		{
+			Log.info("Order Id textbox is not present.");
+			System.out.println("Order Id textbox  is not present.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement Button_SubmitOrderId(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//button[@type='submit']"));
+
+		if(element!=null)
+		{   
+			Log.info("Order Id textbox is present.");
+			System.out.println("Order Id textbox is present.");
+
+		}
+		else
+		{
+			Log.info("Order Id textbox is not present.");
+			System.out.println("Order Id textbox  is not present.");
+
+		}
+
+		return element;
+
+	}
+}

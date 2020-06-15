@@ -1,0 +1,354 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import com.jawwy.util.Log;
+
+public class SSO_Login_Page {
+	
+
+	private static WebElement element = null;
+	private static Select select = null;
+
+	public static WebElement txtbx_UserName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='email']"));
+
+		if(element!=null)
+		{   
+			Log.info("Username Textbox is displayed.");
+			System.out.println("Username textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Username Textbox is not displayed.");
+			System.out.println("Username textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+
+	public static WebElement txtbx_Password(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='password']"));
+
+		if(element!=null)
+		{   
+			Log.info("Password Textbox is displayed");
+			System.out.println("Passowrd textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Password Textbox is not displayed.");
+			System.out.println("Password textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+
+	public static WebElement btn_Login(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//a[@id='login-btn']/span"));
+
+		if(element!=null)
+		{   
+			Log.info("Login Button is displayed.");
+			System.out.println("Login Button is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("Login button is not displayed.");
+			System.out.println("Login  button is not displayed.");
+
+		}
+
+		return element;
+	}
+	
+	public static WebElement homepage_btn_Login(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//a[@id='sph-login']"));
+
+		if(element!=null)
+		{   
+			Log.info("Estore HomePage Login Button is displayed.");
+			System.out.println("Estore HomePage Login Button is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("Estore HomePage Login button is not displayed.");
+			System.out.println("Estore HomePage Login  button is not displayed.");
+
+		}
+
+		return element;
+	}
+    
+	public static WebElement ssopage_btn_signin(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//a[@class='action-common-button signin ']/span"));
+
+		if(element!=null)
+		{   
+			Log.info("SSOPage Signin Button is displayed.");
+			System.out.println("SSOPage Signin Button is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("SSOPage Signin button is not displayed.");
+			System.out.println("SSOPage Signin  button is not displayed.");
+
+		}
+
+		return element;
+	}
+    
+	
+	public static WebElement ssopage_btn_register(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//a[@class='action-common-button register ']/span"));
+
+		if(element!=null)
+		{   
+			Log.info("SSOPage Register Button is displayed.");
+			System.out.println("SSOPage Register Button is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("SSOPage Register button is not displayed.");
+			System.out.println("SSOPage Register  button is not displayed.");
+
+		}
+
+		return element;
+	}
+	
+	public static WebElement ssopage_email(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//input[@type='email']"));
+
+		if(element!=null)
+		{   
+			Log.info("SSOPage Email field is displayed.");
+			System.out.println("SSOPage Email field is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("SSOPage Email field is not displayed.");
+			System.out.println("SSOPage Email  field is not displayed.");
+
+		}
+
+		return element;
+	}
+	
+	public static WebElement ssopage_password(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//input[@type='password']"));
+
+		if(element!=null)
+		{   
+			Log.info("SSOPage passowrd field is displayed.");
+			System.out.println("SSOPage passowrd field is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("SSOPage passowrd field is not displayed.");
+			System.out.println("SSOPage passowrd field is not displayed.");
+
+		}
+
+		return element;
+	}
+	
+	public static WebElement ssopage_communityname(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//input[@id='community_username']"));
+
+		if(element!=null)
+		{   
+			Log.info("SSOPage communityname field is displayed.");
+			System.out.println("SSOPage communityname field is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("SSOPage communityname field is not displayed.");
+			System.out.println("SSOPage communityname field is not displayed.");
+
+		}
+
+		return element;
+	}
+    
+	
+	public static WebElement ssopage_captchainput(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//input[@id='captchaCode']"));
+
+		if(element!=null)
+		{   
+			Log.info("SSOPage Captchainput field is displayed.");
+			System.out.println("SSOPage Captchainput field is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("SSOPage Captchainput field is not displayed.");
+			System.out.println("SSOPage Captchainput field is not displayed.");
+
+		}
+
+		return element;
+	}
+	
+	public static WebElement ssopage_registerbutton(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//a[@id='register-btn']"));
+
+		if(element!=null)
+		{   
+			Log.info("SSOPage register button is displayed.");
+			System.out.println("SSOPage register button is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("SSOPage register button is not displayed.");
+			System.out.println("SSOPage register button is not displayed.");
+
+		}
+
+		return element;
+	}
+    
+	
+	public static WebElement ssopage_link_forgotpassword(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//a[@id='forgot-pwd-btn']"));
+
+		if(element!=null)
+		{   
+			Log.info("Forgot Password Link is displayed.");
+			System.out.println("Forgot Password Link is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("Forgot Password Link is not displayed.");
+			System.out.println("Forgot Password Link is not displayed.");
+
+		}
+
+		return element;
+	}
+   
+	public static WebElement ssopage_header_forgotPassowrd(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//div[@class='sph-label big' and text()='Forgot password']"));
+
+		if(element!=null)
+		{   
+			Log.info("Forgot Password Header is displayed.");
+			System.out.println("Forgot Password Header is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("Forgot Password Header is not displayed.");
+			System.out.println("Forgot Password Header is not displayed.");
+
+		}
+
+		return element;
+	}
+	
+	public static WebElement ssopage_forgotpass_input_email(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//input[@id='email']"));
+
+		if(element!=null)
+		{   
+			Log.info("Forgot Password Email ID is displayed.");
+			System.out.println("Forgot Password Email ID  is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("Forgot Password Email ID  is not displayed.");
+			System.out.println("Forgot Password Email ID  is not displayed.");
+
+		}
+
+		return element;
+	}
+	
+	public static WebElement ssopage_forgotpass_continue(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//a[@id='forgot-pwd-btn']"));
+
+		if(element!=null)
+		{   
+			Log.info("Forgot Password Continue button is displayed.");
+			System.out.println("Forgot Password Continue button is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("Forgot Password Continue button is not displayed.");
+			System.out.println("Forgot Password Continue button is not displayed.");
+
+		}
+
+		return element;
+	}
+	
+	public static WebElement ssopage_forgotpass_successresetmessage(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//div[@class='sph-description' and contains(text(),'Instructions to reset your password have been sent to your registered email address.')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Success password reset message is displayed.");
+			System.out.println("Success password reset message is displayed.");
+
+		}
+
+		else
+		{
+			Log.warn("Success password reset message is not displayed.");
+			System.out.println("Success password reset message is not displayed.");
+
+		}
+
+		return element;
+	}
+} 

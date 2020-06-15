@@ -1,0 +1,188 @@
+package com.jawwy.modules;
+
+
+import static org.testng.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.annotations.Parameters;
+
+
+import com.jawwy.util.CommonUtilities;
+import com.jawwy.util.ExcelUtilities;
+import com.jawwy.util.Log;
+import com.jawwy.util.Constant;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Assert;
+
+import com.jawwy.pageobject.ViaArabia_HomePage;
+
+
+
+public class Jawwy_Admin {
+	
+	private WebDriver driver;
+	private CommonUtilities utilities;
+	private WebDriverWait wait;
+	private String sTestCaseName;
+	private int iTestCaseRow;
+	ArrayList moduleRecord=null;
+	
+	
+	@BeforeTest
+	@Parameters("browsername")
+	public void setUp(String browsername) throws Exception{
+		
+		//Log4j configuration settings
+	    DOMConfigurator.configure("log4j.xml");
+	    Log.info("Log4j initiated");
+       
+	    System.out.println("Executing in browser: "+browsername);
+	    
+		if(browsername.equalsIgnoreCase("Firefox"))
+		{   
+			System.setProperty("webdriver.gecko.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\geckodriver.exe");
+	        System.setProperty("webdriver.firefox.bin", "C:\\FirefoxPortable45ESR\\FirefoxPortable.exe");
+		    driver= new FirefoxDriver();
+		}		
+		
+		if(browsername.equalsIgnoreCase("Chrome"))	
+		{
+			 System.setProperty("webdriver.chrome.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\chromedriver.exe");
+			 driver = new ChromeDriver();
+		}
+		
+		if(browsername.equalsIgnoreCase("IE"))	
+		{
+			 System.setProperty("webdriver.ie.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\MicrosoftWebDriver.exe");
+			 driver = new InternetExplorerDriver();
+		}
+		
+		
+		
+		Log.info("New driver instantiated");
+		
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+		Log.info("Window maximized and Implicit wait applied on the driver for 10 seconds");
+	
+ 
+		wait = new WebDriverWait(driver,60);
+        Log.info("WebDriver wait initialized");
+ 	
+		utilities = new CommonUtilities();
+		  
+		 //Getting Testdata from the excel file
+		moduleRecord=ExcelUtilities.excelSetDBRecord("Jawwy_Admin");
+		
+		
+	
+	}
+	
+	
+	@AfterTest
+	public void tearDown() throws Exception{
+	  	
+		driver.quit();
+	}
+		
+	
+	 @Test
+	 @Parameters("testcasename")
+	 public void verify_ViaArabiaOrderSearch(String testcasename) throws Exception{
+
+		try
+		{
+            System.out.println("Getting testdata for testcase:"+testcasename);
+            
+            
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+			
+			Log.startTestCase(testcasename);
+
+			utilities.app_Login(driver,wait,Constant.URL,testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			utilities.explicitilyWaitFor(".//a[text()='Home']", wait);
+			
+			if(driver.findElements(By.xpath(".//a[text()='Home']")).size()>0)
+			{
+ 
+				Log.info("Via Arabia HomePage is opened.");
+				System.out.println("Via Arabia HomePage is opened.");
+
+				if(DataClassificationWizard_Page.lbl_QuickSearch(driver).isDisplayed()) {
+
+					System.out.println("Quick Search Label exist.");
+
+					if(DataClassificationWizard_Page.txtbx_QuickSearch(driver).isEnabled() && DataClassificationWizard_Page.txtbx_QuickSearch(driver).isDisplayed())
+					{
+						System.out.println("Quick Search TetBox exist.");
+
+						DataClassificationWizard_Page.txtbx_QuickSearch(driver).sendKeys("cisco");
+
+						DataClassificationWizard_Page.txtbx_QuickSearch(driver).sendKeys(Keys.RETURN);
+
+						System.out.println("Searching for Data types with Order Id keyword");
+
+						utilities.explicitilyWaitFor(".//span[@data-ng-bind='vm.item.name']", wait);
+
+						List<WebElement> searchresult= driver.findElements(By.xpath(".//span[@data-ng-bind='vm.item.name']"));
+
+						System.out.println("Found below datatype-");
+
+						for(WebElement dtname:searchresult)
+						{
+							if(!dtname.getText().isEmpty())
+								System.out.println(dtname.getText());
+							
+					     }
+
+				}
+					
+
+			}
+
+			else
+			{
+				System.out.println("Via Arabia HomePage is not opened");
+				Assert.assertTrue(false);
+
+			} 
+
+			
+		}	
+			
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+	 
+	
+
+	
+  
+}

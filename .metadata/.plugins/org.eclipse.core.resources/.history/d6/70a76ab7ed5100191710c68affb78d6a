@@ -1,0 +1,55 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class ADM_Portal_HomePage {
+	
+	private static WebElement element = null;
+
+	public static WebElement link_ADM_Heirarchy(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='ADM Hierarchy']"));
+
+		if(element!=null)
+		{   
+			Log.info("ADM Heirarchy Link is displayed.");
+			System.out.println("ADM Heirarchy Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ADM Heirarchy Link is not displayed.");
+			System.out.println("ADM Heirarchy Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+    
+	
+	public static WebElement link_Location(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Location']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location Link is displayed.");
+			System.out.println("Location Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location Link is not displayed.");
+			System.out.println("Location Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+}

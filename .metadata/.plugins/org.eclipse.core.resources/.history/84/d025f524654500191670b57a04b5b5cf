@@ -1,0 +1,90 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="DT Advisor Test Suite">
+ 
+ 
+<!--  <test name="verify_DTAdvisorQuickSearch1"> -->
+<!--  <parameter name = "testcasename" value="verify_DTAdvisorQuickSearch1"/>  -->
+<!--   <classes> -->
+<!--    <class name="com.selenium.modules.DTAdvisorAdmin" > -->
+<!--    <methods> -->
+<!--         <include name="verify_DTAdvisorQuickSearch1" /> -->
+<!--     </methods> -->
+<!--    </class> -->
+<!--   </classes> -->
+<!--  </test> -->
+ 
+<!--  <test name="verify_DTAdvisorQuickSearch"> -->
+<!--  <parameter name = "testcasename" value="verify_DTAdvisorQuickSearch"/>  -->
+<!--   <classes> -->
+<!--    <class name="com.selenium.modules.DTAdvisorAdmin" > -->
+<!--    <methods> -->
+<!--         <include name="verify_DTAdvisorQuickSearch" /> -->
+<!--     </methods> -->
+<!--    </class> -->
+<!--   </classes> -->
+<!--  </test> -->
+ 
+  
+<!--  <test name="verify_CreateDataClassification"> -->
+<!--  <parameter name = "testcasename" value="verify_CreateDataClassification"/>  -->
+<!--   <classes> -->
+<!--    <class name="com.selenium.modules.DTAdvisorAdmin" > -->
+<!--    <methods> -->
+<!--         <include name="verify_CreateDataClassification" /> -->
+<!--     </methods> -->
+<!--    </class> -->
+<!--   </classes> -->
+<!--  </test> -->
+ 
+ 
+<!--  <test name="verify_CreateDataCategories"> -->
+<!--  <parameter name="testcasename" value="verify_CreateDataCategories"></parameter> -->
+<!--   <parameter name="browsername" value="Chrome"></parameter> -->
+<!--  <classes> -->
+<!--  <class name="com.selenium.modules.DTAdvisorAdmin"> -->
+<!--  <methods> -->
+<!--  <include name="verify_CreateDataCategories"></include> -->
+<!--  </methods> -->
+<!--  </class> -->
+<!--  </classes> -->
+<!--  </test> -->
+ 
+ 
+<!-- <test name="verify_MoreAdvisorsTab"> -->
+<!-- <parameter name="testcasename" value="verify_MoreAdvisorsTab"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.selenium.modules.DTAdvisorAdmin"> -->
+<!-- <methods> -->
+<!-- <include name="verify_MoreAdvisorsTab"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_UploadPublishTabDownloadTemplate"> -->
+<!-- <parameter name="testcasename" value="verify_UploadPublishTabDownloadTemplate"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.selenium.modules.DTAdvisorAdmin"> -->
+<!-- <methods> -->
+<!-- <include name="verify_UploadPublishTabDownloadTemplate"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+
+<test name="verify_UploadPublishTabUploadTemplate">
+<parameter name="testcasename" value="verify_UploadPublishTabUploadTemplate"></parameter>
+<parameter name="browsername" value="Chrome"></parameter>
+<classes>
+<class name="com.selenium.modules.DTAdvisorAdmin">
+<methods>
+<include name="verify_UploadPublishTabUploadTemplate"></include>
+</methods>
+</class>
+</classes>
+</test>
+ 
+</suite>

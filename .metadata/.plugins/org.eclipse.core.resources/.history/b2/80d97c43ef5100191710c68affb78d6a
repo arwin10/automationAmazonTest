@@ -1,0 +1,208 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class ADM_Portal_HomePage {
+	
+	private static WebElement element = null;
+
+	public static WebElement link_ADM_Heirarchy(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='ADM Hierarchy']"));
+
+		if(element!=null)
+		{   
+			Log.info("ADM Heirarchy Link is displayed.");
+			System.out.println("ADM Heirarchy Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ADM Heirarchy Link is not displayed.");
+			System.out.println("ADM Heirarchy Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+    
+	
+	public static WebElement link_Location(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Location']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location Link is displayed.");
+			System.out.println("Location Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location Link is not displayed.");
+			System.out.println("Location Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_DefineLoction(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Define Location')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Define Location Header is displayed.");
+			System.out.println("Define Location Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Define Location Header  is not displayed.");
+			System.out.println("Define Location Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement txtBox_DistributorName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:DistributorName']"));
+
+		if(element!=null)
+		{   
+			Log.info("Distributor textbox is displayed.");
+			System.out.println("Distributor textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Distributor textbox  is not displayed.");
+			System.out.println("Distributor textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement txtBox_Longitude(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:longitude']"));
+
+		if(element!=null)
+		{   
+			Log.info("Longitude textbox is displayed.");
+			System.out.println("Longitude textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Longitude textbox  is not displayed.");
+			System.out.println("Longitude textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement txtBox_Email(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:email']"));
+
+		if(element!=null)
+		{   
+			Log.info("Email textbox is displayed.");
+			System.out.println("Email textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Email textbox  is not displayed.");
+			System.out.println("Email textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement txtBox_Latitude(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:latitude']"));
+
+		if(element!=null)
+		{   
+			Log.info("Latitude textbox is displayed.");
+			System.out.println("Latitude textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Latitude textbox  is not displayed.");
+			System.out.println("Latitude textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_LocationCode(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:DistributorCode']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location code textbox is displayed.");
+			System.out.println("Location code textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location code textbox  is not displayed.");
+			System.out.println("Location code textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_Mobile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:mobile']"));
+
+		if(element!=null)
+		{   
+			Log.info("Mobile textbox is displayed.");
+			System.out.println("Mobile textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Mobile textbox  is not displayed.");
+			System.out.println("Mobile textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+}

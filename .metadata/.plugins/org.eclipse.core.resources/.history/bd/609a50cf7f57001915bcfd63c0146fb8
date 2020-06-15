@@ -1,0 +1,3428 @@
+package com.jawwy.pageobject;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class ADM_Portal_HomePage {
+	
+	private static WebElement element = null;
+
+	public static WebElement link_ADM_Heirarchy(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='ADM Hierarchy']"));
+
+		if(element!=null)
+		{   
+			Log.info("ADM Heirarchy Link is displayed.");
+			System.out.println("ADM Heirarchy Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ADM Heirarchy Link is not displayed.");
+			System.out.println("ADM Heirarchy Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Commission_Hierarchy(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Commission']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Heirarchy Link is displayed.");
+			System.out.println("Commission Heirarchy Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Heirarchy Link is not displayed.");
+			System.out.println("Commission Heirarchy Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement link_Settings_Hierarchy(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Setting ']"));
+
+		if(element!=null)
+		{   
+			Log.info("Setting Heirarchy Link is displayed.");
+			System.out.println("Setting Heirarchy Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Setting Heirarchy Link is not displayed.");
+			System.out.println("Setting Heirarchy Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+    
+	public static WebElement link_Locations_Heirarchy(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Locations']"));
+
+		if(element!=null)
+		{   
+			Log.info("Locations Heirarchy Link is displayed.");
+			System.out.println("Locations Heirarchy Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Locations Heirarchy Link is not displayed.");
+			System.out.println("Locations Heirarchy Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Order_Heirarchy(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='orders']"));
+
+		if(element!=null)
+		{   
+			Log.info("Orders Heirarchy Link is displayed.");
+			System.out.println("Orders Heirarchy Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Orders Heirarchy Link is not displayed.");
+			System.out.println("Orders Heirarchy Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Location(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Location']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location Link is displayed.");
+			System.out.println("Location Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location Link is not displayed.");
+			System.out.println("Location Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_LocationStock(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Location Stock']"));
+
+		if(element!=null)
+		{   
+			Log.info("LocationStock Link is displayed.");
+			System.out.println("LocationStock Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("LocationStock Link is not displayed.");
+			System.out.println("LocationStock Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_ShiftSearch(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Shift Search']"));
+
+		if(element!=null)
+		{   
+			Log.info("LocationStock Link is displayed.");
+			System.out.println("LocationStock Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("LocationStock Link is not displayed.");
+			System.out.println("LocationStock Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_DefineLoction(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Define Location')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Define Location Header is displayed.");
+			System.out.println("Define Location Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Define Location Header  is not displayed.");
+			System.out.println("Define Location Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_ShiftSearch(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-panel-title' and text()='Shift Search']"));
+
+		if(element!=null)
+		{   
+			Log.info("Shift Search Header is displayed.");
+			System.out.println("Shift Search Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Shift Search Header  is not displayed.");
+			System.out.println("Shift Search Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_SelectLocation(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-panel-title' and text()='Select Location']"));
+
+		if(element!=null)
+		{   
+			Log.info("SelectLocation Header is displayed.");
+			System.out.println("SelectLocation Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("SelectLocation Header  is not displayed.");
+			System.out.println("SelectLocation Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_LocationList(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//th[@class='ui-datatable-header ui-widget-header' and text()='Locations List']"));
+
+		if(element!=null)
+		{   
+			Log.info("Locations list Header is displayed.");
+			System.out.println("Locations list Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Locations list Header  is not displayed.");
+			System.out.println("Locations list Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement txtBox_DistributorName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:DistributorName']"));
+
+		if(element!=null)
+		{   
+			Log.info("Distributor textbox is displayed.");
+			System.out.println("Distributor textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Distributor textbox  is not displayed.");
+			System.out.println("Distributor textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement txtBox_Longitude(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:longitude']"));
+
+		if(element!=null)
+		{   
+			Log.info("Longitude textbox is displayed.");
+			System.out.println("Longitude textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Longitude textbox  is not displayed.");
+			System.out.println("Longitude textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement txtBox_Email(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:email']"));
+
+		if(element!=null)
+		{   
+			Log.info("Email textbox is displayed.");
+			System.out.println("Email textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Email textbox  is not displayed.");
+			System.out.println("Email textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement txtBox_Latitude(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:latitude']"));
+
+		if(element!=null)
+		{   
+			Log.info("Latitude textbox is displayed.");
+			System.out.println("Latitude textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Latitude textbox  is not displayed.");
+			System.out.println("Latitude textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_LocationCode(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:DistributorCode']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location code textbox is displayed.");
+			System.out.println("Location code textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location code textbox  is not displayed.");
+			System.out.println("Location code textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_Mobile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:mobile']"));
+
+		if(element!=null)
+		{   
+			Log.info("Mobile textbox is displayed.");
+			System.out.println("Mobile textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Mobile textbox  is not displayed.");
+			System.out.println("Mobile textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_DocumentId(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:IqamaID']"));
+
+		if(element!=null)
+		{   
+			Log.info("DocumentId textbox is displayed.");
+			System.out.println("DocumentId textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("DocumentId textbox  is not displayed.");
+			System.out.println("DocumentId textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_Distributor(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:entitys']"));
+
+		if(element!=null)
+		{   
+			Log.info("Distributor Dropdown is displayed.");
+			System.out.println("Distributor Dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Distributor Dropdown   is not displayed.");
+			System.out.println("Distributor Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_DistributorOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Viaarabia']"));
+
+		if(element!=null)
+		{   
+			Log.info("Distributor dropdown option is displayed.");
+			System.out.println("Distributor dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Distributor dropdown option is not displayed.");
+			System.out.println("Distributor dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_Language(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:language']"));
+
+		if(element!=null)
+		{   
+			Log.info("Language dropdown  is displayed.");
+			System.out.println("Language dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Language dropdown  is not displayed.");
+			System.out.println("Language dropdown is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_LanguageOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-active' and text()='ar']"));
+
+		if(element!=null)
+		{   
+			Log.info("Language dropdown option is displayed.");
+			System.out.println("Language dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Language dropdown option is not displayed.");
+			System.out.println("Language dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_DealerName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:dealers']"));
+
+		if(element!=null)
+		{   
+			Log.info("DealerName dropdown is displayed.");
+			System.out.println("DealerName dropdown is displayed.");
+
+		}
+		else
+		{
+			Log.warn("DealerName dropdown is not displayed.");
+			System.out.println("DealerName dropdown is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_DealerNameOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Via Store']"));
+
+		if(element!=null)
+		{   
+			Log.info("DealerName dropdown option is displayed.");
+			System.out.println("DealerName dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("DealerName dropdown option is not displayed.");
+			System.out.println("DealerName dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_AddLocation(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//button[@id='frm1:AddEntityButton']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location Add Button is displayed.");
+			System.out.println("Location Add Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location Add Button is not displayed.");
+			System.out.println("Location Add Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_AddCommissionConfig(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//button[@id='frm1:AddCommConfigButton']"));
+
+		if(element!=null)
+		{   
+			Log.info("CommissionConfig Add Button is displayed.");
+			System.out.println("CommissionConfig Add Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("CommissionConfig Add Button is not displayed.");
+			System.out.println("CommissionConfig Add Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_ExportReport(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-button-text' and text()='Export']"));
+
+		if(element!=null)
+		{   
+			Log.info("ExportReport Button is displayed.");
+			System.out.println("ExportReport Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ExportReport Button is not displayed.");
+			System.out.println("ExportReport Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_ExportReportExcel(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//img[@id='form:j_idt159']"));
+
+		if(element!=null)
+		{   
+			Log.info("ExportReport Excel Button is displayed.");
+			System.out.println("ExportReport Excel Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ExportReport Excel Button is not displayed.");
+			System.out.println("ExportReport Excel Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_SaveAndExit(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-button-text' and text()='Save And Exit']"));
+
+		if(element!=null)
+		{   
+			Log.info("Save and Exit Button is displayed.");
+			System.out.println("Save and Exit Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Save and Exit Button is not displayed.");
+			System.out.println("Save and Exit Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_Address(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:address']"));
+
+		if(element!=null)
+		{   
+			Log.info("Address textbox is displayed.");
+			System.out.println("Address textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Address textbox is not displayed.");
+			System.out.println("Address textbox  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_locationSource(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:locSource']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location Source dropdown is displayed.");
+			System.out.println("Location Source dropdownis displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location Source dropdown is not displayed.");
+			System.out.println("Location Source dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_locationSourceOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:locSource_panel']/div/ul/li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Mall Kiosk']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location Source dropdown option is displayed.");
+			System.out.println("Location Source dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location Source dropdown option is not displayed.");
+			System.out.println("Location Source dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Dealer(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Dealer']"));
+		
+		if(element!=null)
+		{   
+			Log.info("Dealer Link is displayed.");
+			System.out.println("Dealer Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Dealer Link is not displayed.");
+			System.out.println("Dealer Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Commission(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//a[@href='commission.xhtml']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Link is displayed.");
+			System.out.println("Commission Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Link is not displayed.");
+			System.out.println("Commission Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_CommissionReport(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Commission Report']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Link is displayed.");
+			System.out.println("Commission Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Link is not displayed.");
+			System.out.println("Commission Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_DefineAddress(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Define Address' ]"));
+
+		if(element!=null)
+		{   
+			Log.info("Define Address Link is displayed.");
+			System.out.println("Define Address Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Define Address Link is not displayed.");
+			System.out.println("Define Address Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_DefineWarningMessage(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Define Warning Message' ]"));
+
+		if(element!=null)
+		{   
+			Log.info("Define Warning Message link is displayed.");
+			System.out.println("Define Warning Message link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Define Warning Message Link is not displayed.");
+			System.out.println("Define Warning Message Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement header_DefineDealer(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Define Dealer')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Define Dealer Header is displayed.");
+			System.out.println("Define Dealer Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Define Dealer Header  is not displayed.");
+			System.out.println("Define Dealer Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_AddCommission(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Add Commission')]"));
+
+		if(element!=null)
+		{   
+			Log.info("AddCommission Header is displayed.");
+			System.out.println("AddCommission Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("AddCommission Header  is not displayed.");
+			System.out.println("AddCommission Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_AddAddress(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Add Address')]"));
+
+		if(element!=null)
+		{   
+			Log.info("AddAddress Header is displayed.");
+			System.out.println("AddAddress Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("AddAddress Header  is not displayed.");
+			System.out.println("AddAddress Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_AddWarningMessage(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Add Warning Message')]"));
+
+		if(element!=null)
+		{   
+			Log.info("AddWarningMessage Header is displayed.");
+			System.out.println("AddWarningMessage Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("AddWarningMessage Header  is not displayed.");
+			System.out.println("AddWarningMessage Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_CommissionReport(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-panel-title' and contains(text(),'Commission Report')]"));
+
+		if(element!=null)
+		{   
+			Log.info("CommissionReport Header is displayed.");
+			System.out.println("CommissionReport Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("CommissionReport Header  is not displayed.");
+			System.out.println("CommissionReport Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_CommissionCategory(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Commission Category')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Category Header is displayed.");
+			System.out.println("Commission Category Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Category Header  is not displayed.");
+			System.out.println("Commission Category Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_Logout(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//button[@title='Logout']"));
+
+		if(element!=null)
+		{   
+			Log.info("Logout is displayed.");
+			System.out.println("Logout is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Logout is not displayed.");
+			System.out.println("Logout is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement info_SuccessMessage(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@class='ui-growl-message' ]/span[contains(text(),'Added')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Successfully Added message is displayed.");
+			System.out.println("Successfully Added message is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Successfully Added message is not displayed.");
+			System.out.println("Successfully Added message is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Distributor(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Distributor']"));
+
+		if(element!=null)
+		{   
+			Log.info("Distributor Link is displayed.");
+			System.out.println("Distributor Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Distributor Link is not displayed.");
+			System.out.println("Distributor Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_DefineDistributor(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Define Distributor')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Define Distributor Header is displayed.");
+			System.out.println("Define Distributor Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Define Distributor Header  is not displayed.");
+			System.out.println("Define Distributor Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Agent(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Agent']"));
+
+		if(element!=null)
+		{   
+			Log.info("Agent Link is displayed.");
+			System.out.println("Agent Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Agent Link is not displayed.");
+			System.out.println("Agent Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_DefineAgent(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Define Agent')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Define Agent Header is displayed.");
+			System.out.println("Define Agent Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Define Agent Header  is not displayed.");
+			System.out.println("Define Agent Header  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_UserName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:user_name']"));
+
+		if(element!=null)
+		{   
+			Log.info("UserName textbox is displayed.");
+			System.out.println("UserName textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("UserName textbox is not displayed.");
+			System.out.println("UserName textbox  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_Password(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:password']"));
+
+		if(element!=null)
+		{   
+			Log.info("Password textbox is displayed.");
+			System.out.println("Password textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Password textbox is not displayed.");
+			System.out.println("Password textbox  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_ConfirmPassword(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:passwordConfirm']"));
+
+		if(element!=null)
+		{   
+			Log.info("ConfirmPassword textbox is displayed.");
+			System.out.println("ConfirmPassword textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ConfirmPassword textbox is not displayed.");
+			System.out.println("ConfirmPassword textbox  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_AddressName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:addressName']/div[2]/span"));
+
+		if(element!=null)
+		{   
+			Log.info("AddressName dropdown  is displayed.");
+			System.out.println("AddressName dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("AddressName dropdown  is not displayed.");
+			System.out.println("AddressName dropdown is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_AddressNameOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='abha']"));
+
+		if(element!=null)
+		{   
+			Log.info("AddressName dropdown option is displayed.");
+			System.out.println("AddressName dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("AddressName dropdown option is not displayed.");
+			System.out.println("AddressName dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement link_UploadDistUsers(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Upload Distributor Users']"));
+
+		if(element!=null)
+		{   
+			Log.info("UploadDistUsers Link is displayed.");
+			System.out.println("UploadDistUsers Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("UploadDistUsers Link is not displayed.");
+			System.out.println("UploadDistUsers Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_UploadDistFile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Upload Distributor File')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Upload Distributor File Header is displayed.");
+			System.out.println("Upload Distributor File  Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Upload Distributor File is not displayed.");
+			System.out.println("Upload Distributor File is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_ChooseUploadFile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@type='file']"));
+
+		if(element!=null)
+		{   
+			Log.info("Choose upload file is displayed.");
+			System.out.println("Choose upload file is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Choose upload file is not displayed.");
+			System.out.println("Choose upload file is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Uploadfile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-button-text' and text()='Upload']"));
+
+		if(element!=null)
+		{   
+			Log.info("Uploadfile link is displayed.");
+			System.out.println("Uploadfile link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Uploadfile link is not displayed.");
+			System.out.println("Uploadfile link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement error_Uploadfile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//td[@class='error' and contains(text(),'Content of uploaded file not allowed')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Uploadfile error is displayed.");
+			System.out.println("Uploadfile error is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Uploadfile error is not displayed.");
+			System.out.println("Uploadfile error is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_UploadDealerUsers(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Upload Dealer Users']"));
+
+		if(element!=null)
+		{   
+			Log.info("UploadDealerUsers Link is displayed.");
+			System.out.println("UploadDealerUsers Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("UploadDealerUsers Link is not displayed.");
+			System.out.println("UploadDealerUsers Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_UploadDealerFile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Upload Dealer File')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Upload Dealer File Header is displayed.");
+			System.out.println("Upload Dealer File  Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Upload Dealer File is not displayed.");
+			System.out.println("Upload Dealer File is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_UploadLocationUsers(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Upload Location Users']"));
+
+		if(element!=null)
+		{   
+			Log.info("UploadLocationUsers Link is displayed.");
+			System.out.println("UploadLocationUsers Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("UploadLocationUsers Link is not displayed.");
+			System.out.println("UploadLocationUsers Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_UploadDealerShopFile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Upload Dealer Shop File')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Upload Dealer Shop File Header is displayed.");
+			System.out.println("Upload Dealer Shop File  Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Upload Dealer Shop File is not displayed.");
+			System.out.println("Upload Dealer Shop File is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_DealerShopName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:dealerEntity']"));
+
+		if(element!=null)
+		{   
+			Log.info("DealerShopName Dropdown is displayed.");
+			System.out.println("DealerShopName Dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("DealerShopName Dropdown   is not displayed.");
+			System.out.println("DealerShopName Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_DealerShopNameOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='dea001']"));
+
+		if(element!=null)
+		{   
+			Log.info("DealerShopName dropdown option is displayed.");
+			System.out.println("DealerShopName dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("DealerShopName dropdown option is not displayed.");
+			System.out.println("DealerShopName dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_UploadAgentUsers(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-menuitem-text' and text()='Upload Agent Users']"));
+
+		if(element!=null)
+		{   
+			Log.info("UploadAgentUsers Link is displayed.");
+			System.out.println("UploadAgentUsers Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("UploadAgentUsers Link is not displayed.");
+			System.out.println("UploadAgentUsers Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_UploadAgentFile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//legend[contains(text(),'Upload agent File')]"));
+
+		if(element!=null)
+		{   
+			Log.info("Upload Agent File Header is displayed.");
+			System.out.println("Upload Agent File  Header  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Upload Agent File is not displayed.");
+			System.out.println("Upload Agent File is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_AgentDealerShopName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:AgentdealerEntity']"));
+
+		if(element!=null)
+		{   
+			Log.info("DealerShopName Dropdown is displayed.");
+			System.out.println("DealerShopName Dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("DealerShopName Dropdown   is not displayed.");
+			System.out.println("DealerShopName Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_AgentDealerShopNameOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='dea001']"));
+
+		if(element!=null)
+		{   
+			Log.info("Distributor dropdown option is displayed.");
+			System.out.println("Distributor dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Distributor dropdown option is not displayed.");
+			System.out.println("Distributor dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	public static WebElement col_Activate_Deactivate(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Activate/Deactivate']"));
+
+		if(element!=null)
+		{   
+			Log.info("Activate/Deactivate coloumn is displayed.");
+			System.out.println("Activate/Deactivate coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Activate/Deactivate coloumn is not displayed.");
+			System.out.println("Activate/Deactivate coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	public static WebElement col_AgentActivate_Deactivate(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Activate / Deactivate']"));
+
+		if(element!=null)
+		{   
+			Log.info("Activate/Deactivate coloumn is displayed.");
+			System.out.println("Activate/Deactivate coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Activate/Deactivate coloumn is not displayed.");
+			System.out.println("Activate/Deactivate coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Update(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Update']"));
+
+		if(element!=null)
+		{   
+			Log.info("Update coloumn is displayed.");
+			System.out.println("Update coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Update coloumn is not displayed.");
+			System.out.println("Update coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Type(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Type']"));
+
+		if(element!=null)
+		{   
+			Log.info("Type coloumn is displayed.");
+			System.out.println("Type coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Type coloumn is not displayed.");
+			System.out.println("Type coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Brand(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Brand']"));
+
+		if(element!=null)
+		{   
+			Log.info("Brand coloumn is displayed.");
+			System.out.println("Brand coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Brand coloumn is not displayed.");
+			System.out.println("Brand coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_FromPrice(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='From Price']"));
+
+		if(element!=null)
+		{   
+			Log.info("FromPrice coloumn is displayed.");
+			System.out.println("FromPrice coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("FromPrice coloumn is not displayed.");
+			System.out.println("FromPrice coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_ToPrice(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='To Price (less than)']"));
+
+		if(element!=null)
+		{   
+			Log.info("To Price (less than) coloumn is displayed.");
+			System.out.println("To Price (less than) coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("To Price (less than) coloumn is not displayed.");
+			System.out.println("To Price (less than) coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_CommissionValue(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Commission Value']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Value coloumn is displayed.");
+			System.out.println("Commission Value coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Value coloumn is not displayed.");
+			System.out.println("Commission Value coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_SKU(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='SKU']"));
+
+		if(element!=null)
+		{   
+			Log.info("SKU coloumn is displayed.");
+			System.out.println("SKU coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("SKU coloumn is not displayed.");
+			System.out.println("SKU coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+
+	public static WebElement col_Delete(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Delete']"));
+
+		if(element!=null)
+		{   
+			Log.info("Delete coloumn is displayed.");
+			System.out.println("Delete coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Delete coloumn is not displayed.");
+			System.out.println("Delete coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_CommissionConfig(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Commission Config']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Config coloumn is displayed.");
+			System.out.println("Commission Config coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Config coloumn is not displayed.");
+			System.out.println("Commission Config coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Name(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Name']"));
+
+		if(element!=null)
+		{   
+			Log.info("Name coloumn is displayed.");
+			System.out.println("Name coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Name coloumn is not displayed.");
+			System.out.println("Name coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_UserName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Username']"));
+
+		if(element!=null)
+		{   
+			Log.info("UserName coloumn is displayed.");
+			System.out.println("UserName coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("UserName coloumn is not displayed.");
+			System.out.println("UserName coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_ContactName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Contact Name']"));
+
+		if(element!=null)
+		{   
+			Log.info("ContactName coloumn is displayed.");
+			System.out.println("ContactName coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ContactName coloumn is not displayed.");
+			System.out.println("ContactName coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_HasWebAccess(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Has WebAccess']"));
+
+		if(element!=null)
+		{   
+			Log.info("HasWebAccess coloumn is displayed.");
+			System.out.println("HasWebAccess coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("HasWebAccess coloumn is not displayed.");
+			System.out.println("HasWebAccess coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_AccountCode(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Account Code']"));
+
+		if(element!=null)
+		{   
+			Log.info("AccountCode coloumn is displayed.");
+			System.out.println("AccountCode coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("AccountCode coloumn is not displayed.");
+			System.out.println("AccountCode coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_ParentName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Parent Name']"));
+
+		if(element!=null)
+		{   
+			Log.info("ParentName coloumn is displayed.");
+			System.out.println("ParentName coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ParentName coloumn is not displayed.");
+			System.out.println("ParentName coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Mobile(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Mobile']"));
+
+		if(element!=null)
+		{   
+			Log.info("Mobile coloumn is displayed.");
+			System.out.println("Mobile coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Mobile coloumn is not displayed.");
+			System.out.println("Mobile coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_DocumentID(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Document ID']"));
+
+		if(element!=null)
+		{   
+			Log.info("DocumentID coloumn is displayed.");
+			System.out.println("DocumentID coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("DocumentID coloumn is not displayed.");
+			System.out.println("DocumentID coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Email(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Contact E-mail']"));
+
+		if(element!=null)
+		{   
+			Log.info("Email coloumn is displayed.");
+			System.out.println("Email coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Email coloumn is not displayed.");
+			System.out.println("Email coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_NameFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt53:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("Name filter coloumn is displayed.");
+			System.out.println("Name filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Name filter coloumn is not displayed.");
+			System.out.println("Name filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_UserNameFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='form:users_data_table:j_idt55:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("UserName filter coloumn is displayed.");
+			System.out.println("UserName filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("UserName filter coloumn is not displayed.");
+			System.out.println("UserName filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_AccountCodeFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt56:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("AccountCode filter coloumn is displayed.");
+			System.out.println("AccountCode filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("AccountCode filter coloumn is not displayed.");
+			System.out.println("AccountCode filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_ParentNameFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt59:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("ParentName filter coloumn is displayed.");
+			System.out.println("ParentName filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ParentName filter coloumn is not displayed.");
+			System.out.println("ParentName filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_ParentNameAgentFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='form:users_data_table:j_idt58:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("ParentName filter coloumn is displayed.");
+			System.out.println("ParentName filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ParentName filter coloumn is not displayed.");
+			System.out.println("ParentName filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_ContactNameFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='form:users_data_table:j_idt61:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("ContactName filter coloumn is displayed.");
+			System.out.println("ContactName filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ContactName filter coloumn is not displayed.");
+			System.out.println("ContactName filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_MobileFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt62:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("Mobile filter coloumn is displayed.");
+			System.out.println("Mobile filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Mobile filter coloumn is not displayed.");
+			System.out.println("Mobile filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_DocumentIDFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt65:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("DocumentID filter coloumn is displayed.");
+			System.out.println("DocumentID filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("DocumentID coloumn is not displayed.");
+			System.out.println("DocumentID coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_EmailFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt68:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("Email filter coloumn is displayed.");
+			System.out.println("Email filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Email coloumn is not displayed.");
+			System.out.println("Email coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement icon_PlusIcon(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-fieldset-toggler ui-icon ui-icon-plusthick']"));
+
+		if(element!=null)
+		{   
+			Log.info("PlusIcon is displayed.");
+			System.out.println("PlusIcon is displayed.");
+
+		}
+		else
+		{
+			Log.warn("PlusIcon is not displayed.");
+			System.out.println("PlusIcon is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_CommsionCategory(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt71']"));
+
+		if(element!=null)
+		{   
+			Log.info("CommisionCategory textbox is displayed.");
+			System.out.println("CommisionCategory textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("CommisionCategory textbox  is not displayed.");
+			System.out.println("CommisionCategory textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_CommissionDescp(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt73']"));
+
+		if(element!=null)
+		{   
+			Log.info("CommissionDescp textbox is displayed.");
+			System.out.println("CommissionDescp textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("CommissionDescp textbox  is not displayed.");
+			System.out.println("CommissionDescp textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_CommissionCode(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt75']"));
+
+		if(element!=null)
+		{   
+			Log.info("CommissionCode textbox is displayed.");
+			System.out.println("CommissionCode textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("CommissionCode textbox  is not displayed.");
+			System.out.println("CommissionCode textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Commission_Category(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Commission Category']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Category coloumn is displayed.");
+			System.out.println("Commission Category coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Category coloumn is not displayed.");
+			System.out.println("Commission Category coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Commission_Categoryfilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt53:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Category filter is displayed.");
+			System.out.println("Commission Category filter is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Category filter is not displayed.");
+			System.out.println("Commission Category filter is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Commission_Description(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Commission Description']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Description coloumn is displayed.");
+			System.out.println("Commission Description coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Description coloumn is not displayed.");
+			System.out.println("Commission Description coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Commission_Descriptionfilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt56:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Description filter is displayed.");
+			System.out.println("Commission Description filter is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Description filter is not displayed.");
+			System.out.println("Commission Description filter is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Commission_Code(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Commission Code']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Code coloumn is displayed.");
+			System.out.println("Commission Code coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Code coloumn is not displayed.");
+			System.out.println("Commission Code coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Commission_Codefilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt59:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Code filter is displayed.");
+			System.out.println("Commission Code filter is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Code filter is not displayed.");
+			System.out.println("Commission Code filter is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_Commission_Config(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//button[@id='frm1:Entity_data_table:0:userLines_configure']"));
+
+		if(element!=null)
+		{   
+			Log.info("Commission Config link is displayed.");
+			System.out.println("Commission Config link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Commission Config link is not displayed.");
+			System.out.println("Commission Config link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_FromPrice(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:fromPrice']"));
+
+		if(element!=null)
+		{   
+			Log.info("FromPrice textbox is displayed.");
+			System.out.println("FromPrice textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("FromPrice textbox  is not displayed.");
+			System.out.println("FromPrice textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_ToPrice(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:toPrice']"));
+
+		if(element!=null)
+		{   
+			Log.info("ToPrice textbox is displayed.");
+			System.out.println("ToPrice textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ToPrice textbox  is not displayed.");
+			System.out.println("ToPrice textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_CommissionValue(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:nsr']"));
+
+		if(element!=null)
+		{   
+			Log.info("CommissionValue textbox is displayed.");
+			System.out.println("CommissionValue textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("CommissionValue textbox  is not displayed.");
+			System.out.println("CommissionValue textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_Type(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:type']"));
+
+		if(element!=null)
+		{   
+			Log.info("Type Dropdown is displayed.");
+			System.out.println("Type Dropdown is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Type Dropdown is not displayed.");
+			System.out.println("Type Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_TypeOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Manual Commission']"));
+
+		if(element!=null)
+		{   
+			Log.info("Type dropdown option is displayed.");
+			System.out.println("Type dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Type dropdown option is not displayed.");
+			System.out.println("Type dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_Brand(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:commissionBrand']"));
+
+		if(element!=null)
+		{   
+			Log.info("Brand Dropdown is displayed.");
+			System.out.println("Brand Dropdown is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Brand Dropdown is not displayed.");
+			System.out.println("Brand Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_BrandOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:commissionBrand_panel']/div/ul/li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Apple']"));
+
+		if(element!=null)
+		{   
+			Log.info("Brand dropdown option is displayed.");
+			System.out.println("Brand dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Brand dropdown option is not displayed.");
+			System.out.println("Brand dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_DistributorName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='form:DistributerName']"));
+
+		if(element!=null)
+		{   
+			Log.info("Distributor Name Dropdown is displayed.");
+			System.out.println("Distributor Name Dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Distributor Name Dropdown   is not displayed.");
+			System.out.println("Distributor Name Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_DistributorNameOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Viaarabia']"));
+
+		if(element!=null)
+		{   
+			Log.info("Distributor Name dropdown option is displayed.");
+			System.out.println("Distributor Name dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Distributor Name dropdown option is not displayed.");
+			System.out.println("Distributor Name dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_ReportTemplate(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='form:templateName']"));
+
+		if(element!=null)
+		{   
+			Log.info("ReportTemplate Dropdown is displayed.");
+			System.out.println("ReportTemplate Dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ReportTemplate Dropdown   is not displayed.");
+			System.out.println("ReportTemplate Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_ReportTemplateOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Dealer']"));
+
+		if(element!=null)
+		{   
+			Log.info("ReportTemplate dropdown option is displayed.");
+			System.out.println("ReportTemplate dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ReportTemplate dropdown option is not displayed.");
+			System.out.println("ReportTemplate dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_AddressName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt72']"));
+
+		if(element!=null)
+		{   
+			Log.info("AddressName textbox is displayed.");
+			System.out.println("AddressName textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("AddressName textbox  is not displayed.");
+			System.out.println("AddressName textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_City(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt74']"));
+
+		if(element!=null)
+		{   
+			Log.info("City textbox is displayed.");
+			System.out.println("City textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("City textbox  is not displayed.");
+			System.out.println("City textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_Street(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt76']"));
+
+		if(element!=null)
+		{   
+			Log.info("Street textbox is displayed.");
+			System.out.println("Street textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Street textbox  is not displayed.");
+			System.out.println("Street textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_Region(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:region']"));
+
+		if(element!=null)
+		{   
+			Log.info("Region Dropdown is displayed.");
+			System.out.println("Region Dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Region Dropdown   is not displayed.");
+			System.out.println("Region Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_RegionOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='frm1:region_panel']/div/ul/li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Makkah']"));
+
+		if(element!=null)
+		{   
+			Log.info("Region dropdown option is displayed.");
+			System.out.println("Region dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Region dropdown option is not displayed.");
+			System.out.println("Region dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_AddressName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Address Name']"));
+
+		if(element!=null)
+		{   
+			Log.info("Address Name coloumn is displayed.");
+			System.out.println("Address Name coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Address Name coloumn is not displayed.");
+			System.out.println("Address Name coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_City(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='City']"));
+
+		if(element!=null)
+		{   
+			Log.info("City coloumn is displayed.");
+			System.out.println("City coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("City coloumn is not displayed.");
+			System.out.println("City coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Street(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Street']"));
+
+		if(element!=null)
+		{   
+			Log.info("Street coloumn is displayed.");
+			System.out.println("Street coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Street coloumn is not displayed.");
+			System.out.println("Street coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Region(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Region']"));
+
+		if(element!=null)
+		{   
+			Log.info("Region coloumn is displayed.");
+			System.out.println("Region coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Region coloumn is not displayed.");
+			System.out.println("Region coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Cityfilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt56:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("City filter is displayed.");
+			System.out.println("City filter is displayed.");
+
+		}
+		else
+		{
+			Log.warn("City filter is not displayed.");
+			System.out.println("City filter is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_StreetFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt59:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("Street filter is displayed.");
+			System.out.println("Street filter is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Street filter is not displayed.");
+			System.out.println("Street filter is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Regionfilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt62:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("Region filter is displayed.");
+			System.out.println("Region filter is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Region filter is not displayed.");
+			System.out.println("Region filter is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_RuleID(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt69']"));
+
+		if(element!=null)
+		{   
+			Log.info("RuleID textbox is displayed.");
+			System.out.println("RuleID textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("RuleID textbox  is not displayed.");
+			System.out.println("RuleID textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_MessageEnglish(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt71']"));
+
+		if(element!=null)
+		{   
+			Log.info("MessageEnglish textbox is displayed.");
+			System.out.println("MessageEnglish textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("MessageEnglish textbox  is not displayed.");
+			System.out.println("MessageEnglish textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_MessageArabic(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:j_idt73']"));
+
+		if(element!=null)
+		{   
+			Log.info("MessageArabic textbox is displayed.");
+			System.out.println("MessageArabic textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("MessageArabic textbox  is not displayed.");
+			System.out.println("MessageArabic textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_RuleID(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Rule ID']"));
+
+		if(element!=null)
+		{   
+			Log.info("Rule ID coloumn is displayed.");
+			System.out.println("Rule ID coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Rule ID coloumn is not displayed.");
+			System.out.println("Rule ID coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+    
+	public static WebElement col_MesageEng(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Message English']"));
+
+		if(element!=null)
+		{   
+			Log.info("Message English coloumn is displayed.");
+			System.out.println("Message English coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Message English coloumn is not displayed.");
+			System.out.println("Message English coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+   
+	public static WebElement col_MessageArb(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Message Arabic']"));
+
+		if(element!=null)
+		{   
+			Log.info("Message Arabic coloumn is displayed.");
+			System.out.println("Message Arabic coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Message Arabic coloumn is not displayed.");
+			System.out.println("Message Arabic coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_RuleIdFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt53:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("RuleId filter coloumn is displayed.");
+			System.out.println("RuleId filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("RuleId filter coloumn is not displayed.");
+			System.out.println("RuleId filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_MsgEngFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt56:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("MessageEng filter coloumn is displayed.");
+			System.out.println("MessageEng filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("MessageEng filter coloumn is not displayed.");
+			System.out.println("MessageEng filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_MessageArbFilter(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='frm1:Entity_data_table:j_idt59:filter']"));
+
+		if(element!=null)
+		{   
+			Log.info("MessageArb filter coloumn is displayed.");
+			System.out.println("MessageArb filter coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("MessageArb filter coloumn is not displayed.");
+			System.out.println("MessageArb filter coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+  
+	public static WebElement drpdwn_Location(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='form:location']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location Dropdown is displayed.");
+			System.out.println("Location Dropdown  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location Dropdown   is not displayed.");
+			System.out.println("Location Dropdown  is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_LocationOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all' and text()='Location2']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location dropdown option is displayed.");
+			System.out.println("Location dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location dropdown option is not displayed.");
+			System.out.println("Location dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_VendorSKU(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Vendor SKU']"));
+
+		if(element!=null)
+		{   
+			Log.info("VendorSKU coloumn is displayed.");
+			System.out.println("VendorSKU coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("VendorSKU coloumn is not displayed.");
+			System.out.println("VendorSKU coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Title(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Title']"));
+
+		if(element!=null)
+		{   
+			Log.info("Title coloumn is displayed.");
+			System.out.println("Title coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Title coloumn is not displayed.");
+			System.out.println("Title coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Quantity(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Quantity']"));
+
+		if(element!=null)
+		{   
+			Log.info("Quantity coloumn is displayed.");
+			System.out.println("Quantity coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Quantity coloumn is not displayed.");
+			System.out.println("Quantity coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static List<WebElement> text_AllLocationNames(WebDriver driver){
+
+		List<WebElement>  elements = driver.findElements(By.xpath("//tr[@data-ri]/td[3]"));
+
+		if(elements!=null)
+		{   
+			Log.info("Locations list Names are displayed.");
+			System.out.println("Locations list Names are displayed.");
+
+		}
+		else
+		{
+			Log.warn("Locations list Names are not displayed.");
+			System.out.println("Locations list Names are not displayed.");
+
+		}
+
+		return elements;
+
+	}
+	
+	public static WebElement col_OrderNumber(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Order Number']"));
+
+		if(element!=null)
+		{   
+			Log.info("Order Number coloumn is displayed.");
+			System.out.println("Order Number coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Order Number coloumn is not displayed.");
+			System.out.println("Order Number coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_OrderSubmitDate(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Order Submit Date']"));
+
+		if(element!=null)
+		{   
+			Log.info("Order Submit Date coloumn is displayed.");
+			System.out.println("Order Submit Date coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Order Submit Date coloumn is not displayed.");
+			System.out.println("Order Submit Date coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_OrderReceivedDate(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Order Received Date']"));
+
+		if(element!=null)
+		{   
+			Log.info("Order Received Date coloumn is displayed.");
+			System.out.println("Order Received Date coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Order Received Date coloumn is not displayed.");
+			System.out.println("Order Received Date coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_OrderPrice(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Order Price']"));
+
+		if(element!=null)
+		{   
+			Log.info("Order Price coloumn is displayed.");
+			System.out.println("Order Price coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Order Price coloumn is not displayed.");
+			System.out.println("Order Price coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_Paid(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Paid !']"));
+
+		if(element!=null)
+		{   
+			Log.info("Paid ! coloumn is displayed.");
+			System.out.println("Paid ! coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Paid ! coloumn is not displayed.");
+			System.out.println("Paid ! coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_PaymentMethod(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Payment Method']"));
+
+		if(element!=null)
+		{   
+			Log.info("Payment Method coloumn is displayed.");
+			System.out.println("Payment Method coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Payment Method coloumn is not displayed.");
+			System.out.println("Payment Method coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_CustomerIDType(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Customer ID Type']"));
+
+		if(element!=null)
+		{   
+			Log.info("Customer ID Type coloumn is displayed.");
+			System.out.println("Customer ID Type coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Customer ID Type coloumn is not displayed.");
+			System.out.println("Customer ID Type coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_CustomerID(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Customer ID']"));
+
+		if(element!=null)
+		{   
+			Log.info("Customer ID coloumn is displayed.");
+			System.out.println("Customer ID coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Customer ID coloumn is not displayed.");
+			System.out.println("Customer ID coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement col_AgentName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[text()='Agent Name']"));
+
+		if(element!=null)
+		{   
+			Log.info("Agent Name coloumn is displayed.");
+			System.out.println("Agent Name coloumn is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Agent Name coloumn is not displayed.");
+			System.out.println("Agent Name coloumn is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_FromDate(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='form:startDate:j_idt63:gregorianCalendar_calendar_1_input']"));
+
+		if(element!=null)
+		{   
+			Log.info("FromDate textbox is displayed.");
+			System.out.println("FromDate textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("FromDate textbox  is not displayed.");
+			System.out.println("FromDate textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement txtBox_ToDate(WebDriver driver){
+
+		element = driver.findElement(By.xpath("form:toDate:j_idt76:gregorianCalendar_calendar_2"));
+
+		if(element!=null)
+		{   
+			Log.info("ToDate textbox is displayed.");
+			System.out.println("ToDate textbox  is displayed.");
+
+		}
+		else
+		{
+			Log.warn("ToDate textbox  is not displayed.");
+			System.out.println("ToDate textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_LocationSearch(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='form:dealerShop']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location Dropdown is displayed.");
+			System.out.println("Location Dropdown is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location Dropdown is not displayed.");
+			System.out.println("Location Dropdown is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement drpdwn_LocationSearchOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='ui-selectonemenu-item ui-selectonemenu-list-item ui-corner-all ui-state-active' and text()='All']"));
+
+		if(element!=null)
+		{   
+			Log.info("Location dropdown option is displayed.");
+			System.out.println("Location dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Location dropdown option is not displayed.");
+			System.out.println("Location dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_Search(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//span[@class='ui-button-text' and text()='Search']"));
+
+		if(element!=null)
+		{   
+			Log.info("Search Button is displayed.");
+			System.out.println("Search Button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search Button is not displayed.");
+			System.out.println("Search Button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	
+	
+}

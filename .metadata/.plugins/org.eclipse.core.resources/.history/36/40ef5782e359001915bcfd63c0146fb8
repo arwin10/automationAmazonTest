@@ -1,0 +1,75 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class CRM_HomePage {
+
+	private static WebElement element = null;
+
+	public static WebElement txtbx_SearchQuery(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@class='search-query']"));
+
+		if(element!=null)
+		{   
+			Log.info("Search Textbox is displayed.");
+			System.out.println("Search textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search Textbox is not displayed.");
+			System.out.println("Search textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_SearchResult(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='search-result']/div/h3/span/a/strong"));
+
+		if(element!=null)
+		{   
+			Log.info("Search Result Link is displayed.");
+			System.out.println("Search Result Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search Result Link is not displayed.");
+			System.out.println("Search Result Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement div_ResultDetails(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='tabContent']"));
+
+		if(element!=null)
+		{   
+			Log.info("Result Details is displayed.");
+			System.out.println("Result Detailsis displayed.");
+
+		}
+		else
+		{
+			Log.warn("Result Details is not displayed.");
+			System.out.println("Result Details is not displayed.");
+
+		}
+
+		return element;
+
+	}
+}

@@ -1,0 +1,18 @@
+package com.jawwy.util;
+
+public class Constant {
+	
+
+    public static final String URL = "http://portal.viaarabia.com/";
+
+    public static final String Username = "tech.operations.SL1@sapphire.sa";
+
+    public static final String Password = "Sapphire@123";
+    
+    public static final String Path_TestData = "C:\\Jawwy_Repo\\Jawwy_Automation\\src\\resources\\";
+    		 
+    public static final String File_TestData = "TestData.xlsx";
+
+    public static final String Page_Title ="Jawwy_Title";
+}
+

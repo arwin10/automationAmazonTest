@@ -1,0 +1,18 @@
+package com.jawwy.util;
+
+public class Constant {
+	
+
+    public static final String URL = "http://google.com";
+
+    public static final String Username = "arinsark";
+
+    public static final String Password = "Weeds!8957";
+    
+    public static final String Path_TestData = "C:\\Arwin_Sample\\Data_Advisor_App\\src\\resources\\";
+    		 
+    public static final String File_TestData = "TestData.xlsx";
+
+    public static final String Page_Title ="Data Advisor";
+}
+

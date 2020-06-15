@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Amazon Test Suite]">
+  <parameter name="testcasename" value="verify_AmazonOrderPlacement"/>
+  <parameter name="browsername" value="Android_Device"/>
+  <test name="verify_AmazonOrderPlacement(failed)" preserve-order="true">
+    <parameter name="testcasename" value="verify_AmazonOrderPlacement"/>
+    <parameter name="browsername" value="Android_Device"/>
+    <classes>
+      <class name="com.jawwy.modules.Amazon_App">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="verify_AmazonOrderPlacement" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- com.jawwy.modules.Amazon_App -->
+    </classes>
+  </test> <!-- verify_AmazonOrderPlacement(failed) -->
+</suite> <!-- Failed suite [Amazon Test Suite] -->

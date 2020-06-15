@@ -1,0 +1,201 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class CRM_HomePage {
+
+	private static WebElement element = null;
+
+	public static WebElement txtbx_SearchQuery(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@class='search-query']"));
+
+		if(element!=null)
+		{   
+			Log.info("Search Textbox is displayed.");
+			System.out.println("Search textbox is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search Textbox is not displayed.");
+			System.out.println("Search textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_SearchResult_OrderId(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='search-result'][1]/div/h3/span/a"));
+
+		if(element!=null)
+		{   
+			Log.info("Search Result OrderID Link is displayed.");
+			System.out.println("Search Result OrderID Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search Result OrderID Link is not displayed.");
+			System.out.println("Search Result OrderID Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_SearchResult_MSISDN(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='search-result'][1]/div[2]/span[2]"));
+
+		if(element!=null)
+		{   
+			Log.info("Search Result MSISDN Link is displayed.");
+			System.out.println("Search Result MSISDN Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search Result MSISDN Link is not displayed.");
+			System.out.println("Search Result MSISDN Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_Search_dropdown(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@class='module-dropdown-button btn btn-invisible']/i"));
+
+		if(element!=null)
+		{   
+			Log.info("Search dropdown button is displayed.");
+			System.out.println("Search dropdown button is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search dropdown button is not displayed.");
+			System.out.println("Search dropdown button is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement button_Search_dropdownTelcoOrderOption(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//li[@class='menu-item ellipsis_inline']/span[text()='Telco Orders']"));
+
+		if(element!=null)
+		{   
+			Log.info("Search dropdown option is displayed.");
+			System.out.println("Search dropdown option is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Search dropdown option is not displayed.");
+			System.out.println("Search dropdown option is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement div_ResultDetails(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@id='tabContent']"));
+
+		if(element!=null)
+		{   
+			Log.info("Result Details is displayed.");
+			System.out.println("Result Details is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Result Details is not displayed.");
+			System.out.println("Result Details is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement div_loading(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//div[@class='loading']"));
+
+		if(element!=null)
+		{   
+			Log.info("Loading is displayed.");
+			System.out.println("Loading is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Loading is not displayed.");
+			System.out.println("Loading is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement link_ContactsTab(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//a[@track='click:me:Contacts']"));
+
+		if(element!=null)
+		{   
+			Log.info("Contacts Tab Link is displayed.");
+			System.out.println("Contacts Tab Link is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Contacts Tab Link is not displayed.");
+			System.out.println("Contacts Tab Link is not displayed.");
+
+		}
+
+		return element;
+
+	}
+	
+	public static WebElement header_ContactsTab(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//a[@track='click:me:Contacts']"));
+
+		if(element!=null)
+		{   
+			Log.info("Contacts Tab header is displayed.");
+			System.out.println("Contacts Tab header is displayed.");
+
+		}
+		else
+		{
+			Log.warn("Contacts Tab header is not displayed.");
+			System.out.println("Contacts Tab header is not displayed.");
+
+		}
+
+		return element;
+
+	}
+}

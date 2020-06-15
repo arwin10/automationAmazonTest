@@ -1,0 +1,235 @@
+package com.jawwy.modules;
+
+
+import static org.testng.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.annotations.Parameters;
+
+
+import com.jawwy.util.CommonUtilities;
+import com.jawwy.util.ExcelUtilities;
+import com.jawwy.util.Log;
+import com.jawwy.util.Constant;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Assert;
+
+import com.jawwy.pageobject.ViaArabia_HomePage;
+
+
+
+public class Jawwy_Admin {
+
+	private WebDriver driver;
+	private CommonUtilities utilities;
+	private WebDriverWait wait;
+	private String sTestCaseName;
+	private int iTestCaseRow;
+	ArrayList moduleRecord=null;
+
+
+	@BeforeTest
+	@Parameters("browsername")
+	public void setUp(String browsername) throws Exception{
+
+		//Log4j configuration settings
+		DOMConfigurator.configure("log4j.xml");
+		Log.info("Log4j initiated");
+
+		System.out.println("Executing in browser: "+browsername);
+
+		if(browsername.equalsIgnoreCase("Firefox"))
+		{   
+			System.setProperty("webdriver.gecko.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\geckodriver.exe");
+			System.setProperty("webdriver.firefox.bin", "C:\\FirefoxPortable45ESR\\FirefoxPortable.exe");
+			driver= new FirefoxDriver();
+		}		
+
+		if(browsername.equalsIgnoreCase("Chrome"))	
+		{
+			System.setProperty("webdriver.chrome.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\chromedriver.exe");
+			driver = new ChromeDriver();
+		}
+
+		if(browsername.equalsIgnoreCase("IE"))	
+		{
+			System.setProperty("webdriver.ie.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\IEDriverServer.exe");
+			driver = new InternetExplorerDriver();
+		}
+
+
+
+		Log.info("New driver instantiated");
+
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+		Log.info("Window maximized and Implicit wait applied on the driver for 10 seconds");
+
+
+		wait = new WebDriverWait(driver,60);
+		Log.info("WebDriver wait initialized");
+
+		utilities = new CommonUtilities();
+
+		//Getting Testdata from the excel file
+		moduleRecord=ExcelUtilities.excelSetDBRecord("Jawwy_Admin");
+
+
+
+	}
+
+
+	@AfterTest
+	public void tearDown() throws Exception{
+
+		driver.quit();
+	}
+
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_ViaArabiaOrderSearch(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.app_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			utilities.explicitilyWaitFor(".//a[text()='Home']", wait);
+
+			if(driver.findElements(By.xpath(".//a[text()='Home']")).size()>0)
+			{
+
+				Log.info("Via Arabia HomePage is opened.");
+				System.out.println("Via Arabia HomePage is opened.");
+
+				if(ViaArabia_HomePage.link_SapphireTab(driver).isDisplayed()) {
+
+
+					ViaArabia_HomePage.link_SapphireTab(driver).click();
+
+					Thread.sleep(2000);
+
+					if(ViaArabia_HomePage.header_Test(driver).isDisplayed())
+					{
+						ViaArabia_HomePage.link_CheckOrderStatus(driver).click();
+						utilities.explicitilyWaitFor("//td[text()='Order Id']", wait);
+						if(ViaArabia_HomePage.Label_OrderId(driver).isDisplayed())
+						{
+							Log.info("Via Arabia Order Page is opened.");
+							System.out.println("Via Arabia Order Page is opened.");
+
+							ViaArabia_HomePage.TextBox_OrderId(driver).sendKeys("277108545000940");
+							ViaArabia_HomePage.Button_SubmitOrderId(driver).click();
+							
+							//utilities.explicitilyWaitFor("//table[@class='table table-bordered']", wait);
+	
+							if(driver.findElements(By.xpath("//div[@id='ErrDescMsg']")).size()<=0)
+							{ String order_status=ViaArabia_HomePage.field_StatusOrder(driver).getText();
+							  if(!order_status.isEmpty())
+							  {
+								Log.info("Order Status is ="+order_status);
+							  	System.out.println("Order Status is ="+order_status);
+							  }
+							  else
+							  {
+								Log.warn("Order Status is not displayed.");
+								System.out.println("Order Status is not displayed.");
+								Assert.assertTrue(false);
+							  }
+							}
+							else
+							{
+								Log.warn("Order Id is not Found.");
+								System.out.println("Order Id is not found.");
+								Assert.assertTrue(false);
+							}
+						}
+						else
+						{
+							Log.info("Via Arabia Order Page is not opened.");
+							System.out.println("Via Arabia Order Page is not opened.");
+							Assert.assertTrue(false);
+						}
+					}
+
+
+					/*if(DataClassificationWizard_Page.txtbx_QuickSearch(driver).isEnabled() && DataClassificationWizard_Page.txtbx_QuickSearch(driver).isDisplayed())
+					{
+						System.out.println("Quick Search TetBox exist.");
+
+						DataClassificationWizard_Page.txtbx_QuickSearch(driver).sendKeys("cisco");
+
+						DataClassificationWizard_Page.txtbx_QuickSearch(driver).sendKeys(Keys.RETURN);
+
+						System.out.println("Searching for Data types with Order Id keyword");
+
+						utilities.explicitilyWaitFor(".//span[@data-ng-bind='vm.item.name']", wait);
+
+						List<WebElement> searchresult= driver.findElements(By.xpath(".//span[@data-ng-bind='vm.item.name']"));
+
+						System.out.println("Found below datatype-");
+
+						for(WebElement dtname:searchresult)
+						{
+							if(!dtname.getText().isEmpty())
+								System.out.println(dtname.getText());
+
+					     }
+
+				}*/
+
+
+				}
+
+				else
+				{
+					System.out.println("Via Arabia HomePage is not opened");
+					Assert.assertTrue(false);
+
+				} 
+
+
+			}	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+
+
+
+
+
+}

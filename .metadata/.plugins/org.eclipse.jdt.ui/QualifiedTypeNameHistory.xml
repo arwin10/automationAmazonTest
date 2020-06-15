@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.jawwy.pageobject.ViaArabia_Login_Page"/>
+    <fullyQualifiedTypeName name="com.jawwy.pageobject.ViaArabia_HomePage"/>
+    <fullyQualifiedTypeName name="java.lang.Thread"/>
+    <fullyQualifiedTypeName name="com.jawwy.pageobject.CRM_HomePage"/>
+    <fullyQualifiedTypeName name="org.openqa.selenium.remote.DesiredCapabilities"/>
+    <fullyQualifiedTypeName name="java.net.URL"/>
+    <fullyQualifiedTypeName name="io.appium.java_client.MobileElement"/>
+    <fullyQualifiedTypeName name="io.appium.java_client.android.AndroidDriver"/>
+    <fullyQualifiedTypeName name="io.appium.java_client.TouchAction"/>
+    <fullyQualifiedTypeName name="org.openqa.selenium.interactions.touch.TouchActions"/>
+    <fullyQualifiedTypeName name="io.appium.java_client.touch.offset.PointOption"/>
+    <fullyQualifiedTypeName name="com.jawwy.pageobject.ADM_APP_HomePage"/>
+</qualifiedTypeNameHistroy>

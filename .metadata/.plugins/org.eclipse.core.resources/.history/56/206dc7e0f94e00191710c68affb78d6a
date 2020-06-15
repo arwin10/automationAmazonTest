@@ -1,0 +1,125 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Jawwy Test Suite">
+ 
+
+<!-- <test name="verify_ViaArabiaOrderSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViaArabiaOrderSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ViaArabia"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViaArabiaOrderSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_InvalidCreds"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_InvalidCreds"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_InvalidCreds"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_InvalidUsername"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_InvalidUsername"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_InvalidUsername"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_InvalidPassword"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_InvalidPassword"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_InvalidPassword"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_EmptyCreds"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_EmptyCreds"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_EmptyCreds"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_EmptyUsername"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_EmptyUsername"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_EmptyUsername"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_EmptyPassword"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_EmptyPassword"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_EmptyPassword"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SearchSIM_ICCID"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SearchSIM_ICCID"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_SearchSIM_ICCID"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<test name="verify_RMS_SearchSIM_IMSI">
+<parameter name="testcasename" value="verify_RMS_SearchSIM_IMSI"></parameter>
+<parameter name="browsername" value="Chrome"></parameter>
+<classes>
+<class name="com.jawwy.modules.Jawwy_RMS">
+<methods>
+<include name="verify_RMS_SearchSIM_IMSI"></include>
+</methods>
+</class>
+</classes>
+</test>
+ 
+</suite>

@@ -1,0 +1,78 @@
+package com.jawwy.pageobject;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import com.jawwy.util.Log;
+
+public class ViaArabia_Login_Page {
+
+	private static WebElement element = null;
+
+	public static WebElement txtbx_UserName(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='j_username']"));
+
+		if(element!=null)
+		{   
+			Log.info("Username Textbox is displayed.");
+			System.out.println("Username textbox is displayed.");
+
+		}
+		else
+		{
+			Log.info("Username Textbox is not displayed.");
+			System.out.println("Username textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+
+	public static WebElement txtbx_Password(WebDriver driver){
+
+		element = driver.findElement(By.xpath("//input[@id='j_passowrd']"));
+
+		if(element!=null)
+		{   
+			Log.info("Password Textbox is displayed");
+			System.out.println("Passowrd textbox is displayed.");
+
+		}
+		else
+		{
+			Log.info("Password Textbox is not displayed.");
+			System.out.println("Password textbox is not displayed.");
+
+		}
+
+		return element;
+
+	}
+
+	public static WebElement btn_Login(WebDriver driver) {
+
+		element = driver.findElement(By.xpath("//input[@id='login']"));
+
+		if(element!=null)
+		{   
+			Log.info("Login Button is displayed.");
+			System.out.println("Login Button is displayed.");
+
+		}
+
+		else
+		{
+			Log.info("Login button is not displayed.");
+			System.out.println("Login  button is not displayed.");
+
+		}
+
+		return element;
+	}
+
+
+
+}

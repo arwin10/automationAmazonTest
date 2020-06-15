@@ -1,0 +1,1831 @@
+package com.jawwy.modules;
+
+import static org.testng.Assert.assertEquals;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import com.jawwy.pageobject.EStore_HomePage;
+import com.jawwy.pageobject.EStore_LoginPage;
+import com.jawwy.pageobject.SSO_Login_Page;
+import com.jawwy.util.CommonUtilities;
+import com.jawwy.util.DataBaseUtilities;
+import com.jawwy.util.ExcelUtilities;
+import com.jawwy.util.Log;
+
+
+public class Jawwy_SSO {
+
+	private WebDriver driver;
+	private CommonUtilities utilities;
+	private DataBaseUtilities dbutilities;
+	private WebDriverWait wait;
+	private String sTestCaseName;
+	private int iTestCaseRow;
+	ArrayList moduleRecord=null;
+	ResultSet tableRecord = null;
+
+
+	@BeforeTest
+	@Parameters("browsername")
+	public void setUp(String browsername) throws Exception{
+
+		//Log4j configuration settings
+		DOMConfigurator.configure("log4j.xml");
+		Log.info("Log4j initiated");
+
+		System.out.println("Executing in browser: "+browsername);
+
+		if(browsername.equalsIgnoreCase("Firefox"))
+		{   
+			System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
+			System.setProperty("webdriver.firefox.bin", "FirefoxPortable.exe");
+			driver= new FirefoxDriver();
+		}		
+
+		if(browsername.equalsIgnoreCase("Chrome"))	
+		{
+			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+			driver = new ChromeDriver();
+		}
+
+		if(browsername.equalsIgnoreCase("IE"))	
+		{
+			System.setProperty("webdriver.ie.driver", "IEDriverServer.exe");
+			driver = new InternetExplorerDriver();
+		}
+
+
+
+		Log.info("New driver instantiated");
+
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
+		Log.info("Window maximized and Implicit wait applied on the driver for 10 seconds");
+
+
+		wait = new WebDriverWait(driver,180);
+		Log.info("WebDriver wait initialized");
+
+		utilities = new CommonUtilities();
+		dbutilities= new DataBaseUtilities();
+
+
+		//Getting Testdata from the excel file
+		moduleRecord=ExcelUtilities.excelSetDBRecord("Jawwy_SSO");
+		dbutilities.DatabaseConnection_SSO();
+
+
+	}
+
+	@AfterTest
+	public void tearDown() throws Exception{
+
+		driver.quit();
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSOExistingUserLogin(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appEstore_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+			if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+			{
+
+				Log.info("Estore HomePage is opened.");
+				System.out.println("Estore HomePage is opened.");			
+
+			}
+
+			else
+			{
+				System.out.println("Estore HomePage is not opened");
+				Log.warn("Estore HomePage is not opened.");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSORegisterUser(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='action-common-button register ']/span", wait);
+
+			SSO_Login_Page.ssopage_btn_register(driver).click();
+
+			if(driver.findElements(By.xpath("//div[contains(text(),' Register using your email address')]")).size()>0)
+			{
+
+				Log.info("SSO Regsitration Page is opened.");
+				System.out.println("SSO Regsitration Page  is opened.");
+
+				SSO_Login_Page.ssopage_email(driver).sendKeys(testdata.get("UserName").toString());
+				Thread.sleep(2000);
+				SSO_Login_Page.ssopage_password(driver).sendKeys(testdata.get("Password").toString());
+				SSO_Login_Page.ssopage_communityname(driver).sendKeys(testdata.get("CommunityName").toString());
+				SSO_Login_Page.ssopage_captchainput(driver).sendKeys("1234"); //Manually Enter Captcha
+				//SSO_Login_Page.ssopage_captchainput(driver).clear(); /*****----Clearing Captcha input----*****/
+				Thread.sleep(10000);
+				SSO_Login_Page.ssopage_registerbutton(driver).click();
+				Thread.sleep(4000);
+
+				//utilities.stopPageLoading(driver);
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+					Log.info("Registration successfully completed.");
+					System.out.println("Registration successfully completed.");
+				}
+				else
+				{
+					Log.warn("Registration is not successfully completed.");
+					System.out.println("Registration is not successfully completed.");
+					Assert.assertTrue(false);
+				}
+				assertEquals("Jawwy",driver.getTitle()); 
+
+
+			}
+
+			else
+			{
+				System.out.println("SSO Regsitration Page is not opened");
+				Log.warn("SSO Regsitration Page is not opened.");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")	
+	public void verify_SSOExistingUserMyProfileUpdate(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appEstore_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+			if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+			{
+
+				Log.info("Estore HomePage is opened.");
+				System.out.println("Estore HomePage is opened.");	
+
+				EStore_HomePage.link_MyJawwy(driver).click();
+
+				String myProfileURL=EStore_HomePage.link_MyProfile(driver).getAttribute("href");
+				System.out.println("Navigating to MY Profile URL="+myProfileURL);
+
+				driver.navigate().to("https://sapphire_be:sapphire_backend@beta.jawwy.sa/en/personal-area/profile");
+				//EStore_HomePage.link_MyProfile(driver).click(); /** Do not enable ***/
+
+				utilities.explicitilyWaitFor("//li[@class='sph-active']/a[contains(text(),'My Profile')]", wait);
+
+
+				if(EStore_HomePage.link_MyProfileTab(driver).isDisplayed())
+				{ 
+					Log.info("MyProfile Page is opened.");
+					System.out.println("MyProfile Page is opened.");
+					driver.switchTo().frame("sph-personal-area-iframe");
+					EStore_HomePage.txtBox_FirstName(driver).clear();
+					EStore_HomePage.txtBox_FirstName(driver).sendKeys(testdata.get("FirstName").toString());
+					EStore_HomePage.txtBox_LastName(driver).clear();
+					EStore_HomePage.txtBox_LastName(driver).sendKeys(testdata.get("LastName").toString());
+					EStore_HomePage.txtBox_AlternateContact(driver).clear();
+					EStore_HomePage.txtBox_AlternateContact(driver).sendKeys(testdata.get("AlternateContact").toString());
+					EStore_HomePage.txtBox_Emailid(driver).clear();
+					EStore_HomePage.txtBox_Emailid(driver).sendKeys(testdata.get("EmailId").toString());
+					EStore_HomePage.select_Language(driver).selectByValue(testdata.get("Language").toString());
+					EStore_HomePage.select_Communication(driver).selectByValue(testdata.get("CommPref").toString());
+					EStore_HomePage.select_DOB_Date(driver).selectByVisibleText(testdata.get("DOB_Date").toString());
+					EStore_HomePage.select_DOB_Month(driver).selectByVisibleText(testdata.get("DOB_Month").toString());
+					EStore_HomePage.select_DOB_Year(driver).selectByVisibleText(testdata.get("DOB_Year").toString());
+
+					EStore_HomePage.button_UpdateProfile(driver).click();
+					Thread.sleep(2000);
+					utilities.explicitilyWaitFor("//div[@class='modal-header']/h4[text()='Profile updated successfully.']", wait);
+					if(EStore_HomePage.modalheader_UpdateProfileSuccess(driver).isDisplayed())
+					{
+						Log.info("Profile is successfully updated.");
+						System.out.println("Profile is successfully updated.");	
+					}
+					else
+					{
+						System.out.println("Profile update is not successful.");
+						Log.warn("Profile update is not successful.");
+						Assert.assertTrue(false);
+
+					}
+
+				}
+				else
+				{
+					System.out.println("MyProfile Page is not opened");
+					Log.warn("MyProfile Page is not opened.");
+					Assert.assertTrue(false);
+				}
+
+			}
+
+			else
+			{
+				System.out.println("Estore HomePage is not opened");
+				Log.warn("Estore HomePage is not opened.");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_ForgotPasswordLink(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='action-common-button register ']/span", wait);
+
+			SSO_Login_Page.ssopage_btn_signin(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@id='login-btn']/span", wait);
+
+			if(driver.findElements(By.xpath("//a[@id='login-btn']/span")).size()>0)
+			{
+
+				Log.info("SSO Login Page is opened.");
+				System.out.println("SSO Login Page is opened.");	
+
+				SSO_Login_Page.txtbx_UserName(driver).clear();
+				SSO_Login_Page.txtbx_UserName(driver).sendKeys(testdata.get("UserName").toString());
+
+				SSO_Login_Page.ssopage_link_forgotpassword(driver).click();
+
+				utilities.explicitilyWaitFor("//input[@id='email']", wait);
+
+				if(SSO_Login_Page.ssopage_header_forgotPassowrd(driver).isDisplayed())
+				{
+					Log.info("Forgot Password Page is opened.");
+					System.out.println("Forgot Password Page is opened.");	
+
+					SSO_Login_Page.ssopage_forgotpass_input_email(driver).sendKeys(testdata.get("UserName").toString());
+
+					SSO_Login_Page.ssopage_forgotpass_continue(driver).click();
+
+					utilities.explicitilyWaitFor("//div[@class='sph-description' and contains(text(),'Instructions to reset your password have been sent to your registered email address.')]", wait);
+
+					if(SSO_Login_Page.ssopage_forgotpass_successresetmessage(driver).isDisplayed())
+					{
+						Log.info("Forgot Password reset is successful.");
+						System.out.println("Forgot reset is successful.");	
+					}
+					else
+					{
+						System.out.println("Forgot Password reset is not successful.");
+						Log.warn("Forgot Password reset is not successful.");
+						Assert.assertTrue(false);
+					}
+
+				}
+				else
+				{
+					System.out.println("Forgot Password Page is not opened.");
+					Log.warn("Forgot Password Page is not opened.");
+					Assert.assertTrue(false);
+				}
+
+
+			}
+
+			else
+			{
+				System.out.println("SSO Login Page is not opened.");
+				Log.warn("SSO Login Page is not opened.");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	//Deepa Code
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_GoogleSignIn(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='gp sph-icon-google-plus']", wait);
+
+			SSO_Login_Page.ssopage_link_GoogleSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@type='email']")).size()>0)
+			{
+
+				Log.info("GoogleSignIn Page is opened.");
+				System.out.println("GoogleSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_GoogleSignInUserName(driver).sendKeys(testdata.get("UserName").toString()+"\n");
+				Thread.sleep(2000);
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//Thread.sleep(2000);
+				//utilities.explicitilyWaitFor("//span[text()='Next']", wait);
+				SSO_Login_Page.txtbx_GoogleSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//utilities.stopPageLoading(driver);
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("GoogleSignIn Page is not opened.");
+				System.out.println("GoogleSignIn Page is not opened.");
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_TwitterSignIn(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='tw sph-icon-twitter']", wait);
+
+			SSO_Login_Page.ssopage_link_twitterSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@id='username_or_email']")).size()>0)
+			{
+
+				Log.info("Twitter SignIn Page is opened.");
+				System.out.println("TwitterSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_TwitterSignInUserName(driver).sendKeys(testdata.get("UserName").toString());
+				Thread.sleep(2000);
+				SSO_Login_Page.txtbx_TwitterSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+
+				//SSO_Login_Page.btn_TwitterSignIn(driver).click();
+
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("GoogleSignIn Page is not opened.");
+				System.out.println("GoogleSignIn Page is not opened.");
+				Assert.assertTrue(false);
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_GoogleSignIn_MyProfileUpdate(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='gp sph-icon-google-plus']", wait);
+
+			SSO_Login_Page.ssopage_link_GoogleSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@type='email']")).size()>0)
+			{
+
+				Log.info("GoogleSignIn Page is opened.");
+				System.out.println("GoogleSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_GoogleSignInUserName(driver).sendKeys(testdata.get("UserName").toString()+"\n");
+				Thread.sleep(2000);
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//Thread.sleep(2000);
+				//utilities.explicitilyWaitFor("//span[text()='Next']", wait);
+				SSO_Login_Page.txtbx_GoogleSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//utilities.stopPageLoading(driver);
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+					EStore_HomePage.link_MyJawwy(driver).click();
+
+					String myProfileURL=EStore_HomePage.link_MyProfile(driver).getAttribute("href");
+					System.out.println("Navigating to MY Profile URL="+myProfileURL);
+
+					driver.navigate().to("https://sapphire_be:sapphire_backend@beta.jawwy.sa/en/personal-area/profile");
+					//EStore_HomePage.link_MyProfile(driver).click(); /** Do not enable ***/
+
+					utilities.explicitilyWaitFor("//li[@class='sph-active']/a[contains(text(),'My Profile')]", wait);
+
+
+					if(EStore_HomePage.link_MyProfileTab(driver).isDisplayed())
+					{ 
+						Log.info("MyProfile Page is opened.");
+						System.out.println("MyProfile Page is opened.");
+						driver.switchTo().frame("sph-personal-area-iframe");
+						EStore_HomePage.txtBox_FirstName(driver).clear();
+						EStore_HomePage.txtBox_FirstName(driver).sendKeys(testdata.get("FirstName").toString());
+						EStore_HomePage.txtBox_LastName(driver).clear();
+						EStore_HomePage.txtBox_LastName(driver).sendKeys(testdata.get("LastName").toString());
+						EStore_HomePage.txtBox_AlternateContact(driver).clear();
+						EStore_HomePage.txtBox_AlternateContact(driver).sendKeys(testdata.get("AlternateContact").toString());
+
+						if(EStore_HomePage.txtBox_Emailid(driver).getAttribute("readonly").contains("true"))
+						{
+							Log.info("EmailID field is Disabled.");
+							System.out.println("EmailID field is Disabled.");
+							if(EStore_HomePage.ssopage_link_GooglePlus(driver).isDisplayed())
+							{
+								Log.info("GooglePlus Link is displayed.");
+								System.out.println("GooglePlus Link is displayed.");
+							}
+							else
+							{
+								Log.warn("GooglePlus  Link is not displayed.");
+								System.out.println("GooglePlus Link is not displayed.");
+								Assert.assertTrue(false);
+							}
+						}
+						else
+						{
+							Log.warn("EmailID field is not Disabled.");
+							System.out.println("EmailID field is not Disabled.");
+							Assert.assertTrue(false);
+						}
+
+						EStore_HomePage.select_Language(driver).selectByValue(testdata.get("Language").toString());
+						EStore_HomePage.select_Communication(driver).selectByValue(testdata.get("CommPref").toString());
+						EStore_HomePage.select_DOB_Date(driver).selectByVisibleText(testdata.get("DOB_Date").toString());
+						EStore_HomePage.select_DOB_Month(driver).selectByVisibleText(testdata.get("DOB_Month").toString());
+						EStore_HomePage.select_DOB_Year(driver).selectByVisibleText(testdata.get("DOB_Year").toString());
+
+						EStore_HomePage.button_UpdateProfile(driver).click();
+						Thread.sleep(2000);
+						utilities.explicitilyWaitFor("//div[@class='modal-header']/h4[text()='Profile updated successfully.']", wait);
+						if(EStore_HomePage.modalheader_UpdateProfileSuccess(driver).isDisplayed())
+						{
+							Log.info("Profile is successfully updated.");
+							System.out.println("Profile is successfully updated.");	
+						}
+						else
+						{
+							System.out.println("Profile update is not successful.");
+							Log.warn("Profile update is not successful.");
+							Assert.assertTrue(false);
+
+						}
+
+					}
+					else
+					{
+						System.out.println("MyProfile Page is not opened");
+						Log.warn("MyProfile Page is not opened.");
+						Assert.assertTrue(false);
+					}
+
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("GoogleSignIn Page is not opened.");
+				System.out.println("GoogleSignIn Page is not opened.");
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_TwitterSignIn_MyProfileUpdate(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='tw sph-icon-twitter']", wait);
+
+			SSO_Login_Page.ssopage_link_twitterSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@id='username_or_email']")).size()>0)
+			{
+
+				Log.info("Twitter SignIn Page is opened.");
+				System.out.println("TwitterSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_TwitterSignInUserName(driver).sendKeys(testdata.get("UserName").toString()+"\n");
+				Thread.sleep(2000);
+				SSO_Login_Page.txtbx_TwitterSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+
+				//SSO_Login_Page.btn_TwitterSignIn(driver).click();
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+					EStore_HomePage.link_MyJawwy(driver).click();
+
+					String myProfileURL=EStore_HomePage.link_MyProfile(driver).getAttribute("href");
+					System.out.println("Navigating to MY Profile URL="+myProfileURL);
+
+					driver.navigate().to("https://sapphire_be:sapphire_backend@beta.jawwy.sa/en/personal-area/profile");
+					//EStore_HomePage.link_MyProfile(driver).click(); /** Do not enable ***/
+
+					utilities.explicitilyWaitFor("//li[@class='sph-active']/a[contains(text(),'My Profile')]", wait);
+
+
+					if(EStore_HomePage.link_MyProfileTab(driver).isDisplayed())
+					{ 
+						Log.info("MyProfile Page is opened.");
+						System.out.println("MyProfile Page is opened.");
+						driver.switchTo().frame("sph-personal-area-iframe");
+						EStore_HomePage.txtBox_FirstName(driver).clear();
+						EStore_HomePage.txtBox_FirstName(driver).sendKeys(testdata.get("FirstName").toString());
+						EStore_HomePage.txtBox_LastName(driver).clear();
+						EStore_HomePage.txtBox_LastName(driver).sendKeys(testdata.get("LastName").toString());
+						EStore_HomePage.txtBox_AlternateContact(driver).clear();
+						EStore_HomePage.txtBox_AlternateContact(driver).sendKeys(testdata.get("AlternateContact").toString());
+
+						if(EStore_HomePage.txtBox_Emailid(driver).getAttribute("readonly").contains("true"))
+						{
+							Log.info("EmailID field is Disabled.");
+							System.out.println("EmailID field is Disabled.");
+							if(EStore_HomePage.ssopage_link_TwitterImage(driver).isDisplayed())
+							{
+								Log.info("Twitter Link is displayed.");
+								System.out.println("Twitter Link is displayed.");
+							}
+							else
+							{
+								Log.warn("Twitter  Link is not displayed.");
+								System.out.println("Twitter Link is not displayed.");
+								Assert.assertTrue(false);
+							}
+						}
+						else
+						{
+							Log.warn("EmailID field is not Disabled.");
+							System.out.println("EmailID field is not Disabled.");
+							Assert.assertTrue(false);
+						}
+
+						EStore_HomePage.select_Language(driver).selectByValue(testdata.get("Language").toString());
+						EStore_HomePage.select_Communication(driver).selectByValue(testdata.get("CommPref").toString());
+						EStore_HomePage.select_DOB_Date(driver).selectByVisibleText(testdata.get("DOB_Date").toString());
+						EStore_HomePage.select_DOB_Month(driver).selectByVisibleText(testdata.get("DOB_Month").toString());
+						EStore_HomePage.select_DOB_Year(driver).selectByVisibleText(testdata.get("DOB_Year").toString());
+
+						EStore_HomePage.button_UpdateProfile(driver).click();
+						Thread.sleep(2000);
+						utilities.explicitilyWaitFor("//div[@class='modal-header']/h4[text()='Profile updated successfully.']", wait);
+						if(EStore_HomePage.modalheader_UpdateProfileSuccess(driver).isDisplayed())
+						{
+							Log.info("Profile is successfully updated.");
+							System.out.println("Profile is successfully updated.");	
+						}
+						else
+						{
+							System.out.println("Profile update is not successful.");
+							Log.warn("Profile update is not successful.");
+							Assert.assertTrue(false);
+
+						}
+
+					}
+					else
+					{
+						System.out.println("MyProfile Page is not opened");
+						Log.warn("MyProfile Page is not opened.");
+						Assert.assertTrue(false);
+					}
+
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("Twitter SignIn Page is not opened.");
+				System.out.println("Twitter SignIn Page is not opened.");
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_FacebookSignIn(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='fb sph-icon-facebook']", wait);
+
+			SSO_Login_Page.ssopage_link_FacebookSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@type='text']")).size()>0)
+			{
+
+				Log.info("FacebookSignIn Page is opened.");
+				System.out.println("FacebookSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_FacebookSignInUserName(driver).sendKeys(testdata.get("UserName").toString()+"\n");
+				Thread.sleep(2000);
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//Thread.sleep(2000);
+				//utilities.explicitilyWaitFor("//span[text()='Next']", wait);
+				SSO_Login_Page.txtbx_FacebookSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//utilities.stopPageLoading(driver);
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("FacebookSignIn Page is not opened.");
+				System.out.println("FacebookSignIn Page is not opened.");
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}	
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_FacebookSignIn_MyProfileUpdate(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='fb sph-icon-facebook']", wait);
+
+			SSO_Login_Page.ssopage_link_FacebookSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@type='text']")).size()>0)
+			{
+
+				Log.info("FacebookSignIn Page is opened.");
+				System.out.println("FacebookSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_FacebookSignInUserName(driver).sendKeys(testdata.get("UserName").toString()+"\n");
+				Thread.sleep(2000);
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//Thread.sleep(2000);
+				//utilities.explicitilyWaitFor("//span[text()='Next']", wait);
+				SSO_Login_Page.txtbx_FacebookSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//utilities.stopPageLoading(driver);
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+					EStore_HomePage.link_MyJawwy(driver).click();
+
+					String myProfileURL=EStore_HomePage.link_MyProfile(driver).getAttribute("href");
+					System.out.println("Navigating to MY Profile URL="+myProfileURL);
+
+					driver.navigate().to("https://sapphire_be:sapphire_backend@beta.jawwy.sa/en/personal-area/profile");
+					//EStore_HomePage.link_MyProfile(driver).click(); /** Do not enable ***/
+
+					utilities.explicitilyWaitFor("//li[@class='sph-active']/a[contains(text(),'My Profile')]", wait);
+
+
+					if(EStore_HomePage.link_MyProfileTab(driver).isDisplayed())
+					{ 
+						Log.info("MyProfile Page is opened.");
+						System.out.println("MyProfile Page is opened.");
+						driver.switchTo().frame("sph-personal-area-iframe");
+						EStore_HomePage.txtBox_FirstName(driver).clear();
+						EStore_HomePage.txtBox_FirstName(driver).sendKeys(testdata.get("FirstName").toString());
+						EStore_HomePage.txtBox_LastName(driver).clear();
+						EStore_HomePage.txtBox_LastName(driver).sendKeys(testdata.get("LastName").toString());
+						EStore_HomePage.txtBox_AlternateContact(driver).clear();
+						EStore_HomePage.txtBox_AlternateContact(driver).sendKeys(testdata.get("AlternateContact").toString());
+
+						if(EStore_HomePage.txtBox_Emailid(driver).getAttribute("readonly").contains("true"))
+						{
+							Log.info("EmailID field is Disabled.");
+							System.out.println("EmailID field is Disabled.");
+							if(EStore_HomePage.ssopage_link_FacebookSymbol(driver).isDisplayed())
+							{
+								Log.info("Facebook Symbol is displayed.");
+								System.out.println("Facebook Symbol is displayed.");
+							}
+							else
+							{
+								Log.warn("Facebook Symbol is not displayed.");
+								System.out.println("Facebook Symbol is not displayed.");
+								Assert.assertTrue(false);
+							}
+						}
+						else
+						{
+							Log.warn("EmailID field is not Disabled.");
+							System.out.println("EmailID field is not Disabled.");
+							Assert.assertTrue(false);
+						}
+
+						EStore_HomePage.select_Language(driver).selectByValue(testdata.get("Language").toString());
+						EStore_HomePage.select_Communication(driver).selectByValue(testdata.get("CommPref").toString());
+						EStore_HomePage.select_DOB_Date(driver).selectByVisibleText(testdata.get("DOB_Date").toString());
+						EStore_HomePage.select_DOB_Month(driver).selectByVisibleText(testdata.get("DOB_Month").toString());
+						EStore_HomePage.select_DOB_Year(driver).selectByVisibleText(testdata.get("DOB_Year").toString());
+
+						EStore_HomePage.button_UpdateProfile(driver).click();
+						Thread.sleep(2000);
+						utilities.explicitilyWaitFor("//div[@class='modal-header']/h4[text()='Profile updated successfully.']", wait);
+						if(EStore_HomePage.modalheader_UpdateProfileSuccess(driver).isDisplayed())
+						{
+							Log.info("Profile is successfully updated.");
+							System.out.println("Profile is successfully updated.");	
+						}
+						else
+						{
+							System.out.println("Profile update is not successful.");
+							Log.warn("Profile update is not successful.");
+							Assert.assertTrue(false);
+
+						}
+
+					}
+					else
+					{
+						System.out.println("MyProfile Page is not opened");
+						Log.warn("MyProfile Page is not opened.");
+						Assert.assertTrue(false);
+					}
+
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("FacebookSignIn Page is not opened.");
+				System.out.println("FacebookSignIn Page is not opened.");
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSOExistingUserMyProfileUpdate_SSODBCheck(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appEstore_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+			if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+			{
+
+				Log.info("Estore HomePage is opened.");
+				System.out.println("Estore HomePage is opened.");	
+
+				EStore_HomePage.link_MyJawwy(driver).click();
+
+				String myProfileURL=EStore_HomePage.link_MyProfile(driver).getAttribute("href");
+				System.out.println("Navigating to MY Profile URL="+myProfileURL);
+
+				driver.navigate().to("https://sapphire_be:sapphire_backend@beta.jawwy.sa/en/personal-area/profile");
+				//EStore_HomePage.link_MyProfile(driver).click(); /** Do not enable ***/
+
+				utilities.explicitilyWaitFor("//li[@class='sph-active']/a[contains(text(),'My Profile')]", wait);
+
+
+				if(EStore_HomePage.link_MyProfileTab(driver).isDisplayed())
+				{ 
+					Log.info("MyProfile Page is opened.");
+					System.out.println("MyProfile Page is opened.");
+					driver.switchTo().frame("sph-personal-area-iframe");
+					EStore_HomePage.txtBox_FirstName(driver).clear();
+					EStore_HomePage.txtBox_FirstName(driver).sendKeys(testdata.get("FirstName").toString());
+					EStore_HomePage.txtBox_LastName(driver).clear();
+					EStore_HomePage.txtBox_LastName(driver).sendKeys(testdata.get("LastName").toString());
+					EStore_HomePage.txtBox_AlternateContact(driver).clear();
+					EStore_HomePage.txtBox_AlternateContact(driver).sendKeys(testdata.get("AlternateContact").toString());
+					EStore_HomePage.txtBox_Emailid(driver).clear();
+					EStore_HomePage.txtBox_Emailid(driver).sendKeys(testdata.get("EmailId").toString());
+					EStore_HomePage.select_Language(driver).selectByValue(testdata.get("Language").toString());
+					EStore_HomePage.select_Communication(driver).selectByValue(testdata.get("CommPref").toString());
+					EStore_HomePage.select_DOB_Date(driver).selectByVisibleText(testdata.get("DOB_Date").toString());
+					EStore_HomePage.select_DOB_Month(driver).selectByVisibleText(testdata.get("DOB_Month").toString());
+					EStore_HomePage.select_DOB_Year(driver).selectByVisibleText(testdata.get("DOB_Year").toString());
+
+					EStore_HomePage.button_UpdateProfile(driver).click();
+					Thread.sleep(2000);
+					utilities.explicitilyWaitFor("//div[@class='modal-header']/h4[text()='Profile updated successfully.']", wait);
+					if(EStore_HomePage.modalheader_UpdateProfileSuccess(driver).isDisplayed())
+					{
+						Log.info("Profile is successfully updated.");
+						System.out.println("Profile is successfully updated.");	
+						
+						System.out.println("<--Verfiying SSO DB USER Details-->");
+						String query = "select * from sapphire_sso.USER_DETAILS where UID='"+testdata.get("UID").toString()+"'";
+						
+						String firstname =null;
+						String lastname = null;
+						String alcontact =null;
+						String commpref=null;
+						String dob_en = null;
+						String lang = null;
+						String dob = testdata.get("DOB_Date").toString() + "/" + testdata.get("DOB_Month").toString() + "/" + testdata.get("DOB_Year").toString();
+						System.out.println("Executing SSO USER DETAILS Query: \n"+query+"\n\n");
+
+						tableRecord=dbutilities.executeQuery(query);
+
+						while(tableRecord.next())
+						{   
+							firstname = tableRecord.getString("FIRST_NAME");
+							lastname = tableRecord.getString("LAST_NAME");
+							alcontact = tableRecord.getString("ALTERNATE_CONTACT_NO");
+							commpref = tableRecord.getString("COMMUNICATION_PREFERENCE");
+							dob_en = tableRecord.getString("DOB_EN");
+							lang = tableRecord.getString("PREFERRED_LANGUAGE");
+							System.out.println("Result[FIRST_NAME]="+ firstname);
+							System.out.println("Result[LAST_NAME]="+ lastname);
+							System.out.println("Result[LANGUAGE]="+ lang);
+							System.out.println("Result[ALTERNATE_CONTACT]="+ alcontact);
+							System.out.println("Result[COMMUNICATION_PREFERENCE]="+ commpref);
+							System.out.println("Result[DOB_EN]="+ dob_en);
+						
+						}
+
+						if(firstname.equals(testdata.get("FirstName").toString())&& lastname.equals(testdata.get("LastName").toString()) && alcontact.equals(testdata.get("AlternateContact").toString()) && commpref.equals(testdata.get("CommPref").toString()) && lang.equals(testdata.get("Language").toString())&& dob_en.equals(dob))   
+						{ 
+							Log.info("SSO DB details updated successfully.");
+							System.out.println("SSO DB details updated successfully.");
+							
+						}
+						else
+						{
+							Log.warn("SSO DB details didn't updated successfully.");
+							System.out.println("SSO DB details didn't updated successfully.");
+							Assert.assertTrue(false);
+						}
+					}
+					else
+					{
+						System.out.println("Profile update is not successful.");
+						Log.warn("Profile update is not successful.");
+						Assert.assertTrue(false);
+
+					}
+
+				}
+				else
+				{
+					System.out.println("MyProfile Page is not opened");
+					Log.warn("MyProfile Page is not opened.");
+					Assert.assertTrue(false);
+				}
+
+			}
+
+			else
+			{
+				System.out.println("Estore HomePage is not opened");
+				Log.warn("Estore HomePage is not opened.");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_GoogleSignIn_MyProfileUpdate_SSODBCheck(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='gp sph-icon-google-plus']", wait);
+
+			SSO_Login_Page.ssopage_link_GoogleSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@type='email']")).size()>0)
+			{
+
+				Log.info("GoogleSignIn Page is opened.");
+				System.out.println("GoogleSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_GoogleSignInUserName(driver).sendKeys(testdata.get("UserName").toString()+"\n");
+				Thread.sleep(2000);
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//Thread.sleep(2000);
+				//utilities.explicitilyWaitFor("//span[text()='Next']", wait);
+				SSO_Login_Page.txtbx_GoogleSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//utilities.stopPageLoading(driver);
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+					EStore_HomePage.link_MyJawwy(driver).click();
+
+					String myProfileURL=EStore_HomePage.link_MyProfile(driver).getAttribute("href");
+					System.out.println("Navigating to MY Profile URL="+myProfileURL);
+
+					driver.navigate().to("https://sapphire_be:sapphire_backend@beta.jawwy.sa/en/personal-area/profile");
+					//EStore_HomePage.link_MyProfile(driver).click(); /** Do not enable ***/
+
+					utilities.explicitilyWaitFor("//li[@class='sph-active']/a[contains(text(),'My Profile')]", wait);
+
+
+					if(EStore_HomePage.link_MyProfileTab(driver).isDisplayed())
+					{ 
+						Log.info("MyProfile Page is opened.");
+						System.out.println("MyProfile Page is opened.");
+						driver.switchTo().frame("sph-personal-area-iframe");
+						EStore_HomePage.txtBox_FirstName(driver).clear();
+						EStore_HomePage.txtBox_FirstName(driver).sendKeys(testdata.get("FirstName").toString());
+						EStore_HomePage.txtBox_LastName(driver).clear();
+						EStore_HomePage.txtBox_LastName(driver).sendKeys(testdata.get("LastName").toString());
+						EStore_HomePage.txtBox_AlternateContact(driver).clear();
+						EStore_HomePage.txtBox_AlternateContact(driver).sendKeys(testdata.get("AlternateContact").toString());
+
+						if(EStore_HomePage.txtBox_Emailid(driver).getAttribute("readonly").contains("true"))
+						{
+							Log.info("EmailID field is Disabled.");
+							System.out.println("EmailID field is Disabled.");
+							if(EStore_HomePage.ssopage_link_GooglePlus(driver).isDisplayed())
+							{
+								Log.info("GooglePlus Link is displayed.");
+								System.out.println("GooglePlus Link is displayed.");
+							}
+							else
+							{
+								Log.warn("GooglePlus  Link is not displayed.");
+								System.out.println("GooglePlus Link is not displayed.");
+								Assert.assertTrue(false);
+							}
+						}
+						else
+						{
+							Log.warn("EmailID field is not Disabled.");
+							System.out.println("EmailID field is not Disabled.");
+							Assert.assertTrue(false);
+						}
+
+						EStore_HomePage.select_Language(driver).selectByValue(testdata.get("Language").toString());
+						EStore_HomePage.select_Communication(driver).selectByValue(testdata.get("CommPref").toString());
+						EStore_HomePage.select_DOB_Date(driver).selectByVisibleText(testdata.get("DOB_Date").toString());
+						EStore_HomePage.select_DOB_Month(driver).selectByVisibleText(testdata.get("DOB_Month").toString());
+						EStore_HomePage.select_DOB_Year(driver).selectByVisibleText(testdata.get("DOB_Year").toString());
+
+						EStore_HomePage.button_UpdateProfile(driver).click();
+						Thread.sleep(2000);
+						utilities.explicitilyWaitFor("//div[@class='modal-header']/h4[text()='Profile updated successfully.']", wait);
+						if(EStore_HomePage.modalheader_UpdateProfileSuccess(driver).isDisplayed())
+						{
+							Log.info("Profile is successfully updated.");
+							System.out.println("Profile is successfully updated.");	
+							
+							System.out.println("<--Verfiying SSO DB USER Details-->");
+							String query = "select * from sapphire_sso.USER_DETAILS where UID='"+testdata.get("UID").toString()+"'";
+							
+							String firstname =null;
+							String lastname = null;
+							String alcontact =null;
+							String commpref=null;
+							String dob_en = null;
+							String lang = null;
+							String dob = testdata.get("DOB_Date").toString() + "/" + testdata.get("DOB_Month").toString() + "/" + testdata.get("DOB_Year").toString();
+							System.out.println("Executing SSO USER DETAILS Query: \n"+query+"\n\n");
+
+							tableRecord=dbutilities.executeQuery(query);
+
+							while(tableRecord.next())
+							{   
+								firstname = tableRecord.getString("FIRST_NAME");
+								lastname = tableRecord.getString("LAST_NAME");
+								alcontact = tableRecord.getString("ALTERNATE_CONTACT_NO");
+								commpref = tableRecord.getString("COMMUNICATION_PREFERENCE");
+								dob_en = tableRecord.getString("DOB_EN");
+								lang = tableRecord.getString("PREFERRED_LANGUAGE");
+								System.out.println("Result[FIRST_NAME]="+ firstname);
+								System.out.println("Result[LAST_NAME]="+ lastname);
+								System.out.println("Result[LANGUAGE]="+ lang);
+								System.out.println("Result[ALTERNATE_CONTACT]="+ alcontact);
+								System.out.println("Result[COMMUNICATION_PREFERENCE]="+ commpref);
+								System.out.println("Result[DOB_EN]="+ dob_en);
+							
+							}
+
+							if(firstname.equals(testdata.get("FirstName").toString())&& lastname.equals(testdata.get("LastName").toString()) && alcontact.equals(testdata.get("AlternateContact").toString()) && commpref.equals(testdata.get("CommPref").toString()) && lang.equals(testdata.get("Language").toString())&& dob_en.equals(dob))   
+							{ 
+								Log.info("SSO DB details updated successfully.");
+								System.out.println("SSO DB details updated successfully.");
+								
+							}
+							else
+							{
+								Log.warn("SSO DB details didn't updated successfully.");
+								System.out.println("SSO DB details didn't updated successfully.");
+								Assert.assertTrue(false);
+							}
+							
+						}
+						else
+						{
+							System.out.println("Profile update is not successful.");
+							Log.warn("Profile update is not successful.");
+							Assert.assertTrue(false);
+
+						}
+
+					}
+					else
+					{
+						System.out.println("MyProfile Page is not opened");
+						Log.warn("MyProfile Page is not opened.");
+						Assert.assertTrue(false);
+					}
+
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("GoogleSignIn Page is not opened.");
+				System.out.println("GoogleSignIn Page is not opened.");
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_TwitterSignIn_MyProfileUpdate_SSODBCheck(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='tw sph-icon-twitter']", wait);
+
+			SSO_Login_Page.ssopage_link_twitterSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@id='username_or_email']")).size()>0)
+			{
+
+				Log.info("Twitter SignIn Page is opened.");
+				System.out.println("TwitterSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_TwitterSignInUserName(driver).sendKeys(testdata.get("UserName").toString());
+				Thread.sleep(2000);
+				SSO_Login_Page.txtbx_TwitterSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+				Thread.sleep(2000);
+				//SSO_Login_Page.btn_TwitterSignIn(driver).click();
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+					EStore_HomePage.link_MyJawwy(driver).click();
+
+					String myProfileURL=EStore_HomePage.link_MyProfile(driver).getAttribute("href");
+					System.out.println("Navigating to MY Profile URL="+myProfileURL);
+
+					driver.navigate().to("https://sapphire_be:sapphire_backend@beta.jawwy.sa/en/personal-area/profile");
+					//EStore_HomePage.link_MyProfile(driver).click(); /** Do not enable ***/
+
+					utilities.explicitilyWaitFor("//li[@class='sph-active']/a[contains(text(),'My Profile')]", wait);
+
+
+					if(EStore_HomePage.link_MyProfileTab(driver).isDisplayed())
+					{ 
+						Log.info("MyProfile Page is opened.");
+						System.out.println("MyProfile Page is opened.");
+						driver.switchTo().frame("sph-personal-area-iframe");
+						EStore_HomePage.txtBox_FirstName(driver).clear();
+						EStore_HomePage.txtBox_FirstName(driver).sendKeys(testdata.get("FirstName").toString());
+						EStore_HomePage.txtBox_LastName(driver).clear();
+						EStore_HomePage.txtBox_LastName(driver).sendKeys(testdata.get("LastName").toString());
+						EStore_HomePage.txtBox_AlternateContact(driver).clear();
+						EStore_HomePage.txtBox_AlternateContact(driver).sendKeys(testdata.get("AlternateContact").toString());
+
+						if(EStore_HomePage.txtBox_Emailid(driver).getAttribute("readonly").contains("true"))
+						{
+							Log.info("EmailID field is Disabled.");
+							System.out.println("EmailID field is Disabled.");
+							if(EStore_HomePage.ssopage_link_TwitterImage(driver).isDisplayed())
+							{
+								Log.info("Twitter Link is displayed.");
+								System.out.println("Twitter Link is displayed.");
+							}
+							else
+							{
+								Log.warn("Twitter  Link is not displayed.");
+								System.out.println("Twitter Link is not displayed.");
+								Assert.assertTrue(false);
+							}
+						}
+						else
+						{
+							Log.warn("EmailID field is not Disabled.");
+							System.out.println("EmailID field is not Disabled.");
+							Assert.assertTrue(false);
+						}
+
+						EStore_HomePage.select_Language(driver).selectByValue(testdata.get("Language").toString());
+						EStore_HomePage.select_Communication(driver).selectByValue(testdata.get("CommPref").toString());
+						EStore_HomePage.select_DOB_Date(driver).selectByVisibleText(testdata.get("DOB_Date").toString());
+						EStore_HomePage.select_DOB_Month(driver).selectByVisibleText(testdata.get("DOB_Month").toString());
+						EStore_HomePage.select_DOB_Year(driver).selectByVisibleText(testdata.get("DOB_Year").toString());
+
+						EStore_HomePage.button_UpdateProfile(driver).click();
+						Thread.sleep(2000);
+						utilities.explicitilyWaitFor("//div[@class='modal-header']/h4[text()='Profile updated successfully.']", wait);
+						if(EStore_HomePage.modalheader_UpdateProfileSuccess(driver).isDisplayed())
+						{
+							Log.info("Profile is successfully updated.");
+							System.out.println("Profile is successfully updated.");	
+							
+							System.out.println("<--Verfiying SSO DB USER Details-->");
+							String query = "select * from sapphire_sso.USER_DETAILS where UID='"+testdata.get("UID").toString()+"'";
+							
+							String firstname =null;
+							String lastname = null;
+							String alcontact =null;
+							String commpref=null;
+							String dob_en = null;
+							String lang = null;
+							String dob = testdata.get("DOB_Date").toString() + "/" + testdata.get("DOB_Month").toString() + "/" + testdata.get("DOB_Year").toString();
+							System.out.println("Executing SSO USER DETAILS Query: \n"+query+"\n\n");
+
+							tableRecord=dbutilities.executeQuery(query);
+
+							while(tableRecord.next())
+							{   
+								firstname = tableRecord.getString("FIRST_NAME");
+								lastname = tableRecord.getString("LAST_NAME");
+								alcontact = tableRecord.getString("ALTERNATE_CONTACT_NO");
+								commpref = tableRecord.getString("COMMUNICATION_PREFERENCE");
+								dob_en = tableRecord.getString("DOB_EN");
+								lang = tableRecord.getString("PREFERRED_LANGUAGE");
+								System.out.println("Result[FIRST_NAME]="+ firstname);
+								System.out.println("Result[LAST_NAME]="+ lastname);
+								System.out.println("Result[LANGUAGE]="+ lang);
+								System.out.println("Result[ALTERNATE_CONTACT]="+ alcontact);
+								System.out.println("Result[COMMUNICATION_PREFERENCE]="+ commpref);
+								System.out.println("Result[DOB_EN]="+ dob_en);
+							
+							}
+
+							if(firstname.equals(testdata.get("FirstName").toString())&& lastname.equals(testdata.get("LastName").toString()) && alcontact.equals(testdata.get("AlternateContact").toString()) && commpref.equals(testdata.get("CommPref").toString()) && lang.equals(testdata.get("Language").toString())&& dob_en.equals(dob))   
+							{ 
+								Log.info("SSO DB details updated successfully.");
+								System.out.println("SSO DB details updated successfully.");
+								
+							}
+							else
+							{
+								Log.warn("SSO DB details didn't updated successfully.");
+								System.out.println("SSO DB details didn't updated successfully.");
+								Assert.assertTrue(false);
+							}
+							
+						}
+						else
+						{
+							System.out.println("Profile update is not successful.");
+							Log.warn("Profile update is not successful.");
+							Assert.assertTrue(false);
+
+						}
+
+					}
+					else
+					{
+						System.out.println("MyProfile Page is not opened");
+						Log.warn("MyProfile Page is not opened.");
+						Assert.assertTrue(false);
+					}
+
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("Twitter SignIn Page is not opened.");
+				System.out.println("Twitter SignIn Page is not opened.");
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_SSO_FacebookSignIn_MyProfileUpdate_SSODBCheck(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			driver.navigate().to(testdata.get("URL").toString());
+
+			EStore_LoginPage.homepage_btn_Login(driver).click();
+
+			utilities.explicitilyWaitFor("//a[@class='fb sph-icon-facebook']", wait);
+
+			SSO_Login_Page.ssopage_link_FacebookSignIn(driver).click();
+
+			if(driver.findElements(By.xpath("//input[@type='text']")).size()>0)
+			{
+
+				Log.info("FacebookSignIn Page is opened.");
+				System.out.println("FacebookSignIn Page  is opened.");
+
+				SSO_Login_Page.txtbx_FacebookSignInUserName(driver).sendKeys(testdata.get("UserName").toString()+"\n");
+				Thread.sleep(2000);
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//Thread.sleep(2000);
+				//utilities.explicitilyWaitFor("//span[text()='Next']", wait);
+				SSO_Login_Page.txtbx_FacebookSignInPassword(driver).sendKeys(testdata.get("Password").toString()+"\n");
+				//SSO_Login_Page.button_GoogleSignInNext(driver).click();
+				//utilities.stopPageLoading(driver);
+				utilities.explicitilyWaitFor("//div[@class='sph-logo']", wait);
+
+				if(driver.findElements(By.xpath("//div[@class='sph-logo']")).size()>0)
+				{
+
+					Log.info("Estore HomePage is opened.");
+					System.out.println("Estore HomePage is opened.");
+
+					EStore_HomePage.link_MyJawwy(driver).click();
+
+					String myProfileURL=EStore_HomePage.link_MyProfile(driver).getAttribute("href");
+					System.out.println("Navigating to MY Profile URL="+myProfileURL);
+
+					driver.navigate().to("https://sapphire_be:sapphire_backend@beta.jawwy.sa/en/personal-area/profile");
+					//EStore_HomePage.link_MyProfile(driver).click(); /** Do not enable ***/
+
+					utilities.explicitilyWaitFor("//li[@class='sph-active']/a[contains(text(),'My Profile')]", wait);
+
+
+					if(EStore_HomePage.link_MyProfileTab(driver).isDisplayed())
+					{ 
+						Log.info("MyProfile Page is opened.");
+						System.out.println("MyProfile Page is opened.");
+						driver.switchTo().frame("sph-personal-area-iframe");
+						EStore_HomePage.txtBox_FirstName(driver).clear();
+						EStore_HomePage.txtBox_FirstName(driver).sendKeys(testdata.get("FirstName").toString());
+						EStore_HomePage.txtBox_LastName(driver).clear();
+						EStore_HomePage.txtBox_LastName(driver).sendKeys(testdata.get("LastName").toString());
+						EStore_HomePage.txtBox_AlternateContact(driver).clear();
+						EStore_HomePage.txtBox_AlternateContact(driver).sendKeys(testdata.get("AlternateContact").toString());
+
+						if(EStore_HomePage.txtBox_Emailid(driver).getAttribute("readonly").contains("true"))
+						{
+							Log.info("EmailID field is Disabled.");
+							System.out.println("EmailID field is Disabled.");
+							if(EStore_HomePage.ssopage_link_FacebookSymbol(driver).isDisplayed())
+							{
+								Log.info("Facebook Symbol is displayed.");
+								System.out.println("Facebook Symbol is displayed.");
+							}
+							else
+							{
+								Log.warn("Facebook Symbol is not displayed.");
+								System.out.println("Facebook Symbol is not displayed.");
+								Assert.assertTrue(false);
+							}
+						}
+						else
+						{
+							Log.warn("EmailID field is not Disabled.");
+							System.out.println("EmailID field is not Disabled.");
+							Assert.assertTrue(false);
+						}
+
+						EStore_HomePage.select_Language(driver).selectByValue(testdata.get("Language").toString());
+						EStore_HomePage.select_Communication(driver).selectByValue(testdata.get("CommPref").toString());
+						EStore_HomePage.select_DOB_Date(driver).selectByVisibleText(testdata.get("DOB_Date").toString());
+						EStore_HomePage.select_DOB_Month(driver).selectByVisibleText(testdata.get("DOB_Month").toString());
+						EStore_HomePage.select_DOB_Year(driver).selectByVisibleText(testdata.get("DOB_Year").toString());
+
+						EStore_HomePage.button_UpdateProfile(driver).click();
+						Thread.sleep(2000);
+						utilities.explicitilyWaitFor("//div[@class='modal-header']/h4[text()='Profile updated successfully.']", wait);
+						if(EStore_HomePage.modalheader_UpdateProfileSuccess(driver).isDisplayed())
+						{
+							Log.info("Profile is successfully updated.");
+							System.out.println("Profile is successfully updated.");	
+							
+							System.out.println("<--Verfiying SSO DB USER Details-->");
+							String query = "select * from sapphire_sso.USER_DETAILS where UID='"+testdata.get("UID").toString()+"'";
+							
+							String firstname =null;
+							String lastname = null;
+							String alcontact =null;
+							String commpref=null;
+							String dob_en = null;
+							String lang = null;
+							String dob = testdata.get("DOB_Date").toString() + "/" + testdata.get("DOB_Month").toString() + "/" + testdata.get("DOB_Year").toString();
+							System.out.println("Executing SSO USER DETAILS Query: \n"+query+"\n\n");
+
+							tableRecord=dbutilities.executeQuery(query);
+
+							while(tableRecord.next())
+							{   
+								firstname = tableRecord.getString("FIRST_NAME");
+								lastname = tableRecord.getString("LAST_NAME");
+								alcontact = tableRecord.getString("ALTERNATE_CONTACT_NO");
+								commpref = tableRecord.getString("COMMUNICATION_PREFERENCE");
+								dob_en = tableRecord.getString("DOB_EN");
+								lang = tableRecord.getString("PREFERRED_LANGUAGE");
+								System.out.println("Result[FIRST_NAME]="+ firstname);
+								System.out.println("Result[LAST_NAME]="+ lastname);
+								System.out.println("Result[LANGUAGE]="+ lang);
+								System.out.println("Result[ALTERNATE_CONTACT]="+ alcontact);
+								System.out.println("Result[COMMUNICATION_PREFERENCE]="+ commpref);
+								System.out.println("Result[DOB_EN]="+ dob_en);
+							
+							}
+
+							if(firstname.equals(testdata.get("FirstName").toString())&& lastname.equals(testdata.get("LastName").toString()) && alcontact.equals(testdata.get("AlternateContact").toString()) && commpref.equals(testdata.get("CommPref").toString()) && lang.equals(testdata.get("Language").toString())&& dob_en.equals(dob))   
+							{ 
+								Log.info("SSO DB details updated successfully.");
+								System.out.println("SSO DB details updated successfully.");
+								
+							}
+							else
+							{
+								Log.warn("SSO DB details didn't updated successfully.");
+								System.out.println("SSO DB details didn't updated successfully.");
+								Assert.assertTrue(false);
+							}
+							
+						}
+						else
+						{
+							System.out.println("Profile update is not successful.");
+							Log.warn("Profile update is not successful.");
+							Assert.assertTrue(false);
+
+						}
+
+					}
+					else
+					{
+						System.out.println("MyProfile Page is not opened");
+						Log.warn("MyProfile Page is not opened.");
+						Assert.assertTrue(false);
+					}
+
+
+				}
+				else
+				{
+					System.out.println("Estore HomePage is not opened");
+					Log.warn("Estore HomePage is not opened.");
+					Assert.assertTrue(false);
+
+				} 	
+			}
+			else	
+			{
+
+				Log.info("FacebookSignIn Page is not opened.");
+				System.out.println("FacebookSignIn Page is not opened.");
+			}
+
+
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+	}
+
+}

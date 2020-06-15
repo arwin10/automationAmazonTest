@@ -1,0 +1,547 @@
+package com.jawwy.modules;
+
+
+import static org.testng.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.annotations.Parameters;
+
+
+import com.jawwy.util.CommonUtilities;
+import com.jawwy.util.ExcelUtilities;
+import com.jawwy.util.Log;
+import com.jawwy.util.Constant;
+import com.jawwy.util.DataBaseUtilities;
+
+import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Assert;
+
+import com.jawwy.pageobject.ADM_Portal_HomePage;;
+
+
+
+public class Jawwy_ADM_Portal {
+
+	private WebDriver driver;
+	private CommonUtilities utilities;
+	private DataBaseUtilities dbutilities;
+	private WebDriverWait wait;
+	private String sTestCaseName;
+	private int iTestCaseRow;
+	ArrayList moduleRecord=null;
+
+
+	@BeforeTest
+	@Parameters("browsername")
+	public void setUp(String browsername) throws Exception{
+
+		//Log4j configuration settings
+		DOMConfigurator.configure("log4j.xml");
+		Log.info("Log4j initiated");
+
+		System.out.println("Executing in browser: "+browsername);
+
+		if(browsername.equalsIgnoreCase("Firefox"))
+		{   
+			System.setProperty("webdriver.gecko.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\geckodriver.exe");
+			System.setProperty("webdriver.firefox.bin", "C:\\FirefoxPortable45ESR\\FirefoxPortable.exe");
+			driver= new FirefoxDriver();
+		}		
+
+		if(browsername.equalsIgnoreCase("Chrome"))	
+		{
+			System.setProperty("webdriver.chrome.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\chromedriver.exe");
+			driver = new ChromeDriver();
+		}
+
+		if(browsername.equalsIgnoreCase("IE"))	
+		{
+			System.setProperty("webdriver.ie.driver", "C:\\Jawwy_Repo\\Jawwy_Automation\\IEDriverServer.exe");
+			driver = new InternetExplorerDriver();
+		}
+
+
+
+		Log.info("New driver instantiated");
+
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+		Log.info("Window maximized and Implicit wait applied on the driver for 10 seconds");
+
+
+		wait = new WebDriverWait(driver,60);
+		Log.info("WebDriver wait initialized");
+
+		utilities = new CommonUtilities();
+		//dbutilities= new DataBaseUtilities();
+
+		//Getting Testdata from the excel file
+		moduleRecord=ExcelUtilities.excelSetDBRecord("Jawwy_ADM_Portal");
+		//dbutilities.DatabaseConnection();
+
+
+	}
+
+
+	@AfterTest
+	public void tearDown() throws Exception{
+
+		driver.quit();
+	}
+
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_NewLocationCreation(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appADMPortal_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//span[@class='ui-menuitem-icon ui-icon menu-home-icon']")).size()>0)
+			{
+
+				Log.info("ADM Portal HomePage is opened.");
+				System.out.println("ADM Portal HomePage is opened.");
+				
+				ADM_Portal_HomePage.link_ADM_Heirarchy(driver).click();
+				ADM_Portal_HomePage.link_Location(driver).click();
+				
+				utilities.explicitilyWaitFor("//legend[contains(text(),'Define Location')]", wait);
+				if(ADM_Portal_HomePage.header_DefineLoction(driver).isDisplayed())
+				{
+					Log.info("ADM Portal Location creation page is opened.");
+					System.out.println("ADM Portal Location creation page is opened.");
+					
+					ADM_Portal_HomePage.drpdwn_Distributor(driver).click();
+					Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_DistributorOption(driver).click();
+					Thread.sleep(2000);
+					
+					ADM_Portal_HomePage.drpdwn_DealerName(driver).click();
+					Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_DealerNameOption(driver).click();
+					Thread.sleep(2000);
+					
+					ADM_Portal_HomePage.txtBox_DistributorName(driver).sendKeys("Test Distributor5"); /** Change Value**/
+					
+					ADM_Portal_HomePage.txtBox_Longitude(driver).sendKeys("123456");
+					
+					ADM_Portal_HomePage.txtBox_Email(driver).sendKeys("testmail@yopmail.com");
+					
+					//ADM_Portal_HomePage.txtBox_Address(driver).sendKeys("testaddress");
+					//Thread.sleep(2000);
+					
+					ADM_Portal_HomePage.drpdwn_Language(driver).click();
+					Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_LanguageOption(driver).click();
+					Thread.sleep(2000);
+					
+					ADM_Portal_HomePage.txtBox_LocationCode(driver).sendKeys("5675"); /** Change Value**/
+					
+					ADM_Portal_HomePage.txtBox_Latitude(driver).sendKeys("123456");
+					
+					ADM_Portal_HomePage.txtBox_Mobile(driver).sendKeys("966557822611");
+					ADM_Portal_HomePage.txtBox_DocumentId(driver).sendKeys("112345678");
+					
+					ADM_Portal_HomePage.drpdwn_locationSource(driver).click();
+					ADM_Portal_HomePage.drpdwn_locationSourceOption(driver).click();
+			
+					ADM_Portal_HomePage.button_AddLocation(driver).click();
+					Thread.sleep(4000);
+					
+					if(utilities.isElementPresent(driver, "//div[@class='ui-growl-message' ]/span[contains(text(),'Added')]"))
+					{
+						Log.info("Location added successfully.");
+						System.out.println("Location added successfully.");
+						ADM_Portal_HomePage.button_Logout(driver).click();
+						Thread.sleep(2000);
+					}
+					else
+					{
+						System.out.println("Location not added successfully.");
+						Log.warn("Location not added successfully.");
+						ADM_Portal_HomePage.button_Logout(driver).click();
+						Thread.sleep(2000);
+						Assert.assertTrue(false);
+					}
+					
+					
+				}
+				else
+				{
+					System.out.println("ADM Portal Location creation page is not opened");
+					Log.warn("ADM Portal Location creation page is not opened");
+					Assert.assertTrue(false);
+				}
+				
+				
+                
+			}
+
+			else
+			{
+				System.out.println("ADM Portal HomePage is not opened");
+				Log.warn("ADM Portal HomePage is not opened");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+
+
+	@Test
+	@Parameters("testcasename")
+	public void verify_NewDealerCreation(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appADMPortal_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//span[@class='ui-menuitem-icon ui-icon menu-home-icon']")).size()>0)
+			{
+
+				Log.info("ADM Portal HomePage is opened.");
+				System.out.println("ADM Portal HomePage is opened.");
+				
+				ADM_Portal_HomePage.link_ADM_Heirarchy(driver).click();
+				ADM_Portal_HomePage.link_Dealer(driver).click();
+				
+				utilities.explicitilyWaitFor("//legend[contains(text(),'Define Dealer')]", wait);
+				if(ADM_Portal_HomePage.header_DefineDealer(driver).isDisplayed())
+				{
+					Log.info("ADM Portal Dealer creation page is opened.");
+					System.out.println("ADM Portal Dealer creation page is opened.");
+					
+					ADM_Portal_HomePage.drpdwn_Distributor(driver).click();
+					Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_DistributorOption(driver).click();
+					Thread.sleep(2000);
+					
+					
+					ADM_Portal_HomePage.txtBox_DistributorName(driver).sendKeys("Test Dealer4"); /** Change Value**/
+					ADM_Portal_HomePage.txtBox_LocationCode(driver).sendKeys("56781"); /** Change Value**/
+					 
+					ADM_Portal_HomePage.txtBox_Email(driver).sendKeys("testmail@yopmail.com");
+					ADM_Portal_HomePage.txtBox_Mobile(driver).sendKeys("966557822611");
+				
+					ADM_Portal_HomePage.drpdwn_Language(driver).click();
+					Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_LanguageOption(driver).click();
+					Thread.sleep(2000);
+									
+					ADM_Portal_HomePage.txtBox_DocumentId(driver).sendKeys("112345678");
+			
+					ADM_Portal_HomePage.button_AddLocation(driver).click();
+					Thread.sleep(4000);
+					
+					if(utilities.isElementPresent(driver, "//div[@class='ui-growl-message' ]/span[contains(text(),'Added')]"))
+					{
+						Log.info("Location added successfully.");
+						System.out.println("Location added successfully.");
+						ADM_Portal_HomePage.button_Logout(driver).click();
+						Thread.sleep(2000);
+					}
+					else
+					{
+						System.out.println("Location not added successfully.");
+						Log.warn("Location not added successfully.");
+						ADM_Portal_HomePage.button_Logout(driver).click();
+						Thread.sleep(2000);
+						Assert.assertTrue(false);
+					}
+					
+					
+				}
+				else
+				{
+					System.out.println("ADM Portal dealer creation page is not opened");
+					Log.warn("ADM Portal dealer creation page is not opened");
+					Assert.assertTrue(false);
+				}
+				
+				
+                
+			}
+
+			else
+			{
+				System.out.println("ADM Portal HomePage is not opened");
+				Log.warn("ADM Portal HomePage is not opened");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+	
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_NewDistributorCreation(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appADMPortal_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//span[@class='ui-menuitem-icon ui-icon menu-home-icon']")).size()>0)
+			{
+
+				Log.info("ADM Portal HomePage is opened.");
+				System.out.println("ADM Portal HomePage is opened.");
+				
+				ADM_Portal_HomePage.link_ADM_Heirarchy(driver).click();
+				ADM_Portal_HomePage.link_Distributor(driver).click();
+				
+				utilities.explicitilyWaitFor("//legend[contains(text(),'Define Distributor')]", wait);
+				if(ADM_Portal_HomePage.header_DefineDistributor(driver).isDisplayed())
+				{
+					Log.info("ADM Portal Distributor creation page is opened.");
+					System.out.println("ADM Portal Distributor creation page is opened.");
+		
+					ADM_Portal_HomePage.txtBox_DistributorName(driver).sendKeys("Test Distributor_1"); /** Change Value**/
+					ADM_Portal_HomePage.txtBox_LocationCode(driver).sendKeys("56785"); /** Change Value**/
+					 
+					ADM_Portal_HomePage.txtBox_Email(driver).sendKeys("testmail@yopmail.com");
+					ADM_Portal_HomePage.txtBox_Mobile(driver).sendKeys("966557822611");
+				
+					ADM_Portal_HomePage.drpdwn_Language(driver).click();
+					Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_LanguageOption(driver).click();
+					Thread.sleep(2000);
+									
+					ADM_Portal_HomePage.txtBox_DocumentId(driver).sendKeys("112345678");
+			
+					ADM_Portal_HomePage.button_AddLocation(driver).click();
+					Thread.sleep(4000);
+					
+					if(utilities.isElementPresent(driver, "//div[@class='ui-growl-message' ]/span[contains(text(),'Added')]"))
+					{
+						Log.info("Distributor added successfully.");
+						System.out.println("Distributor added successfully.");
+						ADM_Portal_HomePage.button_Logout(driver).click();
+						Thread.sleep(2000);
+					}
+					else
+					{
+						System.out.println("Distributor not added successfully.");
+						Log.warn("Distributor not added successfully.");
+						ADM_Portal_HomePage.button_Logout(driver).click();
+						Thread.sleep(2000);
+						Assert.assertTrue(false);
+					}
+					
+					
+				}
+				else
+				{
+					System.out.println("ADM Portal Distributor creation page is not opened");
+					Log.warn("ADM Portal Distributor creation page is not opened");
+					Assert.assertTrue(false);
+				}
+				
+				
+                
+			}
+
+			else
+			{
+				System.out.println("ADM Portal HomePage is not opened");
+				Log.warn("ADM Portal HomePage is not opened");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+    
+	
+	@Test
+	@Parameters("testcasename")
+	public void verify_NewAgentCreation(String testcasename) throws Exception{
+
+		try
+		{
+			System.out.println("Getting testdata for testcase:"+testcasename);
+
+
+			Map testdata = ExcelUtilities.getTestData(testcasename);
+
+			Log.startTestCase(testcasename);
+
+			utilities.appADMPortal_Login(driver,wait,testdata.get("URL").toString(),testdata.get("UserName").toString(),testdata.get("Password").toString());
+
+			if(driver.findElements(By.xpath("//span[@class='ui-menuitem-icon ui-icon menu-home-icon']")).size()>0)
+			{
+
+				Log.info("ADM Portal HomePage is opened.");
+				System.out.println("ADM Portal HomePage is opened.");
+				
+				ADM_Portal_HomePage.link_ADM_Heirarchy(driver).click();
+				ADM_Portal_HomePage.link_Agent(driver).click();
+				
+				utilities.explicitilyWaitFor("//legend[contains(text(),'Define Agent')]", wait);
+				if(ADM_Portal_HomePage.header_DefineAgent(driver).isDisplayed())
+				{
+					Log.info("ADM Portal Agent creation page is opened.");
+					System.out.println("ADM Portal Agent creation page is opened.");
+					
+					ADM_Portal_HomePage.drpdwn_Distributor(driver).click();
+				    Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_DistributorOption(driver).click();
+					Thread.sleep(2000);
+					
+					ADM_Portal_HomePage.drpdwn_DealerName(driver).click();
+					Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_DealerNameOption(driver).click();
+					Thread.sleep(2000);
+		
+					ADM_Portal_HomePage.txtBox_DistributorName(driver).sendKeys("Test Distributor_1"); /** Change Value**/
+					ADM_Portal_HomePage.txtBox_LocationCode(driver).sendKeys("56785"); /** Change Value**/
+					 
+					
+					ADM_Portal_HomePage.txtBox_Mobile(driver).sendKeys("966557822611");
+				
+					ADM_Portal_HomePage.drpdwn_Language(driver).click();
+					Thread.sleep(2000);
+					ADM_Portal_HomePage.drpdwn_LanguageOption(driver).click();
+					Thread.sleep(2000);
+					
+					ADM_Portal_HomePage.txtBox_DocumentId(driver).sendKeys("112345678");
+					
+					ADM_Portal_HomePage.txtBox_Email(driver).sendKeys("testmail@yopmail.com");
+				    Thread.sleep(2000);				
+					ADM_Portal_HomePage.txtBox_UserName(driver).sendKeys("testuser");
+					ADM_Portal_HomePage.txtBox_Password(driver).sendKeys("testpass");
+					ADM_Portal_HomePage.txtBox_ConfirmPassword(driver).sendKeys("testpass");
+			
+					ADM_Portal_HomePage.button_AddLocation(driver).click();
+					Thread.sleep(4000);
+					
+					if(utilities.isElementPresent(driver, "//div[@class='ui-growl-message' ]/span[contains(text(),'Added')]"))
+					{
+						Log.info("Agent added successfully.");
+						System.out.println("Agent added successfully.");
+						ADM_Portal_HomePage.button_Logout(driver).click();
+						Thread.sleep(2000);
+					}
+					else
+					{
+						System.out.println("Agent not added successfully.");
+						Log.warn("Agent not added successfully.");
+						ADM_Portal_HomePage.button_Logout(driver).click();
+						Thread.sleep(2000);
+						Assert.assertTrue(false);
+					}
+					
+					
+				}
+				else
+				{
+					System.out.println("ADM Portal Agent creation page is not opened");
+					Log.warn("ADM Portal Distributor Agent page is not opened");
+					Assert.assertTrue(false);
+				}
+				
+				
+                
+			}
+
+			else
+			{
+				System.out.println("ADM Portal HomePage is not opened");
+				Log.warn("ADM Portal HomePage is not opened");
+				Assert.assertTrue(false);
+
+			} 	
+
+			Log.endTestCase(testcasename);
+
+		}
+
+
+		catch(Exception e)
+		{
+			System.out.println("Exception Occured:"+e);
+			Log.error(e.getMessage());
+			Assert.assertTrue(false);
+		}
+
+
+	}
+
+
+}

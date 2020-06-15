@@ -1,0 +1,764 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Jawwy Test Suite">
+ 
+<!-- EStore Test -->
+
+<!-- <test name="verify_ClickandCollect30SARSIMOrderCreation"> -->
+<!-- <parameter name="testcasename" value="verify_ClickandCollect30SARSIMOrderCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_Estore"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ClickandCollect30SARSIMOrderCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+ 
+<!-- <test name="verify_StandaryDelivery30SARSIMOrderCreation"> -->
+<!-- <parameter name="testcasename" value="verify_StandaryDelivery30SARSIMOrderCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_Estore"> -->
+<!-- <methods> -->
+<!-- <include name="verify_StandaryDelivery30SARSIMOrderCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_StandaryDeliveryPhoneOrderCreation"> -->
+<!-- <parameter name="testcasename" value="verify_StandaryDeliveryPhoneOrderCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_Estore"> -->
+<!-- <methods> -->
+<!-- <include name="verify_StandaryDeliveryPhoneOrderCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- SSO Test -->
+
+<!--  <test name="verify_SSOExistingUserLogin"> -->
+<!-- <parameter name="testcasename" value="verify_SSOExistingUserLogin"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SSO"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SSOExistingUserLogin"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SSORegisterUser"> -->
+<!-- <parameter name="testcasename" value="verify_SSORegisterUser"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SSO"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SSORegisterUser"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!--  <test name="verify_SSOExistingUserMyProfileUpdate"> -->
+<!-- <parameter name="testcasename" value="verify_SSOExistingUserMyProfileUpdate"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SSO"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SSOExistingUserMyProfileUpdate"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SSO_ForgotPasswordLink"> -->
+<!-- <parameter name="testcasename" value="verify_SSO_ForgotPasswordLink"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SSO"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SSO_ForgotPasswordLink"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+ 
+ 
+<!-- Via Arabia Test -->
+
+<!-- <test name="verify_ViaArabiaOrderSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViaArabiaOrderSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ViaArabia"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViaArabiaOrderSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- RMS Test -->
+
+<!-- <test name="verify_RMS_Login"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_InvalidCreds"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_InvalidCreds"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_InvalidCreds"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_InvalidUsername"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_InvalidUsername"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_InvalidUsername"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_InvalidPassword"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_InvalidPassword"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_InvalidPassword"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_EmptyCreds"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_EmptyCreds"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_EmptyCreds"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_EmptyUsername"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_EmptyUsername"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_EmptyUsername"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_Login_EmptyPassword"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_Login_EmptyPassword"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_Login_EmptyPassword"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SearchSIM_ICCID"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SearchSIM_ICCID"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_SearchSIM_ICCID"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SearchSIM_IMSI"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SearchSIM_IMSI"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_SearchSIM_IMSI"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SearchSIM_MSISDN"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SearchSIM_MSISDN"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_SearchSIM_MSISDN"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SIMSTATUS_ACTIVATED_MSISDN"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SIMSTATUS_ACTIVATED_MSISDN"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_SIMSTATUS_MSISDN"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SIMSTATUS_MNPINACTIVATED_MSISDN"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SIMSTATUS_MNPINACTIVATED_MSISDN"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_SIMSTATUS_MSISDN"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SIMSTATUS_QUARANTINE_MSISDN"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SIMSTATUS_QUARANTINE_MSISDN"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_MSISDNSTATUS_MSISDN"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SIMSTATUS_MNPOUTQUARANTINE_MSISDN"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SIMSTATUS_MNPOUTQUARANTINE_MSISDN"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_MSISDNSTATUS_MSISDN"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SIMSTATUS_BARRED_MSISDN"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SIMSTATUS_BARRED_MSISDN"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_SIMSTATUS_MSISDN"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_RMS_SIMSTATUS_UNBARRED_MSISDN"> -->
+<!-- <parameter name="testcasename" value="verify_RMS_SIMSTATUS_UNBARRED_MSISDN"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_RMS"> -->
+<!-- <methods> -->
+<!-- <include name="verify_RMS_SIMSTATUS_MSISDN"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- ADM Portal Test -->
+
+<!-- <test name="verify_NewLocationCreation"> -->
+<!-- <parameter name="testcasename" value="verify_NewLocationCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_NewLocationCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_NewDistributorCreation"> -->
+<!-- <parameter name="testcasename" value="verify_NewDistributorCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_NewDistributorCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+
+<!-- <test name="verify_NewDealerCreation"> -->
+<!-- <parameter name="testcasename" value="verify_NewDealerCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_NewDealerCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_NewAgentCreation"> -->
+<!-- <parameter name="testcasename" value="verify_NewAgentCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_NewAgentCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+
+<!-- <test name="verify_UploadDistributorFile"> -->
+<!-- <parameter name="testcasename" value="verify_UploadDistributorFile"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_UploadDistributorFile"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_UploadDealerFile"> -->
+<!-- <parameter name="testcasename" value="verify_UploadDealerFile"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_UploadDealerFile"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_UploadLocationUserFile"> -->
+<!-- <parameter name="testcasename" value="verify_UploadLocationUserFile"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_UploadLocationUserFile"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_UploadAgentUserFile"> -->
+<!-- <parameter name="testcasename" value="verify_UploadAgentUserFile"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_UploadAgentUserFile"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_ViewLocationListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewLocationListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewLocationListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_ViewLocationListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewLocationListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewLocationListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_ViewDistributorListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewDistributorListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewDistributorListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_ViewDealerListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewDealerListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewDealerListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_ViewAgentListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewAgentListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewAgentListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_NewCommissionCreation"> -->
+<!-- <parameter name="testcasename" value="verify_NewCommissionCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_NewCommissionCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_ViewCommissionListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewCommissionListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewCommissionListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test>  -->
+
+<!-- <test name="verify_ViewCommissionConfigListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewCommissionConfigListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewCommissionConfigListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test>  -->
+
+<!-- <test name="verify_AddCommissionConfig"> -->
+<!-- <parameter name="testcasename" value="verify_AddCommissionConfig"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_AddCommissionConfig"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test>  -->
+
+<!-- <test name="verify_CommissionReportDownload"> -->
+<!-- <parameter name="testcasename" value="verify_CommissionReportDownload"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_CommissionReportDownload"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test>  -->
+
+<!-- <test name="verify_NewAddressCreation"> -->
+<!-- <parameter name="testcasename" value="verify_NewAddressCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_NewAddressCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_ViewAddressListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewAddressListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewAddressListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_NewWarningMessageCreation"> -->
+<!-- <parameter name="testcasename" value="verify_NewWarningMessageCreation"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_NewWarningMessageCreation"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_ViewWarningsListSearch"> -->
+<!-- <parameter name="testcasename" value="verify_ViewWarningsListSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_ViewWarningsListSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_AgentLocationStockSearch"> -->
+<!-- <parameter name="testcasename" value="verify_AgentLocationStockSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_AgentLocationStockSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_AgentLocationOrderSearch"> -->
+<!-- <parameter name="testcasename" value="verify_AgentLocationOrderSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_AgentLocationOrderSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_AgentShiftSearch"> -->
+<!-- <parameter name="testcasename" value="verify_AgentShiftSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_AgentShiftSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_AgentOrderCompletionReportSearch"> -->
+<!-- <parameter name="testcasename" value="verify_AgentOrderCompletionReportSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_ADM_Portal"> -->
+<!-- <methods> -->
+<!-- <include name="verify_AgentOrderCompletionReportSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- Sugar CRM Test -->
+
+<!-- <test name="verify_SugarCRMLogin"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRMLogin"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRMLogin"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRMOrderIdSearch"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRMOrderIdSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRMOrderIdSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_MSISDNSearch"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_MSISDNSearch"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_MSISDNSearch"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_ViewContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_ViewContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_ViewContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_SearchEditContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_SearchEditContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_SearchEditContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_TelcoEstoreOrdersContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_TelcoEstoreOrdersContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_TelcoEstoreOrdersContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_AddressContractsDocsContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_AddressContractsDocsContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_AddressContractsDocsContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_RefferalContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_RefferalContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_RefferalContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_EstoreOrdersStatusContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_EstoreOrdersStatusContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_EstoreOrdersStatusContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_Search_ProspectCustTypeContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_Search_ProspectCustTypeContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_Search_CustTypeContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+<!-- <test name="verify_SugarCRM_Search_HotCustTypeContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_Search_HotCustTypeContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_Search_CustTypeContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+
+<!-- <test name="verify_SugarCRM_Search_WarmCustTypeContacts"> -->
+<!-- <parameter name="testcasename" value="verify_SugarCRM_Search_WarmCustTypeContacts"></parameter> -->
+<!-- <parameter name="browsername" value="Chrome"></parameter> -->
+<!-- <classes> -->
+<!-- <class name="com.jawwy.modules.Jawwy_SugarCRM"> -->
+<!-- <methods> -->
+<!-- <include name="verify_SugarCRM_Search_CustTypeContacts"></include> -->
+<!-- </methods> -->
+<!-- </class> -->
+<!-- </classes> -->
+<!-- </test> -->
+
+</suite>
